@@ -59,9 +59,10 @@ private repositories they cannot see themselves. An installation you do not cont
 the reason it cannot be connected.</p>
 <p>The installation’s repositories are read immediately, then <strong>every hour</strong>: a repository added to
 the GitHub App later appears without anything being pushed to it.</p>
-<p>To <strong>disconnect</strong> an installation, click <strong>Disconnect</strong> next to it. This is refused while
-repositories of that installation are attached to projects: detach them first (the message lists
-which ones).</p>
+<p>To <strong>disconnect</strong> an installation, click <strong>Disconnect</strong> next to it, then confirm. Every repository
+of that installation is detached from every project, and its webhook and its entries in Jira’s
+Development panel are removed within minutes. Nothing is deleted on GitHub, and the GitHub App stays
+installed: connect it again at any time.</p>
 <h3 id="24-attach-a-repository-to-a-jira-project">2.4 Attach a repository to a Jira project</h3>
 <ol>
 <li>In the Jira project: <strong>Project settings → Apps → Git repositories</strong>.</li>
@@ -207,8 +208,8 @@ recent commits of the deployed version.</li>
 <li><strong>Reviews and deployments</strong> arrive by webhook only: the periodic check does not catch them up.</li>
 <li><strong>Superseded deployment</strong>: a deployment replaced by a newer one still shows as “Deployed”.</li>
 <li><strong>Native panel</strong>: a branch with no commit known to the app is not shown there (Jira requires its
-last commit); detaching a repository from one project among several leaves its entries there; the
-environment type (production, staging…) is inferred from its name. Jira shows only the <strong>first
+last commit); after a project is attached to or detached from a repository, the panel is corrected
+within a few minutes (the commits concerned are removed and re-created); the environment type (production, staging…) is inferred from its name. Jira shows only the <strong>first
 100 commits</strong> of an issue there (a Jira limit); the <strong>Git activity</strong> panel shows them all.</li>
 <li><strong>Inactive license</strong>: the panel and <strong>Git repositories</strong> show “License inactive”; GitHub activity
 is no longer synced until the license is renewed, then it is caught up within the limits above.</li>
@@ -258,6 +259,7 @@ then detach and re-attach the repository.</p>
       <a href="docs.html">Documentation</a>
       <a href="security.html">Security</a>
       <a href="mailto:saad@linkwright.io">Contact</a>
+      <a href="legal.html">Legal notice</a>
     </nav>
   </div>
 </footer>
