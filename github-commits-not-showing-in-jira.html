@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>GitHub commits not showing in Jira: a checklist — Linkwright</title>
+<meta name="description" content="GitHub commits not showing in Jira? A checklist: issue key format, pushes before connection, Jira indexing delay, cached counts, the 100-commit cap, and JQL checks.">
+<link rel="canonical" href="https://linkwright.io/github-commits-not-showing-in-jira.html">
+<meta property="og:title" content="GitHub commits not showing in Jira: a checklist — Linkwright">
+<meta property="og:description" content="GitHub commits not showing in Jira? A checklist: issue key format, pushes before connection, Jira indexing delay, cached counts, the 100-commit cap, and JQL checks.">
+<meta property="og:image" content="https://linkwright.io/assets/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="assets/logo.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="assets/logo-512.png">
+<meta name="theme-color" content="#14302a">
+<link rel="stylesheet" href="style.css?v=5770d7d4b7">
+</head>
+<body>
+
+<header class="site">
+  <div class="wrap">
+    <a class="brand" href="/"><img src="assets/logo.svg" alt="" width="28" height="28">Linkwright</a>
+    <nav>
+      <a href="docs.html">Documentation</a>
+      <a href="security.html">Security</a>
+      <a class="nav-cta" href="/#early-access">Early access</a>
+    </nav>
+  </div>
+</header>
+
+<main class="doc">
+  <div class="narrow">
+    <h1>GitHub commits not showing in Jira: a checklist</h1>
+    <div class="toc"><p>On this page</p><ul><li><a href="#1-is-the-issue-key-written-the-way-jira-expects">1. Is the issue key written the way Jira expects?</a></li><li><a href="#2-was-the-commit-pushed-before-the-repository-was-connected">2. Was the commit pushed before the repository was connected?</a></li><li><a href="#3-is-jira-simply-still-indexing">3. Is Jira simply still indexing?</a></li><li><a href="#4-are-you-reading-a-cached-count">4. Are you reading a cached count?</a></li><li><a href="#5-are-there-more-than-100-commits-on-the-issue">5. Are there more than 100 commits on the issue?</a></li><li><a href="#6-can-jira-see-it-at-all-ask-it-with-jql">6. Can Jira see it at all? Ask it with JQL</a></li><li><a href="#7-does-the-connection-say-it-is-healthy-and-is-it">7. Does the connection say it is healthy, and is it?</a></li><li><a href="#how-linkwright-handles-this">How Linkwright handles this</a></li></ul></div>
+<p>You pushed a commit that mentions an issue, and the issue’s Development panel stays empty. This
+page goes through the causes in the order worth checking them. Most of it applies whatever
+connector you use: the Development panel belongs to Jira, and the rules for matching an issue key
+are the same everywhere.</p>
+<h2 id="1-is-the-issue-key-written-the-way-jira-expects">1. Is the issue key written the way Jira expects?</h2>
+<p>A commit is matched to an issue through its <strong>issue key</strong>, for example <code>CHK-42</code>.</p>
+<ul>
+<li>Write it in <strong>upper case</strong> in commit messages and pull request titles: <code>CHK-42 Fix login</code>.
+Lower-case keys are a common reason for a commit that never links.</li>
+<li>It must stand as a <strong>whole word</strong>: <code>CHK-42:</code> and <code>(CHK-42)</code> work, <code>xCHK-42</code> does not.</li>
+<li>It must be the key of the <strong>right project</strong>. If the project key changed, older commits carry the
+old key.</li>
+<li>Branch names count too: a branch called <code>feature/CHK-42-login</code> links the branch to <code>CHK-42</code>; some
+connectors, Linkwright included, also link that branch’s commits.</li>
+</ul>
+<h2 id="2-was-the-commit-pushed-before-the-repository-was-connected">2. Was the commit pushed before the repository was connected?</h2>
+<p>Connectors learn about new commits through webhooks, which GitHub sends at push time. A commit
+pushed <strong>before</strong> the repository was connected never produced a webhook for it. Whether it is
+caught up later depends on the connector’s backfill. Linkwright’s, for example, rereads the last
+100 commits of the default branch, so an old commit on a feature branch stays unlinked. Pushing a new commit that mentions the key is the quickest way to tell a
+backfill gap from a broken connection.</p>
+<h2 id="3-is-jira-simply-still-indexing">3. Is Jira simply still indexing?</h2>
+<p>Jira does not show development information the instant it receives it. Measured on a real Jira
+Cloud site on 30 September 2026: a commit reached the connector in <strong>5.7 s</strong> and was sent to Jira
+in <strong>7.2 s</strong>, but only appeared in the issue’s Development panel after about <strong>57 s</strong>. Wait a
+minute before concluding that something is broken.</p>
+<h2 id="4-are-you-reading-a-cached-count">4. Are you reading a cached count?</h2>
+<p>The small summary on the issue (“3 commits”) can lag behind the details. On our test site, the
+summary kept showing 8 commits for a while after the detail view already listed all 11. <strong>Open the
+details</strong> (click the count) before deciding what is missing.</p>
+<h2 id="5-are-there-more-than-100-commits-on-the-issue">5. Are there more than 100 commits on the issue?</h2>
+<p>Atlassian documents that the Development panel displays <strong>at most 100 commits per issue</strong>. On a
+long-running issue, older commits are not lost: they are simply not all displayed.</p>
+<h2 id="6-can-jira-see-it-at-all-ask-it-with-jql">6. Can Jira see it at all? Ask it with JQL</h2>
+<p>JQL searches the same development information as the panel:</p>
+<pre><code>development[commits].all &gt; 0
+</code></pre>
+<p>lists every issue that has at least one commit, and</p>
+<pre><code>development[pullrequests].open &gt; 0
+</code></pre>
+<p>every issue with an open pull request. If your issue is missing from the first query, Jira never
+received a link for it: the problem is upstream, in the connector or in the key.</p>
+<h2 id="7-does-the-connection-say-it-is-healthy-and-is-it">7. Does the connection say it is healthy, and is it?</h2>
+<p>The most frequent complaint in the negative reviews of the official connectors is exactly this:
+<strong>every indicator says connected, and nothing gets linked</strong>. When the steps above do not explain a
+missing commit, check what your connector can actually tell you: when it last received an event
+from each repository, and when it last read that repository successfully. If it cannot tell you
+either, you cannot tell a delay from a failure.</p>
+<h2 id="how-linkwright-handles-this">How Linkwright handles this</h2>
+<p><a href="https://linkwright.io/">Linkwright for Jira</a> was built around point 7. For every repository, it
+shows the time of the last webhook, the time of the last successful full read, and a plain state:
+<em>Up to date</em>, <em>Out of date</em>, <em>Rate limited</em>, <em>Failing</em> or <em>Not authorized</em>, with the reason. A
+<strong>Refresh</strong> button rereads a repository from GitHub on demand, and the app checks five minutes after
+sending that Jira really kept the links, and repairs the ones it dropped. It feeds Jira’s native
+Development panel, so JQL and Automation work as usual.</p>
+<p>It is free for up to 10 users. See the <a href="docs.html">documentation</a> or write to <a href="mailto:saad@linkwright.io">saad@linkwright.io</a>.</p>
+
+  </div>
+</main>
+
+<footer class="site">
+  <div class="wrap">
+    <span>&copy; 2026 Linkwright. Built in France by an independent developer.</span>
+    <nav>
+      <a href="/">Home</a>
+      <a href="docs.html">Documentation</a>
+      <a href="security.html">Security</a>
+      <a href="mailto:saad@linkwright.io">Contact</a>
+      <a href="privacy.html">Privacy</a>
+      <a href="terms.html">Terms</a>
+      <a href="legal.html">Legal notice</a>
+      <a href="github-commits-not-showing-in-jira.html">Commits not showing in Jira?</a>
+      <a href="github-for-jira-alternatives.html">Alternatives</a>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,29 @@
+# Linkwright for Jira
+
+> Linkwright for Jira is an Atlassian Forge app for Jira Cloud that links GitHub commits, branches, pull requests, reviews and deployments to Jira issues, feeds Jira's native Development panel, and shows for every repository how current its data is and why when it is not. Free for up to 10 users. Built by Linkwright, an independent developer in France.
+
+Key facts:
+
+- Works with Jira Cloud and GitHub.com. Not GitLab, Bitbucket or Azure DevOps (self-hosted GitLab is planned).
+- Webhooks first, with a periodic check that rereads what webhooks missed; a Refresh button rereads a repository on demand.
+- Per-repository sync state: Up to date, Out of date, Rate limited, Failing, Not authorized, with the time of the last webhook and of the last successful read.
+- Checks five minutes after sending that Jira kept the links, and repairs the ones it dropped.
+- Repositories are attached per Jira project.
+- Measured on a real Jira Cloud site (30 September 2026): a commit reached the issue in 5.7 s; a 500-commit push arrived whole.
+- Pricing: free up to 10 users; USD 2.61 per user per month from 11 to 100 users; USD 1.86 from 101 to 250.
+- Runs on Atlassian Forge; no SOC 2 or ISO 27001 certification; aimed at self-service teams of 20 to 200 people.
+- Status: submitted to the Atlassian Marketplace on 30 September 2026, in review.
+
+## Pages
+
+- [Home](https://linkwright.io/): what it does, demo, pricing, limits, FAQ
+- [Documentation](https://linkwright.io/docs.html): installation, linking rules, sync states, troubleshooting
+- [GitHub commits not showing in Jira](https://linkwright.io/github-commits-not-showing-in-jira.html): a troubleshooting checklist that applies to any connector
+- [GitHub for Jira alternatives](https://linkwright.io/github-for-jira-alternatives.html): the Marketplace options with public installs, ratings and prices
+- [Security](https://linkwright.io/security.html): data handled, architecture, vulnerability reporting
+- [Privacy policy](https://linkwright.io/privacy.html)
+
+## Contact
+
+- Support: saad@linkwright.io (first response within 2 business days)
+- Security: security@linkwright.io
