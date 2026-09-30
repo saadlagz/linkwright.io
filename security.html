@@ -39,7 +39,9 @@ deliveries are rejected. Replayed deliveries are detected and ignored.</p>
 <h2 id="least-privilege">Least privilege</h2>
 <ul>
 <li>On GitHub, the app reads only the repositories the GitHub account owner granted it, and manages
-only the webhooks it created itself. It never writes code, pull requests or other webhooks.</li>
+only the webhooks it created itself. It never writes code, pull requests or other webhooks.
+It reads organization membership only to check that the administrator who connects an
+installation to Jira controls it.</li>
 <li>A repository only feeds issues of the Jira projects it is attached to.</li>
 <li>Associating a GitHub organization with a Jira site requires a Jira administrator who is also an
 owner of that GitHub organization, checked on GitHub at association time.</li>

@@ -41,10 +41,12 @@ that information is</strong>.</p>
 <h3 id="21-install-the-app-in-jira">2.1 Install the app in Jira</h3>
 <p>Install Linkwright for Jira on your Jira site from the Atlassian Marketplace.</p>
 <h3 id="22-install-the-github-app-and-choose-repositories">2.2 Install the GitHub App and choose repositories</h3>
-<p>Install the Linkwright GitHub App on your GitHub account or organization, then choose <strong>the
-repositories</strong> it can access. On those repositories only, the app <strong>reads</strong> code, pull requests and
+<p>Install the <a href="https://github.com/apps/linkwright-for-jira">Linkwright for Jira GitHub App</a> on your
+GitHub account or organization, then choose <strong>the repositories</strong> it can access. On those repositories only, the app <strong>reads</strong> code, pull requests and
 deployments, and <strong>manages its own webhooks</strong> (created when a repository is attached, deleted when
-it is detached). It never changes code, pull requests or other webhooks of the repository.</p>
+it is detached). It never changes code, pull requests or other webhooks of the repository. It also reads the
+organization’s <strong>membership</strong>, only to check that the person connecting it to Jira is an owner
+(section 2.3).</p>
 <h3 id="23-connect-your-github-account-or-organization-to-jira-once">2.3 Connect your GitHub account or organization to Jira (once)</h3>
 <p>Done by a <strong>Jira administrator</strong> who is also an <strong>owner</strong> of the GitHub account or organization —
 usually the person who just installed the GitHub App.</p>
