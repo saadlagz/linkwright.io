@@ -41,6 +41,7 @@
     <a href="#how">How it works</a>
     <a href="#pricing">Pricing</a>
     <a href="#limits">Limits</a>
+    <a href="#faq">FAQ</a>
     <a href="#early-access">Early access</a>
   </div>
 </nav>
@@ -240,6 +241,41 @@
           not for enterprise procurement.</dd>
       </dl>
       <p><a href="docs.html#6-limits-of-this-version">See the full list in the documentation</a></p>
+    </div>
+  </div>
+</section>
+
+<section class="limits faq" id="faq">
+  <div class="wrap split">
+    <div>
+      <h2>Questions teams ask first</h2>
+      <p>Short answers. The <a href="docs.html">documentation</a> has the long ones.</p>
+    </div>
+    <div>
+      <dl>
+        <dt>Which Git hosts does it support?</dt>
+        <dd>GitHub.com, through a GitHub App you install on your account or organization. GitHub
+          Enterprise Server and GitLab are not supported in this version.</dd>
+        <dt>Do Smart Commits, JQL and Automation still work?</dt>
+        <dd>Yes. Linkwright fills Jira&rsquo;s own Development panel, so <code>development[commits]</code>
+          in JQL, board badges, Smart Commits and automatic transitions behave as they do with
+          Atlassian&rsquo;s integration.</dd>
+        <dt>What leaves our Jira site?</dt>
+        <dd>Nothing is sent to GitHub. Linkwright reads from GitHub and writes to your Jira site, and
+          runs entirely on Atlassian Forge: there is no server of mine in between. Details in the
+          <a href="security.html">security policy</a>.</dd>
+        <dt>Who can see which repositories?</dt>
+        <dd>A repository feeds only the Jira projects it is attached to, and only an owner of the
+          GitHub organization can connect it to your site. Nobody sees in Jira a private repository
+          they could not see on GitHub.</dd>
+        <dt>What happens when a link breaks?</dt>
+        <dd>The repository&rsquo;s state changes to <em>Rate limited</em>, <em>Failing</em>,
+          <em>Not authorized</em> or <em>Webhook down</em>, with the reason and the time of the last
+          success. <em>Refresh</em> re-reads it from GitHub.</dd>
+        <dt>Who is behind it, and how fast is support?</dt>
+        <dd>One independent developer, registered in France. First response within two business
+          days, at <a href="mailto:saad@linkwright.io">saad@linkwright.io</a>.</dd>
+      </dl>
     </div>
   </div>
 </section>
