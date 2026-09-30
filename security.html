@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Security Policy — Linkwright for Jira — Linkwright</title>
+<meta name="description" content="How Linkwright for Jira handles your data, its architecture on Atlassian Forge, and how to report a vulnerability.">
+<link rel="icon" href="assets/logo.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="assets/logo-512.png">
+<meta name="theme-color" content="#14302a">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="site">
+  <div class="wrap">
+    <a class="brand" href="/"><img src="assets/logo.svg" alt="" width="28" height="28">Linkwright</a>
+    <nav>
+      <a href="docs.html">Documentation</a>
+      <a href="security.html" aria-current="page">Security</a>
+      <a class="nav-cta" href="/#early-access">Early access</a>
+    </nav>
+  </div>
+</header>
+
+<main class="doc">
+  <div class="narrow">
+    <h1>Security Policy — Linkwright for Jira</h1>
+<p><strong>Effective date:</strong> 30 September 2026</p>
+<h2 id="architecture">Architecture</h2>
+<p>Linkwright for Jira runs entirely on Atlassian Forge. Its code executes on Atlassian’s
+infrastructure and its data lives in the Forge storage of each customer’s Jira site, isolated from
+every other customer. We operate no server, database or log pipeline of our own.</p>
+<h2 id="authentication-of-incoming-data">Authentication of incoming data</h2>
+<p>The only inbound endpoint is the web trigger that receives GitHub webhooks. Every delivery must
+carry a valid HMAC-SHA256 signature computed with a secret unique to the customer’s site; the
+signature is checked in constant time on the raw request body. Unsigned, mis-signed or malformed
+deliveries are rejected. Replayed deliveries are detected and ignored.</p>
+<h2 id="least-privilege">Least privilege</h2>
+<ul>
+<li>On GitHub, the app reads only the repositories the GitHub account owner granted it, and manages
+only the webhooks it created itself. It never writes code, pull requests or other webhooks.</li>
+<li>A repository only feeds issues of the Jira projects it is attached to.</li>
+<li>Associating a GitHub organization with a Jira site requires a Jira administrator who is also an
+owner of that GitHub organization, checked on GitHub at association time.</li>
+<li>Each Jira permission scope requested is used by the code and justified in the listing.</li>
+</ul>
+<h2 id="secrets">Secrets</h2>
+<p>The GitHub App private key is held in Forge encrypted environment variables. Installation tokens
+and per-site webhook secrets are held in Forge encrypted storage. The GitHub OAuth token of the
+administrator who associates an organization is held and refreshed by Forge. No secret is written
+to logs, URLs or source code.</p>
+<h2 id="data-handling">Data handling</h2>
+<p>Logs contain identifiers, repository and branch names, issue keys, counters and error messages;
+never commit messages, author names, emails, tokens or secrets. Database queries are parameterized.
+See the Privacy Policy for the full list of data processed and retention.</p>
+<h2 id="dependencies">Dependencies</h2>
+<p>Production dependencies are audited before every release; no release ships with a known critical
+or high vulnerability.</p>
+<h2 id="reporting-a-vulnerability">Reporting a vulnerability</h2>
+<p>Email <code>saad@linkwright.io</code>. We acknowledge reports within 2 business days and fix vulnerabilities
+within the timeframes of the Atlassian Marketplace Security Bug Fix Policy (critical: 10 days).
+Please do not disclose publicly before a fix is released.</p>
+
+  </div>
+</main>
+
+<footer class="site">
+  <div class="wrap">
+    <span>&copy; 2026 Linkwright. Built in France by an independent developer.</span>
+    <nav>
+      <a href="/">Home</a>
+      <a href="docs.html">Documentation</a>
+      <a href="security.html">Security</a>
+      <a href="mailto:saad@linkwright.io">Contact</a>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>

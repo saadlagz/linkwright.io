@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Linkwright for Jira — user guide — Linkwright</title>
+<meta name="description" content="Install Linkwright for Jira, attach repositories, read the sync states, and troubleshoot missing links.">
+<link rel="icon" href="assets/logo.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="assets/logo-512.png">
+<meta name="theme-color" content="#14302a">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="site">
+  <div class="wrap">
+    <a class="brand" href="/"><img src="assets/logo.svg" alt="" width="28" height="28">Linkwright</a>
+    <nav>
+      <a href="docs.html" aria-current="page">Documentation</a>
+      <a href="security.html">Security</a>
+      <a class="nav-cta" href="/#early-access">Early access</a>
+    </nav>
+  </div>
+</header>
+
+<main class="doc">
+  <div class="narrow">
+    <h1>Linkwright for Jira — user guide</h1>
+    <div class="toc"><p>On this page</p><ul><li><a href="#1-before-you-start">1. Before you start</a></li><li><a href="#2-installation">2. Installation</a></li><li><a href="#3-how-an-issue-is-linked-to-github-activity">3. How an issue is linked to GitHub activity</a></li><li><a href="#4-what-the-panel-shows">4. What the panel shows</a></li><li><a href="#5-sync-states">5. Sync states</a></li><li><a href="#6-limits-of-this-version">6. Limits of this version</a></li><li><a href="#7-data">7. Data</a></li><li><a href="#8-troubleshooting">8. Troubleshooting</a></li></ul></div>
+<p>Linkwright for Jira shows, on every Jira issue, the GitHub activity that concerns it: commits,
+branches, pull requests, reviews, merges and deployments. And it always tells you <strong>how current
+that information is</strong>.</p>
+<hr>
+<h2 id="1-before-you-start">1. Before you start</h2>
+<ul>
+<li><strong>Jira Cloud</strong>, and administration rights on the project concerned.</li>
+<li><strong>GitHub repositories</strong> on <a href="https://github.com">github.com</a>. GitLab is not supported yet.</li>
+<li>Permission to install a GitHub App on the GitHub account or organization.</li>
+</ul>
+<h2 id="2-installation">2. Installation</h2>
+<h3 id="21-install-the-app-in-jira">2.1 Install the app in Jira</h3>
+<p>Install Linkwright for Jira on your Jira site from the Atlassian Marketplace.</p>
+<h3 id="22-install-the-github-app-and-choose-repositories">2.2 Install the GitHub App and choose repositories</h3>
+<p>Install the Linkwright GitHub App on your GitHub account or organization, then choose <strong>the
+repositories</strong> it can access. On those repositories only, the app <strong>reads</strong> code, pull requests and
+deployments, and <strong>manages its own webhooks</strong> (created when a repository is attached, deleted when
+it is detached). It never changes code, pull requests or other webhooks of the repository.</p>
+<h3 id="23-connect-your-github-account-or-organization-to-jira-once">2.3 Connect your GitHub account or organization to Jira (once)</h3>
+<p>Done by a <strong>Jira administrator</strong> who is also an <strong>owner</strong> of the GitHub account or organization —
+usually the person who just installed the GitHub App.</p>
+<ol>
+<li><strong>Jira settings → Apps → Git sync health</strong>.</li>
+<li>Click <strong>Connect a GitHub organization</strong>, then allow access to GitHub.</li>
+<li>Click <strong>Connect a GitHub organization</strong> again: your installations are listed.</li>
+<li>Click <strong>Connect to this site</strong> next to the right one.</li>
+</ol>
+<p>Why the owner role is required: without it, any member of an organization could expose in Jira
+private repositories they cannot see themselves. An installation you do not control is listed with
+the reason it cannot be connected.</p>
+<p>The installation’s repositories are read immediately, then <strong>every hour</strong>: a repository added to
+the GitHub App later appears without anything being pushed to it.</p>
+<p>To <strong>disconnect</strong> an installation, click <strong>Disconnect</strong> next to it. This is refused while
+repositories of that installation are attached to projects: detach them first (the message lists
+which ones).</p>
+<h3 id="24-attach-a-repository-to-a-jira-project">2.4 Attach a repository to a Jira project</h3>
+<ol>
+<li>In the Jira project: <strong>Project settings → Apps → Git repositories</strong>.</li>
+<li>Repositories of connected installations (§2.3) are listed; no others ever appear.</li>
+<li>Click <strong>Attach to [PROJECT KEY]</strong>.</li>
+</ol>
+<p>When a repository is attached, the app creates its webhook to your Jira site automatically. If it
+cannot, a red message says so: the repository stays attached, but its activity may not arrive until
+the problem is fixed.</p>
+<blockquote>
+<p><strong>Scoped per project.</strong> A repository only creates links on issues of the projects it is attached
+to. A commit that mentions an issue from another project is ignored there.</p>
+</blockquote>
+<h3 id="25-where-to-see-activity-on-an-issue">2.5 Where to see activity on an issue</h3>
+<ul>
+<li><strong>Jira’s Development panel</strong> (native): branches, commits, pull requests and deployments appear
+there automatically, as with Atlassian’s integrations. Boards, JQL search and Automation read the
+same data.</li>
+<li><strong>The app’s Git activity panel</strong>: the details, and above all <strong>the freshness of each
+repository</strong>. Jira does not show app panels automatically: on an issue, click the <strong>apps button
+under the issue title</strong>, then choose <strong>Git activity</strong>.</li>
+</ul>
+<blockquote>
+<p>Commits sent to the native panel trigger the <em>smart commits</em> and automatic transitions configured
+in your Jira, as Atlassian’s integrations do.</p>
+</blockquote>
+<h2 id="3-how-an-issue-is-linked-to-github-activity">3. How an issue is linked to GitHub activity</h2>
+<p>The app looks for the <strong>issue key</strong> (for example <code>CHK-42</code>):</p>
+<table>
+<thead>
+<tr>
+<th>Where</th>
+<th>Example</th>
+<th>Rule</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Branch name</td>
+<td><code>feature/chk-42-login</code></td>
+<td>upper <strong>or</strong> lower case</td>
+</tr>
+<tr>
+<td>Commit message</td>
+<td><code>CHK-42 Fix login</code></td>
+<td><strong>upper case</strong></td>
+</tr>
+<tr>
+<td>Pull request title or description</td>
+<td><code>CHK-42: new page</code></td>
+<td><strong>upper case</strong></td>
+</tr>
+</tbody>
+</table>
+<p>Details:</p>
+<ul>
+<li>The key must be a whole word: <code>CHK-42.</code> and <code>(CHK-42)</code> work, <code>xCHK-42</code> or <code>CHK-42x</code> do not.</li>
+<li><code>CHK-42-7</code> is not recognized anywhere: too close to a version number. In a branch name,
+<code>chk-42-add-login</code> works, because what follows is not a number.</li>
+<li>Only keys of <strong>projects the repository is attached to</strong> count.</li>
+<li>Emoji and non-Latin characters in messages do not prevent detection.</li>
+<li>A commit on a branch whose name contains a key is linked to that issue, even if its message cites
+none. A commit whose message and branch cite no key is linked to nothing.</li>
+</ul>
+<h2 id="4-what-the-panel-shows">4. What the panel shows</h2>
+<ul>
+<li><strong>Pull requests</strong>: Open, Merged or Closed, with their title.</li>
+<li><strong>Reviews</strong>: Approved, Changes requested, Commented or Dismissed.</li>
+<li><strong>Deployments</strong>: environment and state. <strong>A successful deployment is linked to every commit it
+ships</strong> since the previous successful deployment of the same environment, not only to the last
+commit.</li>
+<li><strong>Branches</strong>: including <strong>deleted</strong> branches, marked as such.</li>
+<li><strong>Commits</strong>: the 10 most recent, then the count of the others.</li>
+<li>At the top: the <strong>freshness</strong> of each repository attached to the project.</li>
+</ul>
+<h2 id="5-sync-states">5. Sync states</h2>
+<p>Shown on the panel and in <strong>Git repositories</strong>.</p>
+<table>
+<thead>
+<tr>
+<th>State</th>
+<th>Meaning</th>
+<th>What to do</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Up to date</strong></td>
+<td>The last sync succeeded recently.</td>
+<td>Nothing.</td>
+</tr>
+<tr>
+<td><strong>Never checked</strong></td>
+<td>Repository attached, but not yet read in full.</td>
+<td>Wait for the next cycle (a few minutes), or click <strong>Refresh</strong>.</td>
+</tr>
+<tr>
+<td><strong>Out of date</strong></td>
+<td>No successful sync for more than 2 hours.</td>
+<td>Click <strong>Refresh</strong> if the data must be current now.</td>
+</tr>
+<tr>
+<td><strong>Rate limited</strong></td>
+<td>The GitHub API request quota is used up for the current hour.</td>
+<td>Nothing: resumes automatically.</td>
+</tr>
+<tr>
+<td><strong>Failing</strong></td>
+<td>Several consecutive failures; the reason is shown.</td>
+<td>Read the reason; if it persists, contact support.</td>
+</tr>
+<tr>
+<td><strong>Not authorized</strong></td>
+<td>GitHub refuses access to the repository.</td>
+<td>Check the GitHub App is still installed and still has access to this repository.</td>
+</tr>
+<tr>
+<td><strong>Webhook down</strong></td>
+<td>The periodic check found changes no webhook announced.</td>
+<td>Check the repository’s webhook on GitHub: recent failed deliveries.</td>
+</tr>
+</tbody>
+</table>
+<p>Webhooks bring activity within seconds. On top of that, the app re-reads each attached repository
+regularly (about every 20 minutes) to catch anything that might have been missed.</p>
+<h3 id="refresh">Refresh</h3>
+<p>The <strong>Refresh</strong> button (in <strong>Git repositories</strong>) re-reads the repository from GitHub immediately.
+The message “Check started” appears; the result arrives a few seconds later — reload the page to
+see it.</p>
+<p>It also re-sends the repository to Jira’s <strong>Development</strong> panel, rebuilding it: its commits are
+removed then recreated. Allow <strong>a few minutes</strong> (the next cycle, then Jira’s processing) before
+seeing them all on the issue again.</p>
+<h2 id="6-limits-of-this-version">6. Limits of this version</h2>
+<ul>
+<li><strong>GitHub only</strong> (<a href="https://github.com">github.com</a>). GitLab is planned for a later version.</li>
+<li><strong>Activity before attachment</strong>: commits on the default branch (the 100 most recent), pull
+requests (the 100 most recently updated) and branches are caught up; a commit pushed before
+attachment <strong>on another branch</strong> is not linked.</li>
+<li><strong>Very large pushes</strong>: up to 10,000 commits are caught up automatically. Beyond that, catch-up
+stops and the failure is recorded on the repository; the remaining commits are not linked.</li>
+<li><strong>First deployment of an environment</strong>: with no previous deployment, it is linked to the 100 most
+recent commits of the deployed version.</li>
+<li><strong>Reviews and deployments</strong> arrive by webhook only: the periodic check does not catch them up.</li>
+<li><strong>Superseded deployment</strong>: a deployment replaced by a newer one still shows as “Deployed”.</li>
+<li><strong>Native panel</strong>: a branch with no commit known to the app is not shown there (Jira requires its
+last commit); detaching a repository from one project among several leaves its entries there; the
+environment type (production, staging…) is inferred from its name. Jira shows only the <strong>first
+100 commits</strong> of an issue there (a Jira limit); the <strong>Git activity</strong> panel shows them all.</li>
+<li><strong>Inactive license</strong>: the panel and <strong>Git repositories</strong> show “License inactive”; GitHub activity
+is no longer synced until the license is renewed, then it is caught up within the limits above.</li>
+</ul>
+<h2 id="7-data">7. Data</h2>
+<ul>
+<li><strong>Stored in Jira</strong> (your site’s Forge storage, isolated from other customers): repository and
+branch names; commit identifiers, first line of the message, author and date; pull request title,
+author and reviewers; review author and state; deployment environment and state; repository sync
+state.</li>
+<li><strong>Read from GitHub</strong>: only the repositories the GitHub App can access, read-only.</li>
+<li><strong>Sent to Jira’s Development panel</strong> (Atlassian API, on your site): the same information about
+commits, branches, pull requests and deployments.</li>
+<li><strong>No Jira data is ever sent to GitHub.</strong></li>
+<li>Full privacy policy: published with the Marketplace listing.</li>
+</ul>
+<h2 id="8-troubleshooting">8. Troubleshooting</h2>
+<p><strong>The repository does not appear in Git repositories.</strong></p>
+<ol>
+<li>Is the GitHub account or organization connected to this site (§2.3)?</li>
+<li>Does the GitHub App have access to this repository? A repository added to the GitHub App appears
+within the hour.</li>
+</ol>
+<p><strong>A commit does not appear on the issue.</strong></p>
+<ol>
+<li>Is the key written in upper case in the message (<code>CHK-42</code>)?</li>
+<li>Is the repository attached <strong>to this project</strong>?</li>
+<li>Was the commit pushed before attachment, on a branch other than the default one? It will not be
+caught up (see §6).</li>
+<li>Click <strong>Refresh</strong> in <strong>Git repositories</strong>, then reload the issue.</li>
+</ol>
+<p><strong>The panel does not appear on the issue.</strong>
+Add it with the apps button under the issue title (§2.5).</p>
+<p><strong>“Repository attached, but its webhook could not be created”.</strong>
+Check that the GitHub App has access to this repository and permission to manage its webhooks,
+then detach and re-attach the repository.</p>
+<p><strong>Support</strong>: <a href="mailto:saad@linkwright.io">saad@linkwright.io</a> — answered by the developer who wrote the code, in English or French.</p>
+
+  </div>
+</main>
+
+<footer class="site">
+  <div class="wrap">
+    <span>&copy; 2026 Linkwright. Built in France by an independent developer.</span>
+    <nav>
+      <a href="/">Home</a>
+      <a href="docs.html">Documentation</a>
+      <a href="security.html">Security</a>
+      <a href="mailto:saad@linkwright.io">Contact</a>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>
