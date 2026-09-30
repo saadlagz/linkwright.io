@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>DPA Setup Page — Linkwright for Jira — Linkwright</title>
+<meta name="description" content="Data Processing Agreement setup for Linkwright for Jira, based on the Bonterms DPA.">
+<meta property="og:title" content="DPA Setup Page — Linkwright for Jira — Linkwright">
+<meta property="og:description" content="Data Processing Agreement setup for Linkwright for Jira, based on the Bonterms DPA.">
+<meta property="og:image" content="https://linkwright.io/assets/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="assets/logo.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="assets/logo-512.png">
+<meta name="theme-color" content="#14302a">
+<link rel="stylesheet" href="style.css?v=5770d7d4b7">
+</head>
+<body>
+
+<header class="site">
+  <div class="wrap">
+    <a class="brand" href="/"><img src="assets/logo.svg" alt="" width="28" height="28">Linkwright</a>
+    <nav>
+      <a href="docs.html">Documentation</a>
+      <a href="security.html">Security</a>
+      <a class="nav-cta" href="/#early-access">Early access</a>
+    </nav>
+  </div>
+</header>
+
+<main class="doc">
+  <div class="narrow">
+    <h1>DPA Setup Page — Linkwright for Jira</h1>
+<p>This DPA Setup Page, together with the Bonterms Data Protection Addendum (Version 1.0) (the “DPA”),
+forms part of the Agreement below.</p>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Agreement</strong></td>
+<td>The Bonterms Standard End User Agreement, with our Provider-Specific Terms, under which the customer uses Linkwright for Jira through the Atlassian Marketplace.</td>
+</tr>
+<tr>
+<td><strong>Provider</strong></td>
+<td>Saad Lagzouli, sole proprietor (entrepreneur individuel) trading as Linkwright (SIREN 130 855 364, France)</td>
+</tr>
+<tr>
+<td><strong>DPA Effective Date</strong></td>
+<td>The date the customer first installs a paid or evaluation version of the App.</td>
+</tr>
+<tr>
+<td><strong>Provider privacy contact</strong></td>
+<td><a href="mailto:saad@linkwright.io">saad@linkwright.io</a></td>
+</tr>
+<tr>
+<td><strong>Audit</strong></td>
+<td>Provider answers written security questionnaires once per year at no charge, from its documentation and this page. On-site audits: not offered (the Provider operates no infrastructure; processing runs on Atlassian Forge, whose own audit reports apply).</td>
+</tr>
+<tr>
+<td><strong>Subprocessor notification</strong></td>
+<td>Update of the Subprocessor List at the URL of this page, at least 30 days before a new Subprocessor processes Customer Personal Data.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="subprocessor-list">Subprocessor List</h2>
+<table>
+<thead>
+<tr>
+<th>Subprocessor</th>
+<th>Function</th>
+<th>Location</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Atlassian Pty Ltd and its affiliates (Atlassian Forge)</td>
+<td>Runs the App’s code, stores its data (Forge SQL, Forge key-value storage) and its function logs</td>
+<td>Atlassian’s hosting regions</td>
+</tr>
+</tbody>
+</table>
+<p>Not Subprocessors: <strong>GitHub</strong> is the customer’s own service, from which the customer instructs the
+App to read data; <strong>Atlassian Jira</strong> is the customer’s own site, to which the App writes data.</p>
+<h2 id="schedule-1-subject-matter-and-details-of-processing">Schedule 1 — Subject Matter and Details of Processing</h2>
+<p><strong>Nature and purpose.</strong> Linking the customer’s GitHub activity to Jira issues: reading GitHub data
+for repositories the customer attaches to Jira projects, indexing it per issue, displaying it in the
+App’s issue panel and in Jira’s native Development panel, and reporting synchronization freshness.</p>
+<p><strong>Categories of data subjects.</strong> Contributors to the customer’s GitHub repositories (commit authors,
+branch pushers, pull request authors, requested reviewers, reviewers); the customer’s Jira administrator who
+associates a GitHub installation; owners of personal GitHub accounts whose login appears in a
+repository name.</p>
+<p><strong>Categories of personal data.</strong></p>
+<ul>
+<li>commit author names and the GitHub name of whoever pushed a new branch; pull request author,
+requested reviewer and reviewer GitHub logins;</li>
+<li>GitHub logins contained in repository names (<code>owner/name</code>) of personal accounts;</li>
+<li>the GitHub login of the Jira administrator who associated an installation;</li>
+<li>content that may contain personal data: first line of commit messages, pull request titles,
+branch names.</li>
+</ul>
+<p>No special categories of data are intended to be processed. The App stores <strong>no email addresses</strong> of
+commit authors and <strong>no Atlassian account identifiers</strong>.</p>
+<p><strong>Frequency.</strong> Continuous, on each GitHub webhook delivery and on periodic reconciliation.</p>
+<p><strong>Duration and retention.</strong> For as long as the App is installed on the customer’s site. Webhook
+delivery identifiers: 24 hours. Function logs: per Atlassian Forge log retention. On uninstall, the
+App’s Forge storage and the data sent to Jira’s Development panel are deleted according to
+Atlassian’s rules.</p>
+<h2 id="schedule-2-technical-and-organizational-measures">Schedule 2 — Technical and Organizational Measures</h2>
+<ul>
+<li><strong>No Provider-operated infrastructure</strong>: code and data stay on Atlassian Forge, isolated per
+customer site; no copy to systems the Provider controls.</li>
+<li><strong>Authentication of inbound data</strong>: every GitHub webhook is verified with an HMAC-SHA256 signature
+over the raw body, compared in constant time, with a per-site secret; missing or invalid
+signatures are rejected (fail closed).</li>
+<li><strong>Secrets</strong>: GitHub App private key and webhook secrets in Forge encrypted variables or Forge
+encrypted storage; never in code, URLs or logs.</li>
+<li><strong>Least privilege</strong>: Jira scopes limited to app storage and development/deployment information;
+outbound network access limited to <code>api.github.com</code> and GitHub’s OAuth endpoints.</li>
+<li><strong>Customer isolation of repositories</strong>: only installations associated by an administrator who
+controls the GitHub account (verified server-side), and only repositories a project administrator
+attaches to that project, are processed.</li>
+<li><strong>Data minimization in logs</strong>: no commit messages, author names, emails, reviewer logins, tokens or
+secrets in logs (reviewed line by line, re-reviewed with each new log statement).</li>
+<li><strong>Database safety</strong>: parameterized queries only.</li>
+<li><strong>Dependency hygiene</strong>: <code>npm audit</code> before each release; no known critical or high vulnerability in
+production dependencies at submission.</li>
+<li><strong>Vulnerability handling</strong>: Atlassian Marketplace security bug fix policy (critical issues fixed
+within 10 days).</li>
+</ul>
+<h2 id="schedule-3-cross-border-transfer-mechanisms">Schedule 3 — Cross-Border Transfer Mechanisms</h2>
+<p>The Provider is established in France (European Union). Customer Personal Data is stored and
+processed on Atlassian Forge; transfers by Atlassian outside the EEA are governed by Atlassian’s own
+data processing terms and transfer mechanisms. The Provider does not otherwise transfer Customer
+Personal Data outside the EEA.</p>
+<h2 id="schedule-4-region-specific-terms">Schedule 4 — Region-Specific Terms</h2>
+<p>None.</p>
+
+  </div>
+</main>
+
+<footer class="site">
+  <div class="wrap">
+    <span>&copy; 2026 Linkwright. Built in France by an independent developer.</span>
+    <nav>
+      <a href="/">Home</a>
+      <a href="docs.html">Documentation</a>
+      <a href="security.html">Security</a>
+      <a href="mailto:saad@linkwright.io">Contact</a>
+      <a href="privacy.html">Privacy</a>
+      <a href="legal.html">Legal notice</a>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>

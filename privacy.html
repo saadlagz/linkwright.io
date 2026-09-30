@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Privacy Policy — Linkwright for Jira — Linkwright</title>
+<meta name="description" content="What personal data Linkwright for Jira processes, where it is stored, how long, and how to exercise your rights.">
+<meta property="og:title" content="Privacy Policy — Linkwright for Jira — Linkwright">
+<meta property="og:description" content="What personal data Linkwright for Jira processes, where it is stored, how long, and how to exercise your rights.">
+<meta property="og:image" content="https://linkwright.io/assets/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="assets/logo.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="assets/logo-512.png">
+<meta name="theme-color" content="#14302a">
+<link rel="stylesheet" href="style.css?v=5770d7d4b7">
+</head>
+<body>
+
+<header class="site">
+  <div class="wrap">
+    <a class="brand" href="/"><img src="assets/logo.svg" alt="" width="28" height="28">Linkwright</a>
+    <nav>
+      <a href="docs.html">Documentation</a>
+      <a href="security.html">Security</a>
+      <a class="nav-cta" href="/#early-access">Early access</a>
+    </nav>
+  </div>
+</header>
+
+<main class="doc">
+  <div class="narrow">
+    <h1>Privacy Policy — Linkwright for Jira</h1>
+<p><strong>Effective date:</strong> 30 September 2026</p>
+<p>Saad Lagzouli, sole proprietor (entrepreneur individuel) trading as Linkwright (SIREN 130 855 364, France) (“we”) publishes Linkwright for Jira (the “App”), an Atlassian Forge app that shows
+GitHub activity — commits, branches, pull requests, reviews and deployments — on Jira issues.</p>
+<h2 id="1-where-the-app-runs-and-where-data-is-stored">1. Where the App runs and where data is stored</h2>
+<p>The App is built on Atlassian Forge. Its code runs on Atlassian’s infrastructure and <strong>all data it
+stores is kept in Forge storage (Forge SQL and Forge key-value storage) belonging to your Jira
+site</strong>, isolated from every other customer. We operate <strong>no server of our own</strong> and do not copy
+your data to any system we control.</p>
+<h2 id="2-data-the-app-processes">2. Data the App processes</h2>
+<h3 id="21-from-github-for-repositories-you-attach-to-a-jira-project">2.1 From GitHub, for repositories you attach to a Jira project</h3>
+<ul>
+<li>repository names (<code>owner/name</code>), which include the GitHub login of a personal account owner;</li>
+<li>branch names, and the GitHub name of the user who pushed a new branch;</li>
+<li>commit identifiers, first line of commit messages, author names, dates, number of changed files;</li>
+<li>pull request numbers, titles, states, author logins, requested reviewer logins, comment counts;</li>
+<li>review states and reviewer logins;</li>
+<li>deployment identifiers, environment names, states and commit identifiers.</li>
+</ul>
+<p>Only repositories that (a) the GitHub App has been granted access to by the GitHub account owner,
+(b) belong to a GitHub installation associated with your Jira site, and © are attached to a
+Jira project by a project administrator are read.</p>
+<h3 id="22-when-a-jira-administrator-associates-a-github-installation">2.2 When a Jira administrator associates a GitHub installation</h3>
+<p>The administrator authorizes the App on GitHub once. Through that authorization the App reads the
+administrator’s GitHub user, the installations of the App they can access, and their role in the
+corresponding organizations, to verify they control the installation. The App stores the
+installation identifier, the account name and type, and <strong>the administrator’s GitHub login</strong>. The
+OAuth token is stored and refreshed by Atlassian Forge, not by our code.
+The App does <strong>not</strong> store Atlassian account identifiers.</p>
+<h3 id="23-operational-data">2.3 Operational data</h3>
+<p>Synchronization state per repository (timestamps, error kinds), identifiers of the commits already
+sent to Jira’s Development panel (so none is sent twice), GitHub API quota counters, webhook
+delivery identifiers (kept 24 hours to discard duplicates), and a per-site webhook secret and GitHub
+installation token held in Forge encrypted storage.</p>
+<h2 id="3-how-the-data-is-used">3. How the data is used</h2>
+<p>Solely to provide the App’s features on your Jira site: linking GitHub activity to issues,
+displaying it in the App’s issue panel and in Jira’s native Development panel, and reporting how
+up to date it is. We do not sell data, use it for advertising, profile individuals, or train
+models on it. The App displays no advertising.</p>
+<h2 id="4-where-data-is-sent">4. Where data is sent</h2>
+<ul>
+<li><strong>Your Jira site</strong> (Atlassian’s Jira APIs): the data in §2.1 is sent to Jira’s development and
+deployment information APIs so it appears in the native Development panel. It stays on your site.</li>
+<li><strong>GitHub</strong> (<code>api.github.com</code>): the App sends identifiers needed to read repositories, the GitHub
+App’s credentials, and, when it creates a repository webhook, your site’s webhook address and
+secret. <strong>No Jira data is sent to GitHub.</strong></li>
+<li>No other third party receives data.</li>
+</ul>
+<h2 id="5-logs">5. Logs</h2>
+<p>Forge function logs, visible to us for support and debugging, contain repository names, issue keys,
+branch names, environment names, counters, identifiers and error messages. They do not contain
+commit messages, author names or emails, reviewer logins, tokens or secrets. Repository names can
+contain a personal GitHub login (see §2.1). Logs are retained according to Atlassian Forge’s log
+retention.</p>
+<h2 id="6-retention-and-deletion">6. Retention and deletion</h2>
+<ul>
+<li>Data stays in your site’s Forge storage while the App is installed.</li>
+<li>Detaching a repository from its last project deletes its webhook on GitHub and removes it from
+Jira’s Development panel.</li>
+<li><strong>Uninstalling the App</strong> deletes the data the App sent to Jira’s Development panel (Jira behaviour)
+and the App’s Forge storage for your site, according to Atlassian Forge’s data deletion rules:
+Forge keeps that storage for <strong>28 days</strong> after uninstallation (soft deletion, so that an accidental
+uninstall can be recovered on request within 21 days), then erases it. We keep no copy elsewhere.</li>
+<li>To request deletion earlier, contact <a href="mailto:saad@linkwright.io">saad@linkwright.io</a>.</li>
+</ul>
+<h2 id="7-security">7. Security</h2>
+<p>Webhook deliveries are verified with an HMAC signature using a per-site secret and rejected
+otherwise; secrets are held in Forge encrypted storage; database queries are parameterized.
+Vulnerabilities are handled under the Atlassian Marketplace security bug fix policy.</p>
+<h2 id="8-your-rights">8. Your rights</h2>
+<p>Where data protection law such as the GDPR applies, the customer operating the Jira site is the
+controller of the data processed by the App and we act as a processor. Individuals may exercise
+their rights through that customer or by contacting <a href="mailto:saad@linkwright.io">saad@linkwright.io</a>.</p>
+<h2 id="9-changes">9. Changes</h2>
+<p>We will update this policy when the App’s data processing changes and change the effective date
+above.</p>
+<h2 id="10-contact">10. Contact</h2>
+<p>Saad Lagzouli, sole proprietor (entrepreneur individuel) trading as Linkwright (SIREN 130 855 364, France) — <a href="mailto:saad@linkwright.io">saad@linkwright.io</a></p>
+
+  </div>
+</main>
+
+<footer class="site">
+  <div class="wrap">
+    <span>&copy; 2026 Linkwright. Built in France by an independent developer.</span>
+    <nav>
+      <a href="/">Home</a>
+      <a href="docs.html">Documentation</a>
+      <a href="security.html">Security</a>
+      <a href="mailto:saad@linkwright.io">Contact</a>
+      <a href="privacy.html">Privacy</a>
+      <a href="legal.html">Legal notice</a>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>
