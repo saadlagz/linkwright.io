@@ -19,7 +19,7 @@
 <meta property="og:image:alt" content="Linkwright for Jira">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="preload" href="assets/fonts/plex-sans-600-normal.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="style.css?v=5770d7d4b7">
 </head>
 <body class="home">
 
@@ -36,6 +36,7 @@
 
 <nav class="sectionnav" aria-label="Sections of this page">
   <div class="wrap">
+    <a href="#demo">Demo</a>
     <a href="#why">The problem</a>
     <a href="#what">What it does</a>
     <a href="#how">How it works</a>
@@ -107,6 +108,27 @@
     </figure>
   </div>
 </div>
+
+<section class="demo" id="demo">
+  <div class="wrap">
+    <h2>One commit, from push to Jira.</h2>
+    <p class="demo-lede">Recorded on a real Jira site on 30 September 2026, on issue CHK-5. Nothing staged, times as measured.</p>
+    <div class="demo-grid">
+      <div class="demo-stage" role="img" aria-label="Issue CHK-5 shows one commit; a commit naming CHK-5 is pushed to GitHub; CHK-5 then shows two commits; Jira's Development panel lists the new commit and its message.">
+        <figure class="demo-frame f1"><img src="assets/demo-1.webp" width="1212" height="758" alt=""><span class="demo-mark" style="left:66%;top:97%"></span></figure>
+        <figure class="demo-frame f2"><img src="assets/demo-2.webp" width="1212" height="758" alt="" loading="lazy"></figure>
+        <figure class="demo-frame f3"><img src="assets/demo-3.webp" width="1212" height="758" alt="" loading="lazy"><span class="demo-mark" style="left:66%;top:97%"></span></figure>
+        <figure class="demo-frame f4"><img src="assets/demo-4.webp" width="1212" height="758" alt="" loading="lazy"></figure>
+      </div>
+      <ol class="demo-steps">
+        <li class="s1"><span class="t">20:14:08</span> CHK-5 shows one commit, from eleven days ago.</li>
+        <li class="s2"><span class="t">+0&nbsp;s</span> A commit naming CHK-5 is pushed to GitHub.</li>
+        <li class="s3"><span class="t">+6&nbsp;s</span> Linkwright links it to CHK-5. By +57&nbsp;s, Jira&rsquo;s own Development panel counts two commits.</li>
+        <li class="s4"><span class="t">Then</span> The commit and its message sit in Jira&rsquo;s native panel, where JQL, boards and Automation see it.</li>
+      </ol>
+    </div>
+  </div>
+</section>
 
 <section class="why" id="why">
   <div class="wrap split">
