@@ -296,7 +296,8 @@ footer.site a:hover { text-decoration: underline; }
 @media (max-width: 640px) {
   body { font-size: 16px; }
   header.site nav { gap: 1rem; font-size: 0.9rem; }
-  header.site nav a[href="security.html"] { display: none; }
+  /* A phone keeps the language switch and the demo button; the other links are in the footer. */
+  header.site nav a:not(.nav-cta):not([hreflang]) { display: none; }
   .hero { padding-top: 3.5rem; margin-bottom: 5rem; }
   .sectionnav { top: 64px; }
   .sectionnav .wrap { width: 100%; padding-inline: 1.25rem; gap: 1.3rem; }
