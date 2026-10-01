@@ -38,6 +38,15 @@
   <div class="narrow">
     <h1>Changelog</h1>
 <p>What changes for people using Linkwright for Jira, newest first.</p>
+<h2 id="1-october-2026-version-28">1 October 2026 — version 2.8</h2>
+<ul>
+<li><strong>Every send is now checked, not only full ones.</strong> Five minutes after commits reach Jira from a
+push, the app reads back what Jira kept and repairs any link it dropped. Before, only a full
+resend was checked.</li>
+<li><strong>Large repositories are checked too.</strong> Past 400 items Jira answers with a sample; the app now
+judges the commits that sample holds instead of giving up.</li>
+<li>Dependencies updated: two advisories in transitive packages fixed.</li>
+</ul>
 <h2 id="1-october-2026-version-27">1 October 2026 — version 2.7</h2>
 <ul>
 <li><strong>Refresh now repairs branches too.</strong> Jira can drop a branch from an issue while keeping it
