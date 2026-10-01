@@ -38,6 +38,26 @@
   <div class="narrow">
     <h1>Changelog</h1>
 <p>What changes for people using Linkwright for Jira, newest first.</p>
+<h2 id="1-october-2026-version-210">1 October 2026 — version 2.10</h2>
+<p>Found by installing the app on a brand-new Jira site and going through it the way a new customer
+would.</p>
+<ul>
+<li><strong>An attached repository is read at once.</strong> It used to wait for the next scheduled pass and say
+“never reconciled” for up to five minutes, next to commits that had already arrived.</li>
+<li><strong>Empty repositories work.</strong> A repository with no commit yet failed every reading; it is now
+simply up to date.</li>
+<li><strong>The first screen explains its wait.</strong> Right after installation the app prepares its
+database, which takes a few seconds; the screen now says so instead of staying blank, and the
+preparation starts as soon as the app is installed.</li>
+<li>Wording: an unattached repository with no ignored activity no longer reads “activity ignored
+never”.</li>
+</ul>
+<h2 id="1-october-2026-version-29">1 October 2026 — version 2.9</h2>
+<ul>
+<li><strong>A repository added on GitHub shows up within seconds.</strong> Opening Git sync health or a project’s
+Git repositories page now looks for repositories added to the GitHub App since the last check,
+and the page updates itself. Measured: 2.9 seconds. Before, it could take up to 10 minutes.</li>
+</ul>
 <h2 id="1-october-2026-version-28">1 October 2026 — version 2.8</h2>
 <ul>
 <li><strong>Every send is now checked, not only full ones.</strong> Five minutes after commits reach Jira from a

@@ -73,8 +73,12 @@ the reason it cannot be connected, and who can connect it instead.</p>
 <p>A <strong>Get started</strong> checklist at the top of <strong>Git sync health</strong> shows where the site stands: GitHub
 App installed and organization connected, repositories read, repositories attached. Each step is
 ticked from what the site actually holds; once all are done, a single line remains.</p>
-<p>The installation’s repositories are read immediately, then <strong>every 10 minutes</strong>: a repository added to
-the GitHub App later appears without anything being pushed to it.</p>
+<p>The installation’s repositories are read immediately, then <strong>every 10 minutes</strong>, and again <strong>each
+time an administrator opens Git sync health or a project’s Git repositories page</strong> (at most once a
+minute): a repository just added to the GitHub App shows up on that page within seconds, without
+anything being pushed to it.</p>
+<p>The very first screen after installing the app can take up to 20 seconds while the app prepares
+its database; it says so while it waits.</p>
 <p>To <strong>disconnect</strong> an installation, click <strong>Disconnect</strong> next to it, then confirm. Every repository
 of that installation is detached from every project, and its webhook and its entries in Jira’s
 Development panel are removed within minutes. Nothing is deleted on GitHub, and the GitHub App stays
@@ -88,9 +92,10 @@ installed: connect it again at any time.</p>
 <p>Repositories whose recent commits cite the project’s key are listed first, marked <strong>Suggested</strong> with
 the number of commits; <strong>Attach the suggested repositories</strong> attaches them all at once. Suggestions
 are refreshed once a day per repository; they never link anything by themselves.</p>
-<p>When a repository is attached, the app creates its webhook to your Jira site automatically. If it
-cannot, a red message says so: the repository stays attached, but its activity may not arrive until
-the problem is fixed.</p>
+<p>When a repository is attached, the app creates its webhook to your Jira site automatically and
+starts reading the repository at once: its state turns <strong>Up to date</strong> within seconds. If the webhook
+cannot be created, a red message says so: the repository stays attached, but its activity may not
+arrive until the problem is fixed. An empty repository is fine: it is up to date with nothing in it.</p>
 <blockquote>
 <p><strong>Scoped per project.</strong> A repository only creates links on issues of the projects it is attached
 to. A commit that mentions an issue from another project is ignored there.</p>
@@ -99,7 +104,8 @@ to. A commit that mentions an issue from another project is ignored there.</p>
 <ul>
 <li><strong>Jira’s Development panel</strong> (native): branches, commits, pull requests and deployments appear
 there automatically, as with Atlassian’s integrations. Boards, JQL search and Automation read the
-same data.</li>
+same data. On a brand-new site, Jira can take a few minutes to show the first data it received
+(measured: about four minutes); the app’s Git activity panel shows it as soon as it arrives.</li>
 <li><strong>The app’s Git activity panel</strong>: the details, and above all <strong>the freshness of each
 repository</strong>. Jira does not show app panels automatically: on an issue, click the <strong>apps button
 under the issue title</strong>, then choose <strong>Git activity</strong>.</li>
