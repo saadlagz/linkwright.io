@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Linkwright pour Jira : intégration GitHub fiable</title>
+<title>Linkwright pour Jira : intégration GitHub fiable</title>
 <meta name="description" content="Relie commits, branches, pull requests et déploiements GitHub aux tickets Jira, et indique toujours si ces données sont à jour. Gratuit jusqu’à 10 utilisateurs.">
 <meta name="theme-color" content="#14302a">
 <!-- Google shows a PNG or ICO favicon in its results, never the SVG: all three are offered. -->
@@ -27,7 +27,7 @@
 <meta property="og:image:alt" content="Linkwright for Jira">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="preload" href="/assets/fonts/plex-sans-600-normal.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="/style.css?v=ede2f7d48d">
+<link rel="stylesheet" href="/style.css?v=9ab3140170">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -50,7 +50,7 @@
     "@type": "Offer",
     "price": "0",
     "priceCurrency": "USD",
-    "description": "Gratuit jusqu’à 10 utilisateurs ; 2,61 USD par utilisateur et par mois de 11 à 100 utilisateurs."
+    "description": "Gratuit jusqu’à 10 utilisateurs ; 2,61 USD par utilisateur et par mois de 11 à 100 utilisateurs."
   },
   "publisher": {
     "@type": "Organization",
@@ -197,7 +197,7 @@
           </tr>
         </tbody>
       </table>
-      <figcaption>La plainte la plus fréquente contre les connecteurs Git : tout affiche &laquo;&nbsp;connecté&nbsp;&raquo; alors que rien ne se lie. Ici, un dépôt qui prend du retard le dit, et dit pourquoi.</figcaption>
+      <figcaption>La plainte la plus fréquente contre les connecteurs Git : tout affiche &laquo;&nbsp;connecté&nbsp;&raquo; alors que rien ne se lie. Ici, un dépôt qui prend du retard le dit, et dit pourquoi.</figcaption>
     </figure>
   </div>
 </div>
@@ -255,30 +255,30 @@
     <div class="feature">
       <div class="feature-text">
         <h3>Savoir ce qui est à jour, avant d’en rendre compte</h3>
-        <p>Chaque dépôt affiche son dernier webhook, sa dernière lecture complète et un état clair : <em>À jour</em>, <em>Pas à jour</em>, <em>Quota épuisé</em>, <em>En échec</em>, <em>Non autorisé</em> ou <em>Webhook en panne</em>, avec la raison. Un clic le relit depuis GitHub.</p>
+        <p>Chaque dépôt affiche son dernier webhook, sa dernière lecture complète et un état clair : <em>À jour</em>, <em>Pas à jour</em>, <em>Quota épuisé</em>, <em>En échec</em>, <em>Non autorisé</em> ou <em>Webhook en panne</em>, avec la raison. Un clic le relit depuis GitHub.</p>
       </div>
       <figure>
-        <img src="/assets/shot-health.png" alt="L’écran Dépôts Git, avec pour chaque dépôt son état de synchronisation et l’heure de sa dernière lecture réussie." loading="lazy" width="1840" height="900">
+        <a class="shot-link" href="/assets/shot-health.png"><img src="/assets/shot-health.png" alt="L’écran Dépôts Git, avec pour chaque dépôt son état de synchronisation et l’heure de sa dernière lecture réussie." loading="lazy" width="1840" height="900"></a>
       </figure>
     </div>
 
     <div class="feature">
       <div class="feature-text">
         <h3>Vos tableaux, votre JQL et Automation continuent de marcher</h3>
-        <p>Commits, branches, pull requests avec leurs approbations et déploiements arrivent dans le panneau Développement natif de Jira : tableaux, JQL et Automation marchent exactement comme avec l’intégration d’Atlassian. Un déploiement est relié à chaque commit qu’il livre, pas seulement au dernier.</p>
+        <p>Commits, branches, pull requests avec leurs approbations et déploiements arrivent dans le panneau Développement natif de Jira : tableaux, JQL et Automation marchent exactement comme avec l’intégration d’Atlassian. Un déploiement est relié à chaque commit qu’il livre, pas seulement au dernier.</p>
       </div>
       <figure>
-        <img src="/assets/shot-panel.png" alt="Un ticket Jira dont le panneau Développement est rempli par Linkwright : branches, commits, pull requests et un déploiement en production." loading="lazy" width="1840" height="900">
+        <a class="shot-link" href="/assets/shot-panel.png"><img src="/assets/shot-panel.png" alt="Un ticket Jira dont le panneau Développement est rempli par Linkwright : branches, commits, pull requests et un déploiement en production." loading="lazy" width="1840" height="900"></a>
       </figure>
     </div>
 
     <div class="feature">
       <div class="feature-text">
         <h3>Personne ne voit un dépôt qu’il ne devrait pas voir</h3>
-        <p>Un dépôt ne se relie qu’aux tickets des projets Jira auxquels il est rattaché. Associer une organisation GitHub demande l’un de ses propriétaires : personne ne peut exposer dans Jira des dépôts privés qu’il ne voit pas lui-même sur GitHub.</p>
+        <p>Un dépôt ne se relie qu’aux tickets des projets Jira auxquels il est rattaché. Associer une organisation GitHub demande l’un de ses propriétaires : personne ne peut exposer dans Jira des dépôts privés qu’il ne voit pas lui-même sur GitHub.</p>
       </div>
       <figure>
-        <img src="/assets/shot-connect.png" alt="Association d’une organisation GitHub depuis l’administration de Jira ; seul un propriétaire de l’organisation peut l’associer." loading="lazy" width="1840" height="900">
+        <a class="shot-link" href="/assets/shot-connect.png"><img src="/assets/shot-connect.png" alt="Association d’une organisation GitHub depuis l’administration de Jira ; seul un propriétaire de l’organisation peut l’associer." loading="lazy" width="1840" height="900"></a>
       </figure>
     </div>
   </div>
@@ -287,11 +287,11 @@
 <section class="how" id="how">
   <div class="wrap">
     <h2>Les webhooks d’abord. Les relectures, seulement pour rattraper ce qu’ils ont manqué.</h2>
-    <p class="sub">Une équipe de trois mille dépôts dispose d’environ quatre requêtes à l’API GitHub par dépôt et par heure. L’interrogation périodique ne tient pas dans ce budget : c’est exactement pour ça que les connecteurs qui en dépendent prennent du retard.</p>
+    <p class="sub">Une équipe de trois mille dépôts dispose d’environ quatre requêtes à l’API GitHub par dépôt et par heure. L’interrogation périodique ne tient pas dans ce budget : c’est exactement pour ça que les connecteurs qui en dépendent prennent du retard.</p>
     <ol class="pipeline">
       <li><h3>GitHub envoie l’événement</h3><p>Il arrive sur votre site Jira au moment où il se produit, par un webhook signé. Les webhooks ne consomment aucun quota d’API GitHub.</p></li>
       <li><h3>Les clés de tickets sont repérées</h3><p>Dans les noms de branches, les messages de commit et les titres de pull requests, uniquement pour les projets auxquels ce dépôt est rattaché.</p></li>
-      <li><h3>Jira est mis à jour</h3><p>Directement dans le panneau Développement natif : tout ce que vous avez déjà construit dessus continue de marcher.</p></li>
+      <li><h3>Jira est mis à jour</h3><p>Directement dans le panneau Développement natif : tout ce que vous avez déjà construit dessus continue de marcher.</p></li>
       <li><h3>Une relecture périodique rattrape le reste</h3><p>Revérifier des données inchangées ne coûte rien. Ce qu’aucun webhook n’a annoncé vous est signalé, pas caché.</p></li>
     </ol>
     <p class="forge">Linkwright tourne <strong>entièrement sur Atlassian Forge</strong>. Vos données restent dans le stockage de votre propre site Jira, je n’ai aucun serveur nulle part, et aucune donnée Jira n’est jamais envoyée à GitHub. <a href="/security.html">Lire la politique de sécurité (en anglais)</a></p>
@@ -302,7 +302,7 @@
   <div class="wrap split">
     <div>
       <h2>Gratuit pour les petites équipes.</h2>
-      <p>Par utilisateur et par mois, facturé par le Marketplace Atlassian. Au-delà de dix utilisateurs, le prix est aligné sur celui du principal connecteur payant. Soumis à Atlassian avec la fiche ; définitif une fois celle-ci approuvée.</p>
+      <p>Par utilisateur et par mois, facturé par le Marketplace Atlassian. Au-delà de dix utilisateurs, le prix est aligné sur celui du principal connecteur payant. Soumis à Atlassian avec la fiche ; définitif une fois celle-ci approuvée.</p>
     </div>
     <table class="price">
       <thead><tr><th scope="col">Taille de l’équipe</th><th scope="col">Prix</th></tr></thead>
@@ -345,17 +345,17 @@
     </div>
     <div>
       <dl>
-        <dt>Quels hébergeurs Git sont pris en charge ?</dt>
+        <dt>Quels hébergeurs Git sont pris en charge ?</dt>
         <dd>GitHub.com, par une GitHub App installée sur votre compte ou votre organisation. GitHub Enterprise Server et GitLab ne sont pas pris en charge dans cette version.</dd>
-        <dt>Les Smart Commits, le JQL et Automation marchent-ils toujours ?</dt>
-        <dd>Oui. Linkwright remplit le panneau Développement de Jira lui-même : <code>development[commits]</code> en JQL, les badges des tableaux, les Smart Commits et les transitions automatiques se comportent comme avec l’intégration d’Atlassian.</dd>
-        <dt>Qu’est-ce qui sort de notre site Jira ?</dt>
-        <dd>Rien n’est envoyé à GitHub. Linkwright lit GitHub et écrit dans votre site Jira, et tourne entièrement sur Atlassian Forge : aucun serveur à moi entre les deux. Détails dans la <a href="/security.html">politique de sécurité</a>.</dd>
-        <dt>Qui voit quels dépôts ?</dt>
+        <dt>Les Smart Commits, le JQL et Automation marchent-ils toujours ?</dt>
+        <dd>Oui. Linkwright remplit le panneau Développement de Jira lui-même : <code>development[commits]</code> en JQL, les badges des tableaux, les Smart Commits et les transitions automatiques se comportent comme avec l’intégration d’Atlassian.</dd>
+        <dt>Qu’est-ce qui sort de notre site Jira ?</dt>
+        <dd>Rien n’est envoyé à GitHub. Linkwright lit GitHub et écrit dans votre site Jira, et tourne entièrement sur Atlassian Forge : aucun serveur à moi entre les deux. Détails dans la <a href="/security.html">politique de sécurité</a>.</dd>
+        <dt>Qui voit quels dépôts ?</dt>
         <dd>Un dépôt n’alimente que les projets Jira auxquels il est rattaché, et seul un propriétaire de l’organisation GitHub peut l’associer à votre site. Personne ne voit dans Jira un dépôt privé qu’il ne pourrait pas voir sur GitHub.</dd>
-        <dt>Que se passe-t-il quand un lien casse ?</dt>
+        <dt>Que se passe-t-il quand un lien casse ?</dt>
         <dd>L’état du dépôt passe à <em>Quota épuisé</em>, <em>En échec</em>, <em>Non autorisé</em> ou <em>Webhook en panne</em>, avec la raison et l’heure du dernier succès. <em>Rafraîchir</em> le relit depuis GitHub.</dd>
-        <dt>Qui est derrière, et en combien de temps le support répond-il ?</dt>
+        <dt>Qui est derrière, et en combien de temps le support répond-il ?</dt>
         <dd>Un développeur indépendant, immatriculé en France. Première réponse sous deux jours ouvrés, à <a href="mailto:saad@linkwright.io">saad@linkwright.io</a>, en français ou en anglais.</dd>
       </dl>
     </div>
@@ -365,10 +365,10 @@
 <section class="letter" id="early-access">
   <div class="narrow">
     <h2>Je ne vends rien pour l’instant.</h2>
-    <p>Linkwright est construit, il tourne, et il est en cours d’examen sur le Marketplace Atlassian. Ce que je cherche est plus simple qu’une vente : <strong>savoir si ce problème existe vraiment dans votre équipe</strong>, et si vous auriez payé pour l’éviter.</p>
+    <p>Linkwright est construit, il tourne, et il est en cours d’examen sur le Marketplace Atlassian. Ce que je cherche est plus simple qu’une vente : <strong>savoir si ce problème existe vraiment dans votre équipe</strong>, et si vous auriez payé pour l’éviter.</p>
     <p>Si votre équipe utilise Jira et GitHub ensemble, une réponse d’une ligne suffit. Je peux aussi vous le montrer en direct, sur un vrai site Jira, en quinze minutes. Vous pourrez l’installer depuis le Marketplace dès qu’il sera approuvé, gratuitement jusqu’à 10 utilisateurs.</p>
     <p class="signature">Saad Lagzouli, qui construit Linkwright</p>
-    <a class="btn btn-forest" href="mailto:saad@linkwright.io?subject=D%C3%A9mo%20Linkwright">Réserver une démo de 15 minutes : saad@linkwright.io</a>
+    <a class="btn btn-forest" href="mailto:saad@linkwright.io?subject=D%C3%A9mo%20Linkwright">Réserver une démo de 15 minutes : saad@linkwright.io</a>
   </div>
 </section>
 
