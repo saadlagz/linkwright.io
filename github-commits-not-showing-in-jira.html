@@ -56,8 +56,8 @@ connectors, Linkwright included, also link that branch’s commits.</li>
 <h2 id="2-was-the-commit-pushed-before-the-repository-was-connected">2. Was the commit pushed before the repository was connected?</h2>
 <p>Connectors learn about new commits through webhooks, which GitHub sends at push time. A commit
 pushed <strong>before</strong> the repository was connected never produced a webhook for it. Whether it is
-caught up later depends on the connector’s backfill. Linkwright’s, for example, rereads the last
-100 commits of the default branch, so an old commit on a feature branch stays unlinked. Pushing a new commit that mentions the key is the quickest way to tell a
+caught up later depends on the connector’s backfill. Linkwright’s, for example, rereads the last 100 commits of the default branch and, on the first
+read and on each Refresh, the commits of up to 20 branches it has not seen yet. Pushing a new commit that mentions the key is the quickest way to tell a
 backfill gap from a broken connection.</p>
 <h2 id="3-is-jira-simply-still-indexing">3. Is Jira simply still indexing?</h2>
 <p>Jira does not show development information the instant it receives it. Measured on a real Jira

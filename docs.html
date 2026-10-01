@@ -217,9 +217,11 @@ seeing them all on the issue again.</p>
 <h2 id="6-limits-of-this-version">6. Limits of this version</h2>
 <ul>
 <li><strong>GitHub only</strong> (<a href="https://github.com">github.com</a>). GitLab is planned for a later version.</li>
-<li><strong>Activity before attachment</strong>: commits on the default branch (the 100 most recent), pull
-requests (the 100 most recently updated) and branches are caught up; a commit pushed before
-attachment <strong>on another branch</strong> is not linked.</li>
+<li><strong>Activity before attachment</strong>: on the first read after attachment, commits on the default
+branch (the 100 most recent), pull requests (the 100 most recently updated) and branches are
+caught up, plus the commits that <strong>up to 20 branches not seen yet</strong> hold beyond the default
+branch (250 per branch). A repository with more such branches catches up 20 more at each
+<strong>Refresh</strong>.</li>
 <li><strong>Very large pushes</strong>: up to 10,000 commits are caught up automatically. Beyond that, catch-up
 stops and the failure is recorded on the repository; the remaining commits are not linked.</li>
 <li><strong>First deployment of an environment</strong>: with no previous deployment, it is linked to the 100 most
@@ -256,8 +258,8 @@ within 10 minutes.</li>
 <ol>
 <li>Is the key written in upper case in the message (<code>CHK-42</code>)?</li>
 <li>Is the repository attached <strong>to this project</strong>?</li>
-<li>Was the commit pushed before attachment, on a branch other than the default one? It will not be
-caught up (see §6).</li>
+<li>Was the commit pushed before attachment, on a branch other than the default one? <strong>Refresh</strong>
+catches up the commits of up to 20 branches not seen yet (see §6).</li>
 <li>Click <strong>Refresh</strong> in <strong>Git repositories</strong>, then reload the issue.</li>
 <li>Still missing? The <a href="github-commits-not-showing-in-jira.html">full checklist</a> covers Jira’s
 indexing delay, cached counts and the JQL checks.</li>

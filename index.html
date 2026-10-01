@@ -353,9 +353,10 @@
       <dl>
         <dt>GitHub.com only</dt>
         <dd>GitLab, including self-hosted GitLab, is planned for a later version.</dd>
-        <dt>Partial catch-up of older activity</dt>
+        <dt>Bounded catch-up of older activity</dt>
         <dd>When you attach a repository, recent commits on the default branch, recent pull requests
-          and branches are linked. A commit pushed earlier on another branch is not.</dd>
+          and branches are linked, plus the commits of up to 20 branches not seen yet. Each
+          <em>Refresh</em> catches up 20 more.</dd>
         <dt>Reviews and deployments come by webhook only</dt>
         <dd>The periodic check does not back-fill them.</dd>
         <dt>No certification</dt>

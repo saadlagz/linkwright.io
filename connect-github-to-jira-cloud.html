@@ -85,11 +85,12 @@ the issue. Expect it in the <strong>Development</strong> panel within about a mi
 commit reached the issue in 5.7 s and Jira’s panel showed it at about 57 s.</p>
 <p>If nothing shows up, go through <a href="github-commits-not-showing-in-jira.html">GitHub commits not showing in Jira</a>.</p>
 <h2 id="what-about-commits-pushed-before-the-connection">What about commits pushed before the connection?</h2>
-<p>Both apps catch up some history when a repository is connected, but not the same amount. In our
-side-by-side test, for commits pushed before the connection, the official app caught up all three
-(two on the default branch, one on a feature branch); Linkwright caught up the two on the default
-branch only. Linkwright’s catch-up covers the last 100 commits of the default branch, recent
-pull requests and branches.</p>
+<p>Both apps catch up some history when a repository is connected. In our side-by-side test on
+1 October 2026, for three commits pushed before the connection (two on the default branch, one on
+a feature branch), the official app caught up all three; Linkwright caught up the two on the
+default branch, and the third once it was updated the same day to read the commits of branches it
+has not seen yet. Linkwright’s catch-up covers the last 100 commits of the default branch, recent
+pull requests and branches, and the commits of up to 20 unseen branches (20 more at each Refresh).</p>
 <h2 id="after-the-setup">After the setup</h2>
 <ul>
 <li>Use <strong>JQL</strong> on development data: see <a href="jira-jql-development-github.html">JQL for GitHub development data</a>.</li>
