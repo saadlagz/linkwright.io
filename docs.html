@@ -10,8 +10,10 @@
 <meta property="og:description" content="Install Linkwright for Jira, attach repositories, read the sync states, and troubleshoot missing links.">
 <meta property="og:image" content="https://linkwright.io/assets/og.png">
 <meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="icon" href="assets/favicon-96.png" type="image/png" sizes="96x96">
 <link rel="icon" href="assets/logo.svg" type="image/svg+xml">
-<link rel="apple-touch-icon" href="assets/logo-512.png">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
 <meta name="theme-color" content="#14302a">
 <link rel="stylesheet" href="style.css?v=5770d7d4b7">
 </head>
@@ -64,7 +66,7 @@ usually the person who just installed the GitHub App.</p>
 <p>Why the owner role is required: without it, any member of an organization could expose in Jira
 private repositories they cannot see themselves. An installation you do not control is listed with
 the reason it cannot be connected.</p>
-<p>The installation’s repositories are read immediately, then <strong>every hour</strong>: a repository added to
+<p>The installation’s repositories are read immediately, then <strong>every 10 minutes</strong>: a repository added to
 the GitHub App later appears without anything being pushed to it.</p>
 <p>To <strong>disconnect</strong> an installation, click <strong>Disconnect</strong> next to it, then confirm. Every repository
 of that installation is detached from every project, and its webhook and its entries in Jira’s
@@ -238,7 +240,7 @@ commits, branches, pull requests and deployments.</li>
 <ol>
 <li>Is the GitHub account or organization connected to this site (§2.3)?</li>
 <li>Does the GitHub App have access to this repository? A repository added to the GitHub App appears
-within the hour.</li>
+within 10 minutes.</li>
 </ol>
 <p><strong>A commit does not appear on the issue.</strong></p>
 <ol>
