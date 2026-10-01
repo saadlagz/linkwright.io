@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Changelog — Linkwright</title>
+<meta name="description" content="What changes in Linkwright for Jira, release by release, newest first.">
+<link rel="canonical" href="https://linkwright.io/changelog.html">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://linkwright.io/changelog.html">
+<meta property="og:site_name" content="Linkwright">
+<meta property="og:title" content="Changelog — Linkwright">
+<meta property="og:description" content="What changes in Linkwright for Jira, release by release, newest first.">
+<meta property="og:image" content="https://linkwright.io/assets/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="icon" href="/assets/favicon-96.png" type="image/png" sizes="96x96">
+<link rel="icon" href="/assets/logo.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+<meta name="theme-color" content="#14302a">
+<link rel="stylesheet" href="/style.css?v=883f849aa5">
+</head>
+<body>
+
+<header class="site">
+  <div class="wrap">
+    <a class="brand" href="/"><img src="/assets/logo.svg" alt="" width="28" height="28">Linkwright</a>
+    <nav>
+      <a href="/guides.html">Guides</a>
+      <a href="/docs.html">Documentation</a>
+      <a href="/security.html">Security</a>
+      <a class="nav-cta" href="/#early-access">Book a demo</a>
+    </nav>
+  </div>
+</header>
+
+<main class="doc">
+  <div class="narrow">
+    <h1>Changelog</h1>
+<p>What changes for people using Linkwright for Jira, newest first.</p>
+<h2 id="1-october-2026-version-25">1 October 2026 — version 2.5</h2>
+<ul>
+<li><strong>New repositories appear within 10 minutes</strong> of being added to the GitHub App, instead of
+up to an hour.</li>
+<li><strong>Bursts of activity are handled faster.</strong> A push updating 30 branches now reaches Jira in about
+a minute; before, the burst could saturate the app’s storage, and the last links took three to four
+minutes to arrive.</li>
+<li><strong>Guided setup.</strong> The administration page shows a checklist of the setup steps, computed from
+what the site actually holds, with a link to install the GitHub App.</li>
+<li><strong>Suggested repositories.</strong> A project’s settings page lists first the repositories whose recent
+commits cite that project, with a button to attach them all.</li>
+<li><strong>Clearer refusals.</strong> When the person connecting a GitHub organization is not one of its owners,
+the page says so and explains who can do it.</li>
+<li><strong>Sync health counts attached repositories only.</strong> A repository no project uses is no longer
+reported as “never synced”.</li>
+</ul>
+<h2 id="30-september-2026-version-21">30 September 2026 — version 2.1</h2>
+<ul>
+<li><strong>Disconnecting a GitHub organization</strong> detaches all its repositories and removes their
+webhooks and Development panel entries; it can be safely retried.</li>
+<li><strong>Attaching or detaching a project</strong> on a repository shared by several projects updates the
+issues of that project only.</li>
+<li><strong>Failed removals are retried automatically</strong>, a few repositories at a time.</li>
+<li>A repository detached from its last project and attached again sends its history to Jira again.</li>
+</ul>
+<h2 id="september-2026-first-versions">September 2026 — first versions</h2>
+<ul>
+<li>Commits, branches, pull requests with reviews, and deployments in <strong>Jira’s native Development
+panel</strong>, so JQL, boards and Automation work as usual.</li>
+<li><strong>A sync state for every repository</strong>, with its last webhook and its last successful check, and
+a <strong>Refresh</strong> button.</li>
+<li><strong>A check five minutes after sending</strong> that Jira kept the links of a full send, with repair.</li>
+<li><strong>Repositories scoped per Jira project</strong>, connected by an owner of the GitHub organization.</li>
+<li>English and French interface.</li>
+</ul>
+
+  </div>
+</main>
+
+<footer class="site">
+  <div class="wrap">
+    <span>&copy; 2026 Linkwright. Built in France by an independent developer.</span>
+    <nav>
+      <a href="/">Home</a>
+      <a href="/guides.html">Guides</a>
+      <a href="/docs.html">Documentation</a>
+      <a href="/security.html">Security</a>
+      <a href="/about.html">About</a>
+      <a href="/changelog.html">Changelog</a>
+      <a href="mailto:saad@linkwright.io">Contact</a>
+      <a href="/privacy.html">Privacy</a>
+      <a href="/terms.html">Terms</a>
+      <a href="/legal.html">Legal notice</a>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>

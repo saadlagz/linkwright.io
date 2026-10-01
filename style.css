@@ -336,3 +336,17 @@ footer.site a:hover { text-decoration: underline; }
   .demo-frame img { height: auto; }
   .demo-steps li { animation: none; color: var(--text); }
 }
+
+/* Hero board: a webhook landing flashes its row; chips cross-fade between states. */
+.board tbody tr { transition: background-color 0.6s ease; }
+.board tr.live-flash { animation: live-flash 1.8s ease-out; }
+@keyframes live-flash { 0% { background: var(--ok-soft); } 100% { background: transparent; } }
+.chip { transition: background-color 0.5s ease, color 0.5s ease; }
+@media (prefers-reduced-motion: reduce) {
+  .board tr.live-flash { animation: none; }
+  .chip { transition: none; }
+}
+
+/* Guides: a query reads as one piece, and a wide table scrolls inside itself on a phone. */
+.doc table { display: block; max-width: 100%; overflow-x: auto; }
+.doc td code { white-space: nowrap; }

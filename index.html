@@ -23,7 +23,7 @@
 <meta property="og:image:alt" content="Linkwright for Jira">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="preload" href="assets/fonts/plex-sans-600-normal.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="style.css?v=5770d7d4b7">
+<link rel="stylesheet" href="style.css?v=883f849aa5">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -57,6 +57,63 @@
   }
 }
 </script>
+<!-- Generated from the FAQ section below: keep both in step (FAQPage rich results). -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Which Git hosts does it support?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "GitHub.com, through a GitHub App you install on your account or organization. GitHub Enterprise Server and GitLab are not supported in this version."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Do Smart Commits, JQL and Automation still work?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. Linkwright fills Jira’s own Development panel, so development[commits] in JQL, board badges, Smart Commits and automatic transitions behave as they do with Atlassian’s integration."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What leaves our Jira site?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Nothing is sent to GitHub. Linkwright reads from GitHub and writes to your Jira site, and runs entirely on Atlassian Forge: there is no server of mine in between. Details in the security policy."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Who can see which repositories?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "A repository feeds only the Jira projects it is attached to, and only an owner of the GitHub organization can connect it to your site. Nobody sees in Jira a private repository they could not see on GitHub."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What happens when a link breaks?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "The repository’s state changes to Rate limited, Failing, Not authorized or Webhook down, with the reason and the time of the last success. Refresh re-reads it from GitHub."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Who is behind it, and how fast is support?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "One independent developer, registered in France. First response within two business days, at saad@linkwright.io."
+      }
+    }
+  ]
+}
+</script>
 </head>
 <body class="home">
 
@@ -64,9 +121,10 @@
   <div class="wrap">
     <a class="brand" href="/"><img src="assets/logo.svg" alt="" width="28" height="28">Linkwright</a>
     <nav>
+      <a href="guides.html">Guides</a>
       <a href="docs.html">Documentation</a>
       <a href="security.html">Security</a>
-      <a class="nav-cta" href="#early-access">Early access</a>
+      <a class="nav-cta" href="#early-access">Book a demo</a>
     </nav>
   </div>
 </header>
@@ -80,7 +138,7 @@
     <a href="#pricing">Pricing</a>
     <a href="#limits">Limits</a>
     <a href="#faq">FAQ</a>
-    <a href="#early-access">Early access</a>
+    <a href="#early-access">Contact</a>
   </div>
 </nav>
 
@@ -88,13 +146,13 @@
   <div class="wrap">
    <div class="hero-grid">
     <div class="hero-text">
-      <p class="status-line"><span class="pulse" aria-hidden="true"></span>In early access. Not on the Atlassian Marketplace yet.</p>
+      <p class="status-line"><span class="pulse" aria-hidden="true"></span>In Atlassian Marketplace review. Live demo available now.</p>
       <h1>Your Jira should never lie about your code.</h1>
       <p class="lead">Linkwright puts GitHub branches, commits, pull requests, reviews and deployments
         on every Jira issue, and tells you, repository by repository, exactly how current that
         information is.</p>
       <div class="cta-row">
-        <a class="btn btn-brass" href="#early-access">Ask for early access</a>
+        <a class="btn btn-brass" href="#early-access">See it on a real Jira site</a>
         <a class="btn btn-line" href="docs.html">Read the documentation</a>
       </div>
     </div>
@@ -102,9 +160,9 @@
     <figure class="proof">
       <figcaption>Measured on a real Jira site, not in tests</figcaption>
       <p class="proof-lead">A demonstration issue was set up on <strong>19 September 2026</strong> and
-        has not been touched since. Eleven days later it still carries its branch, its three commits,
-        its merged pull request and its production deployment &mdash; and Jira&rsquo;s own JQL still
-        returns it.</p>
+        left untouched. Checked again on 22 and 30 September, it still carried its branch, its three
+        commits, its merged pull request and its production deployment &mdash; and Jira&rsquo;s own JQL
+        still returned it.</p>
       <dl class="proof-stats">
         <div><dt>~5 s</dt><dd>for a commit to appear on its issue</dd></div>
         <div><dt>500</dt><dd>commits in one push, arriving whole</dd></div>
@@ -124,14 +182,14 @@
         </thead>
         <tbody>
           <tr>
-            <td class="repo">acme/checkout-api</td>
+            <td class="repo" data-live="webhook">acme/checkout-api</td>
             <td><span class="chip ok">Up to date</span></td>
             <td class="when">Last check <span data-ago="40">40&nbsp;s</span> ago</td>
           </tr>
           <tr>
             <td class="repo">acme/billing-worker</td>
-            <td><span class="chip warn">Rate limited</span></td>
-            <td class="when">GitHub quota spent, resumes at 14:00</td>
+            <td><span class="chip warn" data-live="quota">Rate limited</span></td>
+            <td class="when" data-live="quota-detail">GitHub quota spent, resumes at 14:00</td>
           </tr>
           <tr>
             <td class="repo">acme/legacy-portal</td>
@@ -140,8 +198,9 @@
           </tr>
         </tbody>
       </table>
-      <figcaption>Other connectors would show all three as &ldquo;connected&rdquo; and quietly stop
-        linking two of them. Linkwright shows you which two, and why.</figcaption>
+      <figcaption>The most common complaint about Git connectors is that everything says
+      &ldquo;connected&rdquo; while nothing gets linked. Here, a repository that falls behind says so,
+      and says why.</figcaption>
     </figure>
   </div>
 </div>
@@ -267,7 +326,8 @@
     <div>
       <h2>Free for small teams.</h2>
       <p>Per user, per month, billed through the Atlassian Marketplace. Above ten users, the price
-        matches the leading paid connector. These prices are planned and become final at listing.</p>
+        matches the leading paid connector. Submitted to Atlassian with the listing; final once it is
+        approved.</p>
     </div>
     <table class="price">
       <thead><tr><th scope="col">Team size</th><th scope="col">Price</th></tr></thead>
@@ -357,14 +417,15 @@
   <div class="wrap">
     <span>&copy; 2026 Linkwright. Built in France by an independent developer.</span>
     <nav>
+      <a href="guides.html">Guides</a>
       <a href="docs.html">Documentation</a>
       <a href="security.html">Security</a>
+      <a href="about.html">About</a>
+      <a href="changelog.html">Changelog</a>
       <a href="mailto:saad@linkwright.io">Contact</a>
       <a href="privacy.html">Privacy</a>
       <a href="terms.html">Terms</a>
       <a href="legal.html">Legal notice</a>
-      <a href="github-commits-not-showing-in-jira.html">Commits not showing in Jira?</a>
-      <a href="github-for-jira-alternatives.html">Alternatives</a>
     </nav>
   </div>
 </footer>
@@ -375,10 +436,41 @@
     var el = document.querySelector('[data-ago]');
     if (!el || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
     var start = Date.now() - Number(el.dataset.ago) * 1000;
+    el.addEventListener('reset', function () { start = Date.now(); el.textContent = '0 s'; });
     setInterval(function () {
       var s = Math.round((Date.now() - start) / 1000);
       el.textContent = s < 60 ? s + ' s' : Math.floor(s / 60) + ' min';
     }, 1000);
+  })();
+
+  // The hero board tells the product's story in a loop, like the real screen would over a
+  // morning: a webhook lands on the first repository (its row flashes, its counter restarts),
+  // the second one leaves "Rate limited" once its quota resets, then hits the limit again.
+  // The third stays "Not authorized" — that one needs a human. Still for reduced motion.
+  (function () {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    var row = document.querySelector('[data-live="webhook"]');
+    var ago = document.querySelector('[data-ago]');
+    var chip = document.querySelector('[data-live="quota"]');
+    var detail = document.querySelector('[data-live="quota-detail"]');
+    if (!row || !ago || !chip || !detail) return;
+    var tr = row.parentNode;
+    function webhook() {
+      tr.classList.remove('live-flash');
+      void tr.offsetWidth; // restart the animation
+      tr.classList.add('live-flash');
+      ago.dataset.ago = '0';
+      ago.dispatchEvent(new Event('reset'));
+    }
+    var limited = true;
+    function quota() {
+      limited = !limited;
+      chip.className = 'chip ' + (limited ? 'warn' : 'ok');
+      chip.textContent = limited ? 'Rate limited' : 'Up to date';
+      detail.textContent = limited ? 'GitHub quota spent, resumes at 14:00' : 'Quota back at 14:00, caught up';
+    }
+    setInterval(webhook, 9000);
+    setInterval(quota, 7000);
   })();
 
   // Section nav: mark the section the reader is actually in. Pure enhancement — the links

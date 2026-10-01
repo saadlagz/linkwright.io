@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>JQL for GitHub data in Jira: what works — Linkwright</title>
+<meta name="description" content="Which JQL development[...] fields Jira Cloud accepts for GitHub data, which it refuses, and useful queries — each run on a real site.">
+<link rel="canonical" href="https://linkwright.io/jira-jql-development-github.html">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://linkwright.io/jira-jql-development-github.html">
+<meta property="og:site_name" content="Linkwright">
+<meta property="og:title" content="JQL for GitHub data in Jira: what works — Linkwright">
+<meta property="og:description" content="Which JQL development[...] fields Jira Cloud accepts for GitHub data, which it refuses, and useful queries — each run on a real site.">
+<meta property="og:image" content="https://linkwright.io/assets/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="icon" href="/assets/favicon-96.png" type="image/png" sizes="96x96">
+<link rel="icon" href="/assets/logo.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+<meta name="theme-color" content="#14302a">
+<link rel="stylesheet" href="/style.css?v=883f849aa5">
+</head>
+<body>
+
+<header class="site">
+  <div class="wrap">
+    <a class="brand" href="/"><img src="/assets/logo.svg" alt="" width="28" height="28">Linkwright</a>
+    <nav>
+      <a href="/guides.html">Guides</a>
+      <a href="/docs.html">Documentation</a>
+      <a href="/security.html">Security</a>
+      <a class="nav-cta" href="/#early-access">Book a demo</a>
+    </nav>
+  </div>
+</header>
+
+<main class="doc">
+  <div class="narrow">
+    <h1>JQL for GitHub data in Jira: what works</h1>
+    <div class="toc"><p>On this page</p><ul><li><a href="#the-fields-jira-cloud-accepts">The fields Jira Cloud accepts</a></li><li><a href="#the-ones-it-refuses">The ones it refuses</a></li><li><a href="#queries-that-are-useful-in-practice">Queries that are useful in practice</a></li><li><a href="#why-a-query-can-miss-an-issue-that-shows-the-data">Why a query can miss an issue that shows the data</a></li><li><a href="#which-connector-fills-these-fields">Which connector fills these fields</a></li></ul></div>
+<p>Jira can search issues by the development information your Git connector sends: commits, pull
+requests and reviews. The syntax is <code>development[type].field</code>, and many examples found online
+use fields that Jira Cloud refuses. Every query below was run on a real Jira Cloud site on
+<strong>1 October 2026</strong>, with the result it gave.</p>
+<h2 id="the-fields-jira-cloud-accepts">The fields Jira Cloud accepts</h2>
+<table>
+<thead>
+<tr>
+<th>Query</th>
+<th>What it finds</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>development[commits].all &gt; 0</code></td>
+<td>issues with at least one commit</td>
+</tr>
+<tr>
+<td><code>development[pullrequests].all &gt; 0</code></td>
+<td>issues with at least one pull request, whatever its state</td>
+</tr>
+<tr>
+<td><code>development[pullrequests].open &gt; 0</code></td>
+<td>issues with at least one open pull request</td>
+</tr>
+<tr>
+<td><code>development[reviews].all &gt; 0</code></td>
+<td>issues with at least one review</td>
+</tr>
+</tbody>
+</table>
+<h2 id="the-ones-it-refuses">The ones it refuses</h2>
+<p>These return <em>“Your query couldn’t be processed”</em> on Jira Cloud as of 1 October 2026:
+<code>development[pullrequests].merged</code>, <code>development[pullrequests].declined</code>,
+<code>development[branches].all</code>, <code>development[deployments].all</code> and <code>development[builds].all</code>.</p>
+<p>If you need merged pull requests, combine what exists: issues with pull requests but none open,
+<code>development[pullrequests].all &gt; 0 AND development[pullrequests].open = 0</code>.</p>
+<h2 id="queries-that-are-useful-in-practice">Queries that are useful in practice</h2>
+<p><strong>Done, but code still open.</strong> Issues closed while a pull request is still open:</p>
+<pre><code>development[pullrequests].open &gt; 0 AND statusCategory = Done
+</code></pre>
+<p><strong>Done without any code.</strong> Useful for a team that expects every story to ship code:</p>
+<pre><code>project = CHK AND issuetype = Story AND statusCategory = Done AND development[commits].all = 0
+</code></pre>
+<p><strong>In progress, nothing pushed yet.</strong></p>
+<pre><code>statusCategory = &quot;In Progress&quot; AND development[commits].all = 0
+</code></pre>
+<p><strong>Waiting for review.</strong> Open pull requests, issue not done:</p>
+<pre><code>development[pullrequests].open &gt; 0 AND statusCategory != Done
+</code></pre>
+<p>These work on boards (as quick filters), in filters, dashboards and Automation conditions.</p>
+<h2 id="why-a-query-can-miss-an-issue-that-shows-the-data">Why a query can miss an issue that shows the data</h2>
+<p>On our test site, an issue whose pull request had been merged an hour earlier did not yet match
+<code>development[pullrequests].all &gt; 0</code>, while its Development panel already showed it. Jira’s
+search index for development data lags behind the panel. Two consequences:</p>
+<ul>
+<li>For a report or an Automation rule, allow for the delay; do not conclude a link is missing
+from a JQL result taken minutes after a push.</li>
+<li>If an issue is missing from <code>development[commits].all &gt; 0</code> hours later, the link really is
+missing upstream: see <a href="github-commits-not-showing-in-jira.html">GitHub commits not showing in Jira</a>.</li>
+</ul>
+<h2 id="which-connector-fills-these-fields">Which connector fills these fields</h2>
+<p>Any connector that feeds Jira’s native Development panel: the official GitHub for Atlassian app,
+and <a href="https://linkwright.io/">Linkwright for Jira</a>, which also shows, for every repository, when
+its data was last confirmed. A connector that only shows commits in its own panel does not fill
+JQL.</p>
+
+  </div>
+</main>
+
+<footer class="site">
+  <div class="wrap">
+    <span>&copy; 2026 Linkwright. Built in France by an independent developer.</span>
+    <nav>
+      <a href="/">Home</a>
+      <a href="/guides.html">Guides</a>
+      <a href="/docs.html">Documentation</a>
+      <a href="/security.html">Security</a>
+      <a href="/about.html">About</a>
+      <a href="/changelog.html">Changelog</a>
+      <a href="mailto:saad@linkwright.io">Contact</a>
+      <a href="/privacy.html">Privacy</a>
+      <a href="/terms.html">Terms</a>
+      <a href="/legal.html">Legal notice</a>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>

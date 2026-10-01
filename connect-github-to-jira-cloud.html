@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>How to connect GitHub to Jira Cloud — Linkwright</title>
+<meta name="description" content="How to connect GitHub to Jira Cloud in four steps, written after installing two connectors side by side on a real Jira site.">
+<link rel="canonical" href="https://linkwright.io/connect-github-to-jira-cloud.html">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://linkwright.io/connect-github-to-jira-cloud.html">
+<meta property="og:site_name" content="Linkwright">
+<meta property="og:title" content="How to connect GitHub to Jira Cloud — Linkwright">
+<meta property="og:description" content="How to connect GitHub to Jira Cloud in four steps, written after installing two connectors side by side on a real Jira site.">
+<meta property="og:image" content="https://linkwright.io/assets/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="icon" href="/assets/favicon-96.png" type="image/png" sizes="96x96">
+<link rel="icon" href="/assets/logo.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+<meta name="theme-color" content="#14302a">
+<link rel="stylesheet" href="/style.css?v=883f849aa5">
+</head>
+<body>
+
+<header class="site">
+  <div class="wrap">
+    <a class="brand" href="/"><img src="/assets/logo.svg" alt="" width="28" height="28">Linkwright</a>
+    <nav>
+      <a href="/guides.html">Guides</a>
+      <a href="/docs.html">Documentation</a>
+      <a href="/security.html">Security</a>
+      <a class="nav-cta" href="/#early-access">Book a demo</a>
+    </nav>
+  </div>
+</header>
+
+<main class="doc">
+  <div class="narrow">
+    <h1>How to connect GitHub to Jira Cloud</h1>
+    <div class="toc"><p>On this page</p><ul><li><a href="#before-you-start">Before you start</a></li><li><a href="#step-1-install-the-jira-app">Step 1 — install the Jira app</a></li><li><a href="#step-2-install-the-github-app-on-the-repositories-you-choose">Step 2 — install the GitHub App, on the repositories you choose</a></li><li><a href="#step-3-connect-the-organization-to-the-jira-site">Step 3 — connect the organization to the Jira site</a></li><li><a href="#step-4-check-it-works">Step 4 — check it works</a></li><li><a href="#what-about-commits-pushed-before-the-connection">What about commits pushed before the connection?</a></li><li><a href="#after-the-setup">After the setup</a></li></ul></div>
+<p>Linking GitHub to Jira Cloud puts branches, commits, pull requests and deployments on the issues
+they mention. Whatever app you use, the shape is the same: an app on the Jira side, a GitHub App
+on the GitHub side, and a connection between the two. This page walks through it, written after
+installing two of these apps side by side on a real Jira Cloud site on 1 October 2026.</p>
+<h2 id="before-you-start">Before you start</h2>
+<ul>
+<li><strong>Jira administrator</strong> rights on the Jira Cloud site.</li>
+<li><strong>Owner</strong> rights on the GitHub organization (or the personal account) that holds the
+repositories. Both apps we installed ask for it: the official app’s first screen lists
+“owner permission for a GitHub organization”, and Linkwright refuses to connect an
+organization for anyone who is not one of its owners.</li>
+<li>Issue keys in your Git activity: <code>CHK-42</code> in branch names, commit messages or pull request
+titles. Nothing links without them.</li>
+</ul>
+<h2 id="step-1-install-the-jira-app">Step 1 — install the Jira app</h2>
+<p>From your Jira site: <strong>Apps › Explore more apps</strong>, search for the connector, then <strong>Get it now</strong>.
+The free official app is <em>GitHub for Atlassian</em>; alternatives are compared on
+<a href="github-for-jira-alternatives.html">GitHub for Jira alternatives</a>.</p>
+<h2 id="step-2-install-the-github-app-on-the-repositories-you-choose">Step 2 — install the GitHub App, on the repositories you choose</h2>
+<p>The Jira app sends you to GitHub to install its GitHub App on your organization. GitHub then
+asks which repositories it may access:</p>
+<ul>
+<li><strong>All repositories</strong>: simplest, and every future repository is included.</li>
+<li><strong>Only select repositories</strong>: pick them one by one. Choose this if some repositories must not
+appear in Jira, or to try the app on one repository first.</li>
+</ul>
+<p>You can change this choice later on GitHub: for an organization, <strong>Organization settings ›
+GitHub Apps › Configure</strong>; for a personal account, <strong>Settings › Applications › Installed GitHub
+Apps › Configure</strong>. A repository added there appears in the app afterwards: within 10 minutes in
+Linkwright.</p>
+<h2 id="step-3-connect-the-organization-to-the-jira-site">Step 3 — connect the organization to the Jira site</h2>
+<p>Back in Jira, the app’s configuration page lists the GitHub installations you can connect. Pick
+your organization. From then on:</p>
+<ul>
+<li><strong>GitHub for Atlassian</strong> shows the activity of the connected repositories on the issues it
+mentions.</li>
+<li><strong>Linkwright</strong> shows each repository on every project’s settings page (<strong>Project settings ›
+Apps › Git repositories</strong>). You attach a repository to the projects it belongs to; repositories
+whose recent commits cite the project are suggested first. A repository feeds only the projects
+it is attached to.</li>
+</ul>
+<h2 id="step-4-check-it-works">Step 4 — check it works</h2>
+<p>Push a commit whose message starts with an issue key, for example <code>CHK-42 Fix login</code>, then open
+the issue. Expect it in the <strong>Development</strong> panel within about a minute: on our test site, a
+commit reached the issue in 5.7 s and Jira’s panel showed it at about 57 s.</p>
+<p>If nothing shows up, go through <a href="github-commits-not-showing-in-jira.html">GitHub commits not showing in Jira</a>.</p>
+<h2 id="what-about-commits-pushed-before-the-connection">What about commits pushed before the connection?</h2>
+<p>Both apps catch up some history when a repository is connected, but not the same amount. In our
+side-by-side test, for commits pushed before the connection, the official app caught up all three
+(two on the default branch, one on a feature branch); Linkwright caught up the two on the default
+branch only. Linkwright’s catch-up covers the last 100 commits of the default branch, recent
+pull requests and branches.</p>
+<h2 id="after-the-setup">After the setup</h2>
+<ul>
+<li>Use <strong>JQL</strong> on development data: see <a href="jira-jql-development-github.html">JQL for GitHub development data</a>.</li>
+<li>In Linkwright, <strong>Jira settings › Apps › Git sync health</strong> shows every repository’s state and
+the time of its last successful check; a checklist on that page tracks the setup steps.</li>
+</ul>
+
+  </div>
+</main>
+
+<footer class="site">
+  <div class="wrap">
+    <span>&copy; 2026 Linkwright. Built in France by an independent developer.</span>
+    <nav>
+      <a href="/">Home</a>
+      <a href="/guides.html">Guides</a>
+      <a href="/docs.html">Documentation</a>
+      <a href="/security.html">Security</a>
+      <a href="/about.html">About</a>
+      <a href="/changelog.html">Changelog</a>
+      <a href="mailto:saad@linkwright.io">Contact</a>
+      <a href="/privacy.html">Privacy</a>
+      <a href="/terms.html">Terms</a>
+      <a href="/legal.html">Legal notice</a>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>
