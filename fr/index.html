@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Linkwright pour Jira : intégration GitHub fiable</title>
+<meta name="description" content="Relie commits, branches, pull requests et déploiements GitHub aux tickets Jira, et indique toujours si ces données sont à jour. Gratuit jusqu’à 10 utilisateurs.">
+<meta name="theme-color" content="#14302a">
+<!-- Google shows a PNG or ICO favicon in its results, never the SVG: all three are offered. -->
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="icon" href="/assets/favicon-96.png" type="image/png" sizes="96x96">
+<link rel="icon" href="/assets/favicon-192.png" type="image/png" sizes="192x192">
+<link rel="icon" href="/assets/logo.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+<link rel="canonical" href="https://linkwright.io/fr/">
+<link rel="alternate" hreflang="en" href="https://linkwright.io/">
+<link rel="alternate" hreflang="fr" href="https://linkwright.io/fr/">
+<link rel="alternate" hreflang="x-default" href="https://linkwright.io/">
+<meta property="og:title" content="Linkwright pour Jira">
+<meta property="og:description" content="Branches, pull requests et déploiements GitHub sur chaque ticket Jira, avec un état de synchronisation fiable.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://linkwright.io/fr/">
+<meta property="og:locale" content="fr_FR">
+<meta property="og:image" content="https://linkwright.io/assets/og.png">
+<meta property="og:image:width" content="1120">
+<meta property="og:image:height" content="548">
+<meta property="og:image:alt" content="Linkwright for Jira">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preload" href="/assets/fonts/plex-sans-600-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/style.css?v=883f849aa5">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "Linkwright",
+  "url": "https://linkwright.io/"
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Linkwright for Jira",
+  "url": "https://linkwright.io/",
+  "image": "https://linkwright.io/assets/og.png",
+  "description": "Relie commits, branches, pull requests, relectures et déploiements GitHub aux tickets Jira Cloud, alimente le panneau Développement natif de Jira et indique, dépôt par dépôt, si les données sont à jour.",
+  "applicationCategory": "DeveloperApplication",
+  "operatingSystem": "Jira Cloud (Atlassian Forge)",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD",
+    "description": "Gratuit jusqu’à 10 utilisateurs ; 2,61 USD par utilisateur et par mois de 11 à 100 utilisateurs."
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Linkwright",
+    "url": "https://linkwright.io/",
+    "email": "saad@linkwright.io",
+    "logo": "https://linkwright.io/assets/logo-512.png"
+  }
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Quels hébergeurs Git sont pris en charge ?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "GitHub.com, par une GitHub App installée sur votre compte ou votre organisation. GitHub Enterprise Server et GitLab ne sont pas pris en charge dans cette version."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Les Smart Commits, le JQL et Automation marchent-ils toujours ?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Oui. Linkwright remplit le panneau Développement de Jira lui-même : development[commits] en JQL, les badges des tableaux, les Smart Commits et les transitions automatiques se comportent comme avec l’intégration d’Atlassian."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Qu’est-ce qui sort de notre site Jira ?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Rien n’est envoyé à GitHub. Linkwright lit GitHub et écrit dans votre site Jira, et tourne entièrement sur Atlassian Forge : aucun serveur à moi entre les deux. Détails dans la politique de sécurité."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Qui voit quels dépôts ?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Un dépôt n’alimente que les projets Jira auxquels il est rattaché, et seul un propriétaire de l’organisation GitHub peut l’associer à votre site. Personne ne voit dans Jira un dépôt privé qu’il ne pourrait pas voir sur GitHub."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Que se passe-t-il quand un lien casse ?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "L’état du dépôt passe à Quota épuisé, En échec, Non autorisé ou Webhook en panne, avec la raison et l’heure du dernier succès. Rafraîchir le relit depuis GitHub."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Qui est derrière, et en combien de temps le support répond-il ?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Un développeur indépendant, immatriculé en France. Première réponse sous deux jours ouvrés, à saad@linkwright.io, en français ou en anglais."
+      }
+    }
+  ]
+}
+</script>
+</head>
+<body class="home">
+
+<header class="site">
+  <div class="wrap">
+    <a class="brand" href="/"><img src="/assets/logo.svg" alt="" width="28" height="28">Linkwright</a>
+    <nav>
+      <a href="/guides.html">Guides</a>
+      <a href="/docs.html">Documentation</a>
+      <a href="/security.html">Sécurité</a>
+      <a href="/" hreflang="en" lang="en">English</a>
+      <a class="nav-cta" href="#early-access">Réserver une démo</a>
+    </nav>
+  </div>
+</header>
+
+<nav class="sectionnav" aria-label="Sections of this page">
+  <div class="wrap">
+    <a href="#demo">Démo</a>
+    <a href="#why">Le problème</a>
+    <a href="#what">Ce que ça fait</a>
+    <a href="#how">Comment ça marche</a>
+    <a href="#pricing">Tarifs</a>
+    <a href="#limits">Limites</a>
+    <a href="#faq">Questions</a>
+    <a href="#early-access">Contact</a>
+  </div>
+</nav>
+
+<div class="hero">
+  <div class="wrap">
+   <div class="hero-grid">
+    <div class="hero-text">
+      <p class="status-line"><span class="pulse" aria-hidden="true"></span>En cours d’examen sur le Marketplace Atlassian. Démo en direct disponible.</p>
+      <h1>Votre Jira ne devrait jamais mentir sur votre code.</h1>
+      <p class="lead">Linkwright affiche les branches, commits, pull requests, relectures et déploiements GitHub sur chaque ticket Jira, et vous dit, dépôt par dépôt, à quel point ces informations sont à jour.</p>
+      <div class="cta-row">
+        <a class="btn btn-brass" href="#early-access">Le voir sur un vrai site Jira</a>
+        <a class="btn btn-line" href="/docs.html">Lire la documentation (en anglais)</a>
+      </div>
+    </div>
+
+    <figure class="proof">
+      <figcaption>Mesuré sur un vrai site Jira, pas en tests</figcaption>
+      <p class="proof-lead">Un ticket de démonstration a été préparé le <strong>19 septembre 2026</strong>, puis laissé tel quel. Revérifié les 22 et 30 septembre, il portait toujours sa branche, ses trois commits, sa pull request fusionnée et son déploiement en production &mdash; et le JQL de Jira le retrouvait toujours.</p>
+      <dl class="proof-stats">
+        <div><dt>~5 s</dt><dd>pour qu’un commit apparaisse sur son ticket</dd></div>
+        <div><dt>500</dt><dd>commits en un seul push, arrivés au complet</dd></div>
+        <div><dt>chaque</dt><dd>commit livré par un déploiement est marqué, pas seulement le dernier</dd></div>
+      </dl>
+    </figure>
+   </div>
+
+    <figure class="board">
+      <div class="board-title">
+        <span>Dépôts Git</span>
+        <span class="board-project">Projet CHK</span>
+      </div>
+      <table>
+        <thead>
+          <tr><th scope="col">Dépôt</th><th scope="col">État</th><th scope="col">Détail</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="repo" data-live="webhook">acme/checkout-api</td>
+            <td><span class="chip ok">À jour</span></td>
+            <td class="when">Dernière lecture il y a <span data-ago="40">40&nbsp;s</span></td>
+          </tr>
+          <tr>
+            <td class="repo">acme/billing-worker</td>
+            <td><span class="chip warn" data-live="quota">Quota épuisé</span></td>
+            <td class="when" data-live="quota-detail">Quota GitHub épuisé, reprise à 14:00</td>
+          </tr>
+          <tr>
+            <td class="repo">acme/legacy-portal</td>
+            <td><span class="chip bad">Non autorisé</span></td>
+            <td class="when">La GitHub App a perdu l’accès à ce dépôt</td>
+          </tr>
+        </tbody>
+      </table>
+      <figcaption>La plainte la plus fréquente contre les connecteurs Git : tout affiche &laquo;&nbsp;connecté&nbsp;&raquo; alors que rien ne se lie. Ici, un dépôt qui prend du retard le dit, et dit pourquoi.</figcaption>
+    </figure>
+  </div>
+</div>
+
+<section class="demo" id="demo">
+  <div class="wrap">
+    <h2>Un commit, du push jusqu’à Jira.</h2>
+    <p class="demo-lede">Enregistré sur un vrai site Jira le 30 septembre 2026, sur le ticket CHK-5. Rien de mis en scène, temps tels que mesurés.</p>
+    <div class="demo-grid">
+      <div class="demo-stage" role="img" aria-label="Le ticket CHK-5 affiche un commit ; un commit qui cite CHK-5 est poussé sur GitHub ; CHK-5 affiche alors deux commits ; le panneau Développement de Jira liste le nouveau commit et son message.">
+        <figure class="demo-frame f1"><img src="/assets/demo-1.webp" width="1212" height="758" alt=""><span class="demo-mark" style="left:66%;top:97%"></span></figure>
+        <figure class="demo-frame f2"><img src="/assets/demo-2.webp" width="1212" height="758" alt="" loading="lazy"></figure>
+        <figure class="demo-frame f3"><img src="/assets/demo-3.webp" width="1212" height="758" alt="" loading="lazy"><span class="demo-mark" style="left:66%;top:97%"></span></figure>
+        <figure class="demo-frame f4"><img src="/assets/demo-4.webp" width="1212" height="758" alt="" loading="lazy"></figure>
+      </div>
+      <ol class="demo-steps">
+        <li class="s1"><span class="t">20:14:08</span> CHK-5 affiche un commit, vieux de onze jours.</li>
+        <li class="s2"><span class="t">+0&nbsp;s</span> Un commit qui cite CHK-5 est poussé sur GitHub.</li>
+        <li class="s3"><span class="t">+5,7&nbsp;s</span> Linkwright le relie à CHK-5. À +57&nbsp;s, le panneau Développement de Jira compte deux commits.</li>
+        <li class="s4"><span class="t">Ensuite</span> Le commit et son message sont dans le panneau natif de Jira, là où le JQL, les tableaux et Automation le voient.</li>
+      </ol>
+    </div>
+  </div>
+</section>
+
+<section class="why" id="why">
+  <div class="wrap split">
+    <div>
+      <h2>Le pont entre GitHub et Jira, c’est la partie que tout le monde subit.</h2>
+      <p>La plainte qui revient le plus souvent n’est pas une fonction manquante. C’est que <strong>tous les indicateurs disent &laquo;&nbsp;connecté&nbsp;&raquo;, que rien ne se lie, et que rien ne dit pourquoi</strong>.</p>
+      <p>J’ai lu un par un 279 avis négatifs des deux connecteurs officiels avant d’écrire une ligne de code. Linkwright est construit autour de cette seule phrase.</p>
+      <p>Le coût n’est pas vraiment pour le développeur. C’est que <strong>l’état des tickets cesse d’être une image fiable de l’avancement</strong> &mdash; et on le découvre au point du matin, ou devant un client.</p>
+    </div>
+
+    <figure class="ratings" aria-labelledby="ratings-cap">
+      <p class="ratings-head" id="ratings-cap">Note moyenne sur le Marketplace Atlassian, sur 5</p>
+      <div class="rating">
+        <div class="rating-name">GitHub for Atlassian <small>136 814 installations &middot; 509 avis</small></div>
+        <div class="rating-bar"><span style="--v:3.34"></span><b>3,34</b></div>
+      </div>
+      <div class="rating">
+        <div class="rating-name">GitLab for Jira Cloud <small>32 499 installations &middot; 342 avis</small></div>
+        <div class="rating-bar"><span style="--v:2.75"></span><b>2,75</b></div>
+      </div>
+      <div class="median" style="--v:4.48"><span>Médiane du Marketplace 4,48</span></div>
+      <figcaption>Relevé sur l’API publique du Marketplace le 12 septembre 2026.</figcaption>
+    </figure>
+  </div>
+</section>
+
+<section class="features" id="what">
+  <div class="wrap">
+    <h2>Ce que ça fait</h2>
+
+    <div class="feature">
+      <div class="feature-text">
+        <h3>Savoir ce qui est à jour, avant d’en rendre compte</h3>
+        <p>Chaque dépôt affiche son dernier webhook, sa dernière lecture complète et un état clair : <em>À jour</em>, <em>Pas à jour</em>, <em>Quota épuisé</em>, <em>En échec</em>, <em>Non autorisé</em> ou <em>Webhook en panne</em>, avec la raison. Un clic le relit depuis GitHub.</p>
+      </div>
+      <figure>
+        <img src="/assets/shot-health.png" alt="L’écran Dépôts Git, avec pour chaque dépôt son état de synchronisation et l’heure de sa dernière lecture réussie." loading="lazy" width="1840" height="900">
+      </figure>
+    </div>
+
+    <div class="feature">
+      <div class="feature-text">
+        <h3>Vos tableaux, votre JQL et Automation continuent de marcher</h3>
+        <p>Commits, branches, pull requests avec leurs approbations et déploiements arrivent dans le panneau Développement natif de Jira : tableaux, JQL et Automation marchent exactement comme avec l’intégration d’Atlassian. Un déploiement est relié à chaque commit qu’il livre, pas seulement au dernier.</p>
+      </div>
+      <figure>
+        <img src="/assets/shot-panel.png" alt="Un ticket Jira dont le panneau Développement est rempli par Linkwright : branches, commits, pull requests et un déploiement en production." loading="lazy" width="1840" height="900">
+      </figure>
+    </div>
+
+    <div class="feature">
+      <div class="feature-text">
+        <h3>Personne ne voit un dépôt qu’il ne devrait pas voir</h3>
+        <p>Un dépôt ne se relie qu’aux tickets des projets Jira auxquels il est rattaché. Associer une organisation GitHub demande l’un de ses propriétaires : personne ne peut exposer dans Jira des dépôts privés qu’il ne voit pas lui-même sur GitHub.</p>
+      </div>
+      <figure>
+        <img src="/assets/shot-connect.png" alt="Association d’une organisation GitHub depuis l’administration de Jira ; seul un propriétaire de l’organisation peut l’associer." loading="lazy" width="1840" height="900">
+      </figure>
+    </div>
+  </div>
+</section>
+
+<section class="how" id="how">
+  <div class="wrap">
+    <h2>Les webhooks d’abord. Les relectures, seulement pour rattraper ce qu’ils ont manqué.</h2>
+    <p class="sub">Une équipe de trois mille dépôts dispose d’environ quatre requêtes à l’API GitHub par dépôt et par heure. L’interrogation périodique ne tient pas dans ce budget : c’est exactement pour ça que les connecteurs qui en dépendent prennent du retard.</p>
+    <ol class="pipeline">
+      <li><h3>GitHub envoie l’événement</h3><p>Il arrive sur votre site Jira au moment où il se produit, par un webhook signé. Les webhooks ne consomment aucun quota d’API GitHub.</p></li>
+      <li><h3>Les clés de tickets sont repérées</h3><p>Dans les noms de branches, les messages de commit et les titres de pull requests, uniquement pour les projets auxquels ce dépôt est rattaché.</p></li>
+      <li><h3>Jira est mis à jour</h3><p>Directement dans le panneau Développement natif : tout ce que vous avez déjà construit dessus continue de marcher.</p></li>
+      <li><h3>Une relecture périodique rattrape le reste</h3><p>Revérifier des données inchangées ne coûte rien. Ce qu’aucun webhook n’a annoncé vous est signalé, pas caché.</p></li>
+    </ol>
+    <p class="forge">Linkwright tourne <strong>entièrement sur Atlassian Forge</strong>. Vos données restent dans le stockage de votre propre site Jira, je n’ai aucun serveur nulle part, et aucune donnée Jira n’est jamais envoyée à GitHub. <a href="/security.html">Lire la politique de sécurité (en anglais)</a></p>
+  </div>
+</section>
+
+<section class="pricing" id="pricing">
+  <div class="wrap split">
+    <div>
+      <h2>Gratuit pour les petites équipes.</h2>
+      <p>Par utilisateur et par mois, facturé par le Marketplace Atlassian. Au-delà de dix utilisateurs, le prix est aligné sur celui du principal connecteur payant. Soumis à Atlassian avec la fiche ; définitif une fois celle-ci approuvée.</p>
+    </div>
+    <table class="price">
+      <thead><tr><th scope="col">Taille de l’équipe</th><th scope="col">Prix</th></tr></thead>
+      <tbody>
+        <tr><td>Jusqu’à 10 utilisateurs</td><td><strong>Gratuit</strong><small>Toute l’app, pas un essai</small></td></tr>
+        <tr><td>De 11 à 100 utilisateurs</td><td><strong>2,61 $</strong><small>par utilisateur et par mois</small></td></tr>
+        <tr><td>De 101 à 250 utilisateurs</td><td><strong>1,86 $</strong><small>par utilisateur et par mois</small></td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section class="limits" id="limits">
+  <div class="wrap split">
+    <div>
+      <h2>Ce que ça ne fait pas encore</h2>
+      <p>Écrit ici plutôt que découvert plus tard, parce que c’est tout l’objet du produit.</p>
+    </div>
+    <div>
+      <dl>
+        <dt>GitHub.com seulement</dt>
+        <dd>GitLab, y compris auto-hébergé, est prévu dans une version ultérieure.</dd>
+        <dt>Rattrapage partiel de l’activité ancienne</dt>
+        <dd>Au rattachement d’un dépôt, les commits récents de la branche principale, les pull requests et les branches récentes sont reliés. Un commit poussé plus tôt sur une autre branche ne l’est pas.</dd>
+        <dt>Relectures et déploiements arrivent seulement par webhook</dt>
+        <dd>La relecture périodique ne les rattrape pas.</dd>
+        <dt>Pas de certification</dt>
+        <dd>Ni SOC&nbsp;2, ni ISO&nbsp;27001. L’outil est fait pour des équipes de 20 à 200 personnes en libre-service, pas pour les procédures d’achat des grands comptes.</dd>
+      </dl>
+      <p><a href="/docs.html#6-limits-of-this-version">La liste complète dans la documentation (en anglais)</a></p>
+    </div>
+  </div>
+</section>
+
+<section class="limits faq" id="faq">
+  <div class="wrap split">
+    <div>
+      <h2>Les questions que les équipes posent d’abord</h2>
+      <p>Réponses courtes. La <a href="/docs.html">documentation</a> donne les longues.</p>
+    </div>
+    <div>
+      <dl>
+        <dt>Quels hébergeurs Git sont pris en charge ?</dt>
+        <dd>GitHub.com, par une GitHub App installée sur votre compte ou votre organisation. GitHub Enterprise Server et GitLab ne sont pas pris en charge dans cette version.</dd>
+        <dt>Les Smart Commits, le JQL et Automation marchent-ils toujours ?</dt>
+        <dd>Oui. Linkwright remplit le panneau Développement de Jira lui-même : <code>development[commits]</code> en JQL, les badges des tableaux, les Smart Commits et les transitions automatiques se comportent comme avec l’intégration d’Atlassian.</dd>
+        <dt>Qu’est-ce qui sort de notre site Jira ?</dt>
+        <dd>Rien n’est envoyé à GitHub. Linkwright lit GitHub et écrit dans votre site Jira, et tourne entièrement sur Atlassian Forge : aucun serveur à moi entre les deux. Détails dans la <a href="/security.html">politique de sécurité</a>.</dd>
+        <dt>Qui voit quels dépôts ?</dt>
+        <dd>Un dépôt n’alimente que les projets Jira auxquels il est rattaché, et seul un propriétaire de l’organisation GitHub peut l’associer à votre site. Personne ne voit dans Jira un dépôt privé qu’il ne pourrait pas voir sur GitHub.</dd>
+        <dt>Que se passe-t-il quand un lien casse ?</dt>
+        <dd>L’état du dépôt passe à <em>Quota épuisé</em>, <em>En échec</em>, <em>Non autorisé</em> ou <em>Webhook en panne</em>, avec la raison et l’heure du dernier succès. <em>Rafraîchir</em> le relit depuis GitHub.</dd>
+        <dt>Qui est derrière, et en combien de temps le support répond-il ?</dt>
+        <dd>Un développeur indépendant, immatriculé en France. Première réponse sous deux jours ouvrés, à <a href="mailto:saad@linkwright.io">saad@linkwright.io</a>, en français ou en anglais.</dd>
+      </dl>
+    </div>
+  </div>
+</section>
+
+<section class="letter" id="early-access">
+  <div class="narrow">
+    <h2>Je ne vends rien pour l’instant.</h2>
+    <p>Linkwright est construit, il tourne, et il est en cours d’examen sur le Marketplace Atlassian. Ce que je cherche est plus simple qu’une vente : <strong>savoir si ce problème existe vraiment dans votre équipe</strong>, et si vous auriez payé pour l’éviter.</p>
+    <p>Si votre équipe utilise Jira et GitHub ensemble, une réponse d’une ligne suffit. Je peux aussi vous le montrer en direct, sur un vrai site Jira, en quinze minutes. Vous pourrez l’installer depuis le Marketplace dès qu’il sera approuvé, gratuitement jusqu’à 10 utilisateurs.</p>
+    <p class="signature">Saad Lagzouli, qui construit Linkwright</p>
+    <a class="btn btn-forest" href="mailto:saad@linkwright.io?subject=D%C3%A9mo%20Linkwright">Réserver une démo de 15 minutes : saad@linkwright.io</a>
+  </div>
+</section>
+
+<footer class="site">
+  <div class="wrap">
+    <span>&copy; 2026 Linkwright. Construit en France par un développeur indépendant.</span>
+    <nav>
+      <a href="/guides.html">Guides</a>
+      <a href="/docs.html">Documentation</a>
+      <a href="/security.html">Sécurité</a>
+      <a href="/about.html">À propos</a>
+      <a href="/changelog.html">Nouveautés</a>
+      <a href="mailto:saad@linkwright.io">Contact</a>
+      <a href="/privacy.html">Confidentialité</a>
+      <a href="/terms.html">Conditions</a>
+      <a href="/legal.html">Mentions légales</a>
+    </nav>
+  </div>
+</footer>
+
+<script>
+  // The hero board counts up like the real screen does. Nothing else on the page moves.
+  (function () {
+    var el = document.querySelector('[data-ago]');
+    if (!el || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    var start = Date.now() - Number(el.dataset.ago) * 1000;
+    el.addEventListener('reset', function () { start = Date.now(); el.textContent = '0 s'; });
+    setInterval(function () {
+      var s = Math.round((Date.now() - start) / 1000);
+      el.textContent = s < 60 ? s + ' s' : Math.floor(s / 60) + ' min';
+    }, 1000);
+  })();
+
+  // The hero board tells the product's story in a loop, like the real screen would over a
+  // morning: a webhook lands on the first repository (its row flashes, its counter restarts),
+  // the second one leaves "Rate limited" once its quota resets, then hits the limit again.
+  // The third stays "Not authorized" — that one needs a human. Still for reduced motion.
+  (function () {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    var row = document.querySelector('[data-live="webhook"]');
+    var ago = document.querySelector('[data-ago]');
+    var chip = document.querySelector('[data-live="quota"]');
+    var detail = document.querySelector('[data-live="quota-detail"]');
+    if (!row || !ago || !chip || !detail) return;
+    var tr = row.parentNode;
+    function webhook() {
+      tr.classList.remove('live-flash');
+      void tr.offsetWidth; // restart the animation
+      tr.classList.add('live-flash');
+      ago.dataset.ago = '0';
+      ago.dispatchEvent(new Event('reset'));
+    }
+    var limited = true;
+    function quota() {
+      limited = !limited;
+      chip.className = 'chip ' + (limited ? 'warn' : 'ok');
+      chip.textContent = limited ? 'Quota épuisé' : 'À jour';
+      detail.textContent = limited ? 'Quota GitHub épuisé, reprise à 14:00' : 'Quota revenu à 14:00, rattrapé';
+    }
+    setInterval(webhook, 9000);
+    setInterval(quota, 7000);
+  })();
+
+  // Section nav: mark the section the reader is actually in. Pure enhancement — the links
+  // are ordinary anchors and still work if this never runs.
+  (function () {
+    var links = [].slice.call(document.querySelectorAll('.sectionnav a'));
+    if (!links.length || !window.IntersectionObserver) return;
+
+    var targets = links
+      .map(function (a) { return document.getElementById(a.getAttribute('href').slice(1)); })
+      .filter(Boolean);
+    var visible = Object.create(null);
+
+    function paint() {
+      var current = null;
+      targets.forEach(function (t) { if (!current && visible[t.id]) current = t.id; });
+      links.forEach(function (a) {
+        if (current && a.getAttribute('href') === '#' + current) a.setAttribute('aria-current', 'true');
+        else a.removeAttribute('aria-current');
+      });
+    }
+
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) { visible[e.target.id] = e.isIntersecting; });
+      paint();
+    }, { rootMargin: '-45% 0px -50% 0px' });
+
+    targets.forEach(function (t) { io.observe(t); });
+  })();
+</script>
+</body>
+</html>

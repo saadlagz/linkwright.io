@@ -69,7 +69,10 @@ usually the person who just installed the GitHub App.</p>
 </ol>
 <p>Why the owner role is required: without it, any member of an organization could expose in Jira
 private repositories they cannot see themselves. An installation you do not control is listed with
-the reason it cannot be connected.</p>
+the reason it cannot be connected, and who can connect it instead.</p>
+<p>A <strong>Get started</strong> checklist at the top of <strong>Git sync health</strong> shows where the site stands: GitHub
+App installed and organization connected, repositories read, repositories attached. Each step is
+ticked from what the site actually holds; once all are done, a single line remains.</p>
 <p>The installation’s repositories are read immediately, then <strong>every 10 minutes</strong>: a repository added to
 the GitHub App later appears without anything being pushed to it.</p>
 <p>To <strong>disconnect</strong> an installation, click <strong>Disconnect</strong> next to it, then confirm. Every repository
@@ -82,6 +85,9 @@ installed: connect it again at any time.</p>
 <li>Repositories of connected installations (§2.3) are listed; no others ever appear.</li>
 <li>Click <strong>Attach to [PROJECT KEY]</strong>.</li>
 </ol>
+<p>Repositories whose recent commits cite the project’s key are listed first, marked <strong>Suggested</strong> with
+the number of commits; <strong>Attach the suggested repositories</strong> attaches them all at once. Suggestions
+are refreshed once a day per repository; they never link anything by themselves.</p>
 <p>When a repository is attached, the app creates its webhook to your Jira site automatically. If it
 cannot, a red message says so: the repository stays attached, but its activity may not arrive until
 the problem is fixed.</p>
