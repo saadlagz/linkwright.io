@@ -38,6 +38,13 @@
   <div class="narrow">
     <h1>Changelog</h1>
 <p>What changes for people using Linkwright for Jira, newest first.</p>
+<h2 id="1-october-2026-version-27">1 October 2026 — version 2.7</h2>
+<ul>
+<li><strong>Refresh now repairs branches too.</strong> Jira can drop a branch from an issue while keeping it
+stored; resending it does not bring it back. A full send now deletes the branches Jira holds,
+waits until Jira confirms the deletion, then creates them again — the way commits were already
+repaired. Measured on our test site: 30 branches and 20 pull requests back on their issue.</li>
+</ul>
 <h2 id="1-october-2026-version-26">1 October 2026 — version 2.6</h2>
 <ul>
 <li><strong>Older commits on feature branches are caught up.</strong> On the first read after a repository is
