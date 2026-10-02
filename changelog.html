@@ -38,6 +38,23 @@
   <div class="narrow">
     <h1>Changelog</h1>
 <p>What changes for people using Linkwright for Jira, newest first.</p>
+<h2 id="2-october-2026-version-213">2 October 2026 — version 2.13</h2>
+<ul>
+<li><strong>When GitHub takes a repository away from the app, the page says so, and says why.</strong> If a
+repository is removed from the GitHub App’s repository access, renamed or deleted, “Git
+repositories” shows it as <em>Not authorized</em> as soon as the page is opened, with what to do: add
+it back under <em>Repository access</em>, or detach it. Links already in Jira are kept. (Measured
+side by side the same day: with access removed, the official connector erased the issue’s
+commits from Jira without a word.)</li>
+<li><strong>Attached repositories are re-read every 30 minutes</strong> instead of 15, as a safety net behind
+webhooks, which still deliver every change as it happens.</li>
+</ul>
+<h2 id="2-october-2026-version-212">2 October 2026 — version 2.12</h2>
+<ul>
+<li><strong>Uninstalling cleans up after itself.</strong> Before Jira removes the app, it now deletes the
+webhooks it created on your GitHub repositories. Previously they stayed behind, pointing at an
+address that no longer existed.</li>
+</ul>
 <h2 id="1-october-2026-version-211">1 October 2026 — version 2.11</h2>
 <ul>
 <li><strong>Buttons say what they are doing.</strong> Connecting a GitHub organization, attaching and detaching
