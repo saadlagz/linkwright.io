@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>GitHub for Atlassian is moving to Forge: what to check — Linkwright</title>
+<meta name="description" content="Atlassian is moving GitHub for Atlassian to Forge (rollout October 2026). What Atlassian says, and a five-minute before/after check that your issues keep their commits and pull requests.">
+<link rel="canonical" href="https://linkwright.io/github-for-atlassian-forge-migration.html">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://linkwright.io/github-for-atlassian-forge-migration.html">
+<meta property="og:site_name" content="Linkwright">
+<meta property="og:title" content="GitHub for Atlassian is moving to Forge: what to check — Linkwright">
+<meta property="og:description" content="Atlassian is moving GitHub for Atlassian to Forge (rollout October 2026). What Atlassian says, and a five-minute before/after check that your issues keep their commits and pull requests.">
+<meta property="og:image" content="https://linkwright.io/assets/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="icon" href="/assets/favicon-96.png" type="image/png" sizes="96x96">
+<link rel="icon" href="/assets/logo.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+<meta name="theme-color" content="#14302a">
+<link rel="stylesheet" href="/style.css?v=3ff725e50f">
+</head>
+<body>
+
+<header class="site">
+  <div class="wrap">
+    <a class="brand" href="/"><img src="/assets/logo.svg" alt="" width="28" height="28">Linkwright</a>
+    <nav>
+      <a href="/guides.html">Guides</a>
+      <a href="/docs.html">Documentation</a>
+      <a href="/security.html">Security</a>
+      <a class="nav-cta" href="/#early-access">Book a demo</a>
+    </nav>
+  </div>
+</header>
+
+<main class="doc">
+  <div class="narrow">
+    <h1>GitHub for Atlassian is moving to Forge: what to check</h1>
+    <div class="toc"><p>On this page</p><ul><li><a href="#what-atlassian-says">What Atlassian says</a></li><li><a href="#why-check-anyway">Why check anyway</a></li><li><a href="#before-take-a-baseline-five-minutes">Before: take a baseline (five minutes)</a></li><li><a href="#after-compare">After: compare</a></li><li><a href="#if-something-is-missing">If something is missing</a></li><li><a href="#about-this-page">About this page</a></li></ul></div>
+<p>Atlassian is moving its free GitHub connector, <em>GitHub for Atlassian</em> (the app many teams still call
+“GitHub for Jira”), from the older Connect platform to Atlassian Forge. This page sums up what
+Atlassian says about it, and gives a short way to check, before and after, that your issues still
+carry their branches, commits and pull requests. Nothing here requires a particular connector.</p>
+<h2 id="what-atlassian-says">What Atlassian says</h2>
+<p>From Atlassian’s migration page,
+<a href="https://github.atlassian.com/spa/forge-migration-plan">GitHub for Atlassian is moving to Atlassian Forge</a>
+(read on 10 October 2026):</p>
+<ul>
+<li><strong>Who does it:</strong> Atlassian, in the background. Connected GitHub organizations, repositories and
+settings “will carry over automatically”, and there is “nothing you need to prepare”.</li>
+<li><strong>When:</strong> final development in September–October 2026; <strong>production rollout and progressive
+validation in October</strong>; post-rollout verification in November–December.</li>
+<li><strong>During the move:</strong> existing functionality “will continue to operate throughout the transition”.
+Atlassian says it will contact you and update the page if anything needs your attention.</li>
+</ul>
+<p>On the Atlassian Marketplace, version 3.3.0 of GitHub for Atlassian (released 25 September 2026) is
+already listed as a Forge app.</p>
+<h2 id="why-check-anyway">Why check anyway</h2>
+<p>A platform move for more than 137,000 installations is rolled out progressively, so different sites
+switch at different times. Nobody — Atlassian included — can promise that every site sees exactly
+the same data before and after. Checking takes five minutes and turns “something looks off” into a
+number you can give to support.</p>
+<h2 id="before-take-a-baseline-five-minutes">Before: take a baseline (five minutes)</h2>
+<ol>
+<li>
+<p><strong>Count the issues that carry development data</strong>, per project. In Jira’s issue search, run:</p>
+<pre><code>project = ABC AND development[commits].all &gt; 0
+</code></pre>
+<p>and</p>
+<pre><code>project = ABC AND development[pullrequests].all &gt; 0
+</code></pre>
+<p>Write down both counts with the date. These fields are the ones Jira Cloud accepts; see
+<a href="jira-jql-development-github.html">JQL for GitHub data in Jira</a> for the ones it refuses.</p>
+</li>
+<li>
+<p><strong>Pick two or three reference issues</strong> with recent activity — one with an open pull request, one
+with a merged one — and note what their Development panel shows (branches, commits, pull
+requests, deployments).</p>
+</li>
+<li>
+<p><strong>Note which repositories are connected.</strong> In Jira, the app’s configuration page: <strong>Settings → Apps → Manage
+apps → GitHub for Atlassian</strong>. On GitHub, the same list is under your organization’s <strong>Settings → GitHub Apps</strong> (or
+<code>github.com/organizations/&lt;org&gt;/settings/installations</code>).</p>
+</li>
+<li>
+<p><strong>List the Jira Automation rules</strong> that start from development events (branch created, commit
+created, pull request merged…). They are the first thing your team notices if events stop.</p>
+</li>
+</ol>
+<h2 id="after-compare">After: compare</h2>
+<ul>
+<li>Run the same two JQL queries. <strong>The counts should not go down.</strong> They go up as new work is linked.</li>
+<li>Open the reference issues: the same branches, commits and pull requests should be there.</li>
+<li>Push a test commit whose message starts with an issue key (<code>ABC-123 check</code>), and check that it
+appears on the issue within a few minutes.</li>
+<li>On the configuration page, check that every organization is still connected and that no
+repository is missing.</li>
+<li>On GitHub, check that no <strong>permission update</strong> is waiting for an organization owner’s approval
+(organization <strong>Settings → GitHub Apps</strong> shows pending requests). A GitHub App whose new
+permissions are not approved keeps working with its old ones, which can leave some data out.</li>
+</ul>
+<h2 id="if-something-is-missing">If something is missing</h2>
+<ol>
+<li>Go through <a href="github-commits-not-showing-in-jira.html">GitHub commits not showing in Jira</a>: issue
+keys, repository access, backfill, permissions, a hidden Development field. Most cases are there.</li>
+<li>Re-run the backfill from the app’s configuration page, if it offers one.</li>
+<li>Contact Atlassian support with your baseline: “project ABC had N issues with commits on
+[date], it has M today”. A before/after number is the fastest way to get a case taken seriously.</li>
+<li>Atlassian’s public trackers: issues on
+<a href="https://github.com/atlassian/github-for-jira/issues">atlassian/github-for-jira</a>, and bug reports
+on <a href="https://jira.atlassian.com">jira.atlassian.com</a>.</li>
+</ol>
+<h2 id="about-this-page">About this page</h2>
+<p>Written by the developer of <a href="index.html">Linkwright for Jira</a>, another GitHub connector built on Forge,
+which shows for each repository whether its data is up to date and why not. The checks above work
+whatever connector you use. If you want a second connector to compare against, read
+<a href="github-for-atlassian-side-by-side.html">24 hours side by side with GitHub for Atlassian</a> first —
+two connectors on the same repositories get in each other’s way — and see the
+<a href="beta.html">free beta</a>.</p>
+
+  </div>
+</main>
+
+<footer class="site">
+  <div class="wrap">
+    <span>&copy; 2026 Linkwright. Built in France by an independent developer.</span>
+    <nav>
+      <a href="/">Home</a>
+      <a href="/guides.html">Guides</a>
+      <a href="/docs.html">Documentation</a>
+      <a href="/security.html">Security</a>
+      <a href="/about.html">About</a>
+      <a href="/changelog.html">Changelog</a>
+      <a href="mailto:saad@linkwright.io">Contact</a>
+      <a href="/privacy.html">Privacy</a>
+      <a href="/terms.html">Terms</a>
+      <a href="/legal.html">Legal notice</a>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>
