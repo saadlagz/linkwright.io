@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Linkwright free beta — Linkwright</title>
+<meta name="description" content="Linkwright free beta for Jira Cloud: what it does, how it installs in three steps, and what to know before you install.">
+<link rel="canonical" href="https://linkwright.io/beta.html">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://linkwright.io/beta.html">
+<meta property="og:site_name" content="Linkwright">
+<meta property="og:title" content="Linkwright free beta — Linkwright">
+<meta property="og:description" content="Linkwright free beta for Jira Cloud: what it does, how it installs in three steps, and what to know before you install.">
+<meta property="og:image" content="https://linkwright.io/assets/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="icon" href="/assets/favicon-96.png" type="image/png" sizes="96x96">
+<link rel="icon" href="/assets/logo.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+<meta name="theme-color" content="#14302a">
+<link rel="stylesheet" href="/style.css?v=3ff725e50f">
+</head>
+<body>
+
+<header class="site">
+  <div class="wrap">
+    <a class="brand" href="/"><img src="/assets/logo.svg" alt="" width="28" height="28">Linkwright</a>
+    <nav>
+      <a href="/guides.html">Guides</a>
+      <a href="/docs.html">Documentation</a>
+      <a href="/security.html">Security</a>
+      <a class="nav-cta" href="/#early-access">Book a demo</a>
+    </nav>
+  </div>
+</header>
+
+<main class="doc">
+  <div class="narrow">
+    <h1>Linkwright free beta</h1>
+<p>While Linkwright for Jira is in Atlassian Marketplace review, the same app is available as a free
+beta, installed from a private link. It is the same code as the Marketplace version, under the name
+<strong>Linkwright Beta</strong>.</p>
+<p><strong>To get the link, write to <a href="mailto:saad@linkwright.io?subject=Linkwright%20beta">saad@linkwright.io</a></strong>
+with the address of your Jira site (<code>yourcompany.atlassian.net</code>). You get it the same working day.</p>
+<h2 id="what-you-get">What you get</h2>
+<ul>
+<li>GitHub branches, commits, pull requests, reviews and deployments on your Jira issues, in Jira’s
+native Development panel — JQL, boards and Automation see them like any other development data.</li>
+<li>For every repository, a sync state you can trust: <strong>Up to date</strong>, <strong>Out of date</strong>, <strong>Rate
+limited</strong>, <strong>Failing</strong> or <strong>Not authorized</strong>, with the time of the last webhook and of the last
+successful read, and a <strong>Refresh</strong> button.</li>
+<li>Repositories attached <strong>per Jira project</strong>: a repository only links issues of the projects it is
+attached to.</li>
+<li>Direct support from the developer, and a fix within 48 hours for anything that gets in your way.</li>
+</ul>
+<p><strong>Free</strong> until six months after the Marketplace release.</p>
+<h2 id="install-in-three-steps-about-five-minutes">Install in three steps (about five minutes)</h2>
+<p>You need to be a <strong>Jira administrator</strong>, and an <strong>owner</strong> of the GitHub organization (or the
+personal account) that holds the repositories.</p>
+<h3 id="1-install-the-beta-in-jira">1. Install the beta in Jira</h3>
+<p>Open the link you received, choose your Jira site, then <strong>Install</strong>. The first screen can take up to
+20 seconds while the app prepares its database; it says so while it waits.</p>
+<h3 id="2-connect-github">2. Connect GitHub</h3>
+<ol>
+<li>Install the <a href="https://github.com/apps/linkwright-for-jira">Linkwright for Jira GitHub App</a> on your
+organization and choose the repositories it may read.</li>
+<li>In Jira: <strong>Settings → Apps → Git sync health → Connect a GitHub organization</strong>, allow access to
+GitHub, then <strong>Connect to this site</strong> next to your organization.</li>
+</ol>
+<p>A <strong>Get started</strong> checklist on that page shows what is done and what is left.</p>
+<h3 id="3-attach-repositories-to-a-project">3. Attach repositories to a project</h3>
+<p>In the project: <strong>Project settings → Apps → Git repositories</strong>. Repositories whose recent commits
+already cite the project’s key are listed first as <strong>Suggested</strong>; <strong>Attach the suggested
+repositories</strong> attaches them all. Each one turns <strong>Up to date</strong> within seconds.</p>
+<p>Push a commit whose message starts with an issue key (<code>ABC-12 fix login</code>): it reaches the issue in a
+few seconds. On a brand-new Jira site, Jira’s own Development panel can take a few minutes to show
+the first data; the app’s <strong>Git activity</strong> panel (apps button under the issue title) shows it at once.</p>
+<p>The full guide is in the <a href="docs.html">documentation</a>.</p>
+<h2 id="before-you-install-three-things-to-know">Before you install: three things to know</h2>
+<ul>
+<li><strong>Do not run two GitHub connectors on the same repositories.</strong> If GitHub for Atlassian already
+reads a repository, remove it from that app’s GitHub installation first, or try the beta on other
+repositories. Two connectors on one repository take links away from each other in Jira (we
+measured it on 1 October 2026).</li>
+<li><strong>Moving to the Marketplace version later</strong> means installing that version and attaching the
+repositories again — a few minutes. Your Git history is read again; nothing is lost on GitHub.</li>
+<li><strong><a href="https://GitHub.com">GitHub.com</a> only</strong> for now; no GitLab or GitHub Enterprise Server yet. The other limits are listed
+in the <a href="docs.html">documentation</a>.</li>
+</ul>
+<h2 id="your-data">Your data</h2>
+<p>The app runs on Atlassian Forge: what it stores (repository names, commit and pull request
+metadata, sync state) stays in Atlassian’s infrastructure. It never changes your code. Details on
+the <a href="security.html">security page</a> and in the <a href="privacy.html">privacy policy</a>.</p>
+<p>Questions before installing: <a href="mailto:saad@linkwright.io">saad@linkwright.io</a>.</p>
+
+  </div>
+</main>
+
+<footer class="site">
+  <div class="wrap">
+    <span>&copy; 2026 Linkwright. Built in France by an independent developer.</span>
+    <nav>
+      <a href="/">Home</a>
+      <a href="/guides.html">Guides</a>
+      <a href="/docs.html">Documentation</a>
+      <a href="/security.html">Security</a>
+      <a href="/about.html">About</a>
+      <a href="/changelog.html">Changelog</a>
+      <a href="mailto:saad@linkwright.io">Contact</a>
+      <a href="/privacy.html">Privacy</a>
+      <a href="/terms.html">Terms</a>
+      <a href="/legal.html">Legal notice</a>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>
