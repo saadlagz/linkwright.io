@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>I ran my GitHub–Jira connector next to GitHub for Atlassian for 24 hours. Here is what each one did. — Linkwright</title>
+<meta name="description" content="GitHub for Atlassian and Linkwright run side by side for 24 hours on the same pushes: single commits, 30 branches, 500 commits, a merged PR, history, and removed access.">
+<link rel="canonical" href="https://linkwright.io/github-for-atlassian-side-by-side.html">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://linkwright.io/github-for-atlassian-side-by-side.html">
+<meta property="og:site_name" content="Linkwright">
+<meta property="og:title" content="I ran my GitHub–Jira connector next to GitHub for Atlassian for 24 hours. Here is what each one did. — Linkwright">
+<meta property="og:description" content="GitHub for Atlassian and Linkwright run side by side for 24 hours on the same pushes: single commits, 30 branches, 500 commits, a merged PR, history, and removed access.">
+<meta property="og:image" content="https://linkwright.io/assets/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="icon" href="/assets/favicon-96.png" type="image/png" sizes="96x96">
+<link rel="icon" href="/assets/logo.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+<meta name="theme-color" content="#14302a">
+<link rel="stylesheet" href="/style.css?v=9ab3140170">
+</head>
+<body>
+
+<header class="site">
+  <div class="wrap">
+    <a class="brand" href="/"><img src="/assets/logo.svg" alt="" width="28" height="28">Linkwright</a>
+    <nav>
+      <a href="/guides.html">Guides</a>
+      <a href="/docs.html">Documentation</a>
+      <a href="/security.html">Security</a>
+      <a class="nav-cta" href="/#early-access">Book a demo</a>
+    </nav>
+  </div>
+</header>
+
+<main class="doc">
+  <div class="narrow">
+    <h1>I ran my GitHub–Jira connector next to GitHub for Atlassian for 24 hours. Here is what each one did.</h1>
+<p><em>Published 10 October 2026. Measurements of 1–2 October 2026.</em></p>
+<p>I build Linkwright, a GitHub-to-Jira connector on Forge, so read this as a vendor’s test of its own
+product. I have tried to make it checkable: same scenarios, pushed within half a second of each other,
+measured from Jira’s own development data (<code>dev-status</code>), and every number is below, including the
+ones where the official app does better.</p>
+<p><strong>Setup.</strong> One Jira Cloud site. Two private repositories with identical content: one visible only to
+GitHub for Atlassian, one visible only to Linkwright (more on why below). Tickets SBS-9 to SBS-13.
+Readings at about 2 minutes, then 1 hour, 6 hours and 24 hours. 1–2 October 2026.</p>
+<table>
+<thead>
+<tr>
+<th>Scenario</th>
+<th>GitHub for Atlassian</th>
+<th>Linkwright</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1 commit on <code>main</code></td>
+<td>linked within 32 s</td>
+<td>linked within 32 s</td>
+</tr>
+<tr>
+<td>1 push updating 30 branches</td>
+<td>30/30 commits, 30/30 branches, within 32 s</td>
+<td>same</td>
+</tr>
+<tr>
+<td>1 push of 500 commits</td>
+<td><strong>0 commits</strong> on the issue (1 branch), still 0 after 24 h</td>
+<td>100 shown (Jira displays at most 100), complete within 2 min</td>
+</tr>
+<tr>
+<td>Branch, review, merged pull request</td>
+<td>complete; merge visible at 56 s</td>
+<td>complete; merge visible at 40 s</td>
+</tr>
+<tr>
+<td>Commits pushed <strong>before</strong> connecting</td>
+<td><strong>3 commits, 2 branches</strong></td>
+<td>2 commits at first; <strong>3 commits</strong> after a fix the same day (we link a branch only when its name cites the issue, so 1 branch)</td>
+</tr>
+<tr>
+<td>After 1 h, 6 h, 24 h</td>
+<td>no loss</td>
+<td>no loss</td>
+</tr>
+</tbody>
+</table>
+<p><strong>The scenario that matters most to me: access removed.</strong> I removed each repository from its GitHub
+App, then pushed a commit naming SBS-6.</p>
+<ul>
+<li>GitHub for Atlassian: the commit was not received, and <strong>the commits already on SBS-6 disappeared
+from the issue</strong> (1 → 0), with nothing on the issue or the configuration page saying why. When
+access came back, everything returned on its own.</li>
+<li>Linkwright: the existing links stayed, the new commit was linked (the repository webhook survives
+the access change), and the repository showed <strong>“Not authorized”</strong> with the cause and what to do.
+Our first version only said so at the next re-read and gave the wrong cause; both fixed the same day.</li>
+</ul>
+<p><strong>What I learned that is useful whichever connector you run:</strong></p>
+<ol>
+<li><strong>Two connectors on the same repository get in each other’s way.</strong> On a shared repository in a first
+run, each app’s repair work cost the other one links. If you trial a second connector, give it
+different repositories, or remove them from the first one.</li>
+<li><strong>Large pushes are where links go missing quietly.</strong> If your team squashes rarely or imports
+history, check an issue touched by a big push with JQL <code>development[commits].all &gt; 0</code>.</li>
+<li><strong>“Connected” is not “up to date”.</strong> Ask your connector when it last heard from each repository.</li>
+</ol>
+<p><strong>Limits of this test.</strong> One site, small repositories, one day, run by the vendor of one of the two
+apps. The detailed protocol and raw readings are available on request, and I would like nothing more
+than someone re-running it.</p>
+<p>Linkwright is in Atlassian Marketplace review; meanwhile a free beta installs from a link — write to
+<a href="mailto:saad@linkwright.io">saad@linkwright.io</a>. Questions and corrections are welcome at the same address.</p>
+
+  </div>
+</main>
+
+<footer class="site">
+  <div class="wrap">
+    <span>&copy; 2026 Linkwright. Built in France by an independent developer.</span>
+    <nav>
+      <a href="/">Home</a>
+      <a href="/guides.html">Guides</a>
+      <a href="/docs.html">Documentation</a>
+      <a href="/security.html">Security</a>
+      <a href="/about.html">About</a>
+      <a href="/changelog.html">Changelog</a>
+      <a href="mailto:saad@linkwright.io">Contact</a>
+      <a href="/privacy.html">Privacy</a>
+      <a href="/terms.html">Terms</a>
+      <a href="/legal.html">Legal notice</a>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>
