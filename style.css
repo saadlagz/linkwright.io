@@ -1,4 +1,4 @@
-/* Linkwright — public site. No external requests: fonts are self-hosted, no analytics, no trackers.
+/* Linkwright — public site. Fonts are self-hosted; the only external request is GoatCounter's cookie-less counter (see legal.html).
    Palette taken from the logo: forged green, brass and teal. */
 
 @font-face { font-family: "Plex Sans"; src: url("assets/fonts/plex-sans-400-normal.woff2") format("woff2"); font-weight: 400; font-style: normal; font-display: swap; }
