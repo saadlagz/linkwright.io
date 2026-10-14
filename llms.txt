@@ -30,5 +30,5 @@ Key facts:
 
 ## Contact
 
-- Support: saad@linkwright.io (first response within 2 business days)
+- Support: support@linkwright.io (first response within 2 business days)
 - Security: security@linkwright.io
