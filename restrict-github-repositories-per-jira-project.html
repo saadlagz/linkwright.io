@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Limit which GitHub repositories each Jira project can link — Linkwright</title>
+<meta name="description" content="Limit which GitHub repositories can link to each Jira project and site: what GitHub for Atlassian does (JRACLOUD-99914), three boundaries, and a checklist.">
+<link rel="canonical" href="https://linkwright.io/restrict-github-repositories-per-jira-project.html">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://linkwright.io/restrict-github-repositories-per-jira-project.html">
+<meta property="og:site_name" content="Linkwright">
+<meta property="og:title" content="Limit which GitHub repositories each Jira project can link — Linkwright">
+<meta property="og:description" content="Limit which GitHub repositories can link to each Jira project and site: what GitHub for Atlassian does (JRACLOUD-99914), three boundaries, and a checklist.">
+<meta property="og:image" content="https://linkwright.io/assets/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="icon" href="/assets/favicon-96.png" type="image/png" sizes="96x96">
+<link rel="icon" href="/assets/logo.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+<meta name="theme-color" content="#14302a">
+<link rel="stylesheet" href="/style.css?v=54ef87ef0d">
+<script data-goatcounter="https://saadlagz.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+<script>(function(){try{var q=new URLSearchParams(location.search).get('src');if(q)sessionStorage.setItem('lw_src',q.slice(0,20));var s=sessionStorage.getItem('lw_src');if(!s)return;document.addEventListener('DOMContentLoaded',function(){document.querySelectorAll('a[href*="install-beta"]').forEach(function(a){if(a.href.indexOf('src=')<0)a.href+=(a.href.indexOf('?')<0?'?':'&')+'src='+encodeURIComponent(s)})})}catch(e){}})();</script>
+</head>
+<body>
+
+<header class="site">
+  <div class="wrap">
+    <a class="brand" href="/"><img src="/assets/logo.svg" alt="" width="28" height="28">Linkwright</a>
+    <nav>
+      <a href="/guides.html">Guides</a>
+      <a href="/docs.html">Documentation</a>
+      <a href="/security.html">Security</a>
+      <a class="nav-cta" href="/#early-access">Book a demo</a>
+    </nav>
+  </div>
+</header>
+
+<main class="doc">
+  <div class="narrow">
+    <h1>Limit which GitHub repositories each Jira project can link</h1>
+    <div class="toc"><p>On this page</p><ul><li><a href="#what-atlassians-own-tracker-says-about-github-for-atlassian">What Atlassian’s own tracker says about GitHub for Atlassian</a></li><li><a href="#three-boundaries-from-the-outside-in">Three boundaries, from the outside in</a></li><li><a href="#how-linkwright-draws-them">How Linkwright draws them</a></li><li><a href="#what-this-does-not-do">What this does not do</a></li><li><a href="#checklist">Checklist</a></li></ul></div>
+<p>When a GitHub organization is connected to Jira Cloud, which repositories can link to which issues?
+With most connectors the answer is “all of them, everywhere”: any issue key in any commit of any
+connected repository creates a link. That is fine for a single team. It is not fine when one GitHub
+organization serves several teams, clients or Jira sites that should not see each other’s code.</p>
+<h2 id="what-atlassians-own-tracker-says-about-github-for-atlassian">What Atlassian’s own tracker says about GitHub for Atlassian</h2>
+<p>A public request opened on Atlassian’s tracker on 21 October 2026,
+<a href="https://jira.atlassian.com/browse/JRACLOUD-99914">JRACLOUD-99914</a>, describes the situation with
+GitHub for Atlassian:</p>
+<ul>
+<li>the GitHub App is installed at the organization level, so the repository selection made in GitHub
+(“Only select repositories”) applies to the whole installation;</li>
+<li>every repository authorized there is exposed to every Jira Cloud site connected to that
+organization;</li>
+<li>any work item in any connected site can link to any of those repositories when a commit mentions
+its key.</li>
+</ul>
+<p>The request asks for repository mapping per Jira site and per space. Its status is <em>Gathering
+Interest</em>. A related request from 22 October,
+<a href="https://jira.atlassian.com/browse/JRACLOUD-99928">JRACLOUD-99928</a>, asks to control which
+integration’s data the Development panel shows.</p>
+<p>The workarounds the ticket lists are blunt: move repositories into separate GitHub organizations, or
+remove the <em>View Development Tools</em> permission from a space, which hides the whole Development panel
+there.</p>
+<h2 id="three-boundaries-from-the-outside-in">Three boundaries, from the outside in</h2>
+<ol>
+<li><strong>GitHub: which repositories the GitHub App can read.</strong> Set on the GitHub side, per installation
+(“All repositories” or “Only select repositories”). Whatever the connector, nothing outside this
+list can reach Jira. Keep it as narrow as the teams that use Jira.</li>
+<li><strong>Jira site: which installation the site is connected to.</strong> Decided by whoever connects it.</li>
+<li><strong>Jira project: which repositories can link to its issues.</strong> This is the boundary teams usually
+mean, and the one most connectors do not have.</li>
+</ol>
+<h2 id="how-linkwright-draws-them">How Linkwright draws them</h2>
+<p><strong>A repository links nothing until it is attached to a project.</strong> Each Jira project has a <em>Git
+repositories</em> page (Project settings → Apps). A repository creates links only on issues of the
+projects it is attached to; a commit in that repository that mentions an issue of another project
+is ignored there. Attaching a repository to two projects is allowed, and explicit.</p>
+<p><strong>Connecting an organization requires its owner role.</strong> A Jira administrator connects a GitHub
+installation from the app’s admin page by signing in to GitHub once. The app checks that this person
+is an owner of the organization (or the account itself), and checks again on the server when the
+connection is saved. Without that check, any organization member who is also a Jira admin could
+expose in Jira private repositories they cannot see themselves.</p>
+<p><strong>Each Jira site receives only its own repositories’ events.</strong> When a repository is attached, the
+app creates a webhook on that repository pointing to that Jira site, signed with a secret that
+belongs to that site. Two Jira sites connected to the same organization each get their own webhook,
+and only for the repositories attached on that site.</p>
+<p><strong>Detaching is reversible and clean.</strong> Detaching a repository from its last project removes its
+webhook and its entries in Jira’s Development panel within minutes. Disconnecting an installation
+detaches all of its repositories from every project.</p>
+<h2 id="what-this-does-not-do">What this does not do</h2>
+<ul>
+<li>Linkwright’s data appears in Jira’s native Development panel, like every connector’s. Who can see
+that panel is still governed by the <em>View Development Tools</em> permission of each space.</li>
+<li>Linkwright’s own <em>Git activity</em> panel keeps showing the history it indexed for a repository after
+that repository is detached.</li>
+<li>If another connector (GitHub for Atlassian, for example) still reads the same repositories, its
+links follow its own rules. Remove those repositories from the other app’s GitHub installation if
+you want the per-project boundary to hold.</li>
+</ul>
+<h2 id="checklist">Checklist</h2>
+<ol>
+<li>In GitHub, set each installation to <strong>Only select repositories</strong>.</li>
+<li>In each Jira site, connect only the installations that site should see.</li>
+<li>In each Jira project, attach only the repositories its team works on, and use the <strong>Suggested</strong>
+list to find them: it shows repositories whose recent commits cite the project’s key.</li>
+<li>Check after a week: a commit that mentions another project’s key should not appear on that
+project’s issues.</li>
+</ol>
+<p><a href="index.html">Linkwright for Jira</a> is in free beta: <a href="beta.html">install it on your Jira Cloud site</a>.</p>
+
+  </div>
+</main>
+
+<footer class="site">
+  <div class="wrap">
+    <span>&copy; 2026 Linkwright. Built in France by an independent developer.</span>
+    <nav>
+      <a href="/">Home</a>
+      <a href="/guides.html">Guides</a>
+      <a href="/docs.html">Documentation</a>
+      <a href="/security.html">Security</a>
+      <a href="/about.html">About</a>
+      <a href="/changelog.html">Changelog</a>
+      <a href="/support.html">Support</a>
+      <a href="mailto:support@linkwright.io">Contact</a>
+      <a href="/privacy.html">Privacy</a>
+      <a href="/terms.html">Terms</a>
+      <a href="/legal.html">Legal notice</a>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>
