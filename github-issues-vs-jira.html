@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>GitHub Issues vs Jira: what each does, and when teams use both — Linkwright</title>
+<meta name="description" content="GitHub Issues vs Jira, compared on each vendor's documentation (October 2026): where each fits, why many teams use both, and what connecting them changes.">
+<link rel="canonical" href="https://linkwright.io/github-issues-vs-jira.html">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://linkwright.io/github-issues-vs-jira.html">
+<meta property="og:site_name" content="Linkwright">
+<meta property="og:title" content="GitHub Issues vs Jira: what each does, and when teams use both — Linkwright">
+<meta property="og:description" content="GitHub Issues vs Jira, compared on each vendor's documentation (October 2026): where each fits, why many teams use both, and what connecting them changes.">
+<meta property="og:image" content="https://linkwright.io/assets/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="icon" href="/assets/favicon-96.png" type="image/png" sizes="96x96">
+<link rel="icon" href="/assets/logo.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+<meta name="theme-color" content="#14302a">
+<link rel="stylesheet" href="/style.css?v=54ef87ef0d">
+<script data-goatcounter="https://saadlagz.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+<script>(function(){try{var q=new URLSearchParams(location.search).get('src');if(q)sessionStorage.setItem('lw_src',q.slice(0,20));var s=sessionStorage.getItem('lw_src');if(!s)return;document.addEventListener('DOMContentLoaded',function(){document.querySelectorAll('a[href*="install-beta"]').forEach(function(a){if(a.href.indexOf('src=')<0)a.href+=(a.href.indexOf('?')<0?'?':'&')+'src='+encodeURIComponent(s)})})}catch(e){}})();</script>
+</head>
+<body>
+
+<header class="site">
+  <div class="wrap">
+    <a class="brand" href="/"><img src="/assets/logo.svg" alt="" width="28" height="28">Linkwright</a>
+    <nav>
+      <a href="/guides.html">Guides</a>
+      <a href="/docs.html">Documentation</a>
+      <a href="/security.html">Security</a>
+      <a class="nav-cta" href="/#early-access">Book a demo</a>
+    </nav>
+  </div>
+</header>
+
+<main class="doc">
+  <div class="narrow">
+    <h1>GitHub Issues vs Jira: what each does, and when teams use both</h1>
+    <div class="toc"><p>On this page</p><ul><li><a href="#side-by-side">Side by side</a></li><li><a href="#when-github-issues-is-enough">When GitHub Issues is enough</a></li><li><a href="#when-teams-choose-jira">When teams choose Jira</a></li><li><a href="#the-common-case-code-on-github-planning-in-jira">The common case: code on GitHub, planning in Jira</a></li><li><a href="#a-quick-way-to-decide">A quick way to decide</a></li></ul></div>
+<p>“GitHub or Jira?” is often the wrong question. GitHub Issues and Jira overlap on tracking work, but
+they come from different places: GitHub Issues lives next to the code, Jira is built around a
+team’s process. Many companies run both. This page compares them on facts from each vendor’s
+documentation, read on <strong>26 October 2026</strong>, then shows what changes when you connect them.</p>
+<h2 id="side-by-side">Side by side</h2>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>GitHub Issues + Projects</th>
+<th>Jira Cloud</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Where work lives</td>
+<td>Issues in repositories; a project can gather issues and pull requests from several repositories</td>
+<td>Issues in Jira spaces (formerly called projects), separate from the code</td>
+</tr>
+<tr>
+<td>Breaking work down</td>
+<td>Sub-issues: up to 100 per parent, up to 8 levels deep</td>
+<td>Issue hierarchy (epics, stories, subtasks), configurable issue types</td>
+</tr>
+<tr>
+<td>Dependencies</td>
+<td>“Blocked by” / “blocking” between issues</td>
+<td>Issue links (blocks, relates to, and custom link types)</td>
+</tr>
+<tr>
+<td>Planning views</td>
+<td>Table, board and roadmap layouts; iteration fields; up to 50 fields per project; up to 50,000 items per project</td>
+<td>Boards, backlogs, timelines; sprints</td>
+</tr>
+<tr>
+<td>Process</td>
+<td>Built-in project workflows (set fields, auto-add, auto-archive); GitHub Actions for more</td>
+<td>Custom workflows: statuses and transitions per issue type</td>
+</tr>
+<tr>
+<td>Search</td>
+<td>GitHub search and project filters</td>
+<td>JQL, including development fields such as <code>development[pullrequests].open &gt; 0</code></td>
+</tr>
+<tr>
+<td>Closing work from code</td>
+<td>Keywords such as <code>fixes</code> in a pull request close the issue on merge</td>
+<td>Needs a Git connector; then commits, branches and pull requests appear on the issue</td>
+</tr>
+<tr>
+<td>Free plan</td>
+<td>Included with GitHub</td>
+<td>Up to 10 users, 2 GB storage, 150 automation steps</td>
+</tr>
+</tbody>
+</table>
+<h2 id="when-github-issues-is-enough">When GitHub Issues is enough</h2>
+<ul>
+<li><strong>The people who track the work are the people who write the code.</strong> Issues sit next to pull
+requests, and closing keywords finish the loop without any integration.</li>
+<li><strong>One product, a handful of repositories.</strong> A GitHub project can gather issues from several
+repositories, with a board, a roadmap and iterations.</li>
+<li><strong>Open source, or work that must be visible to outside contributors.</strong> Issues are where they
+already are.</li>
+</ul>
+<h2 id="when-teams-choose-jira">When teams choose Jira</h2>
+<ul>
+<li><strong>People outside engineering plan and follow the work</strong>: product, support, QA, management.
+They need the backlog, not the repositories.</li>
+<li><strong>The process has rules</strong>: statuses and transitions that differ by issue type, required fields,
+approvals. Jira workflows are built for that.</li>
+<li><strong>Reporting across teams</strong>: JQL filters and dashboards over every space, saved and shared.</li>
+<li><strong>Jira is already the company’s system of record</strong>, often with Jira Service Management for
+support tickets alongside.</li>
+</ul>
+<h2 id="the-common-case-code-on-github-planning-in-jira">The common case: code on GitHub, planning in Jira</h2>
+<p>In job ads we collected in September 2026 (Adzuna; France, Germany, the UK, the Netherlands and
+Belgium; 60 days), <strong>388 ads from 242 companies named both Jira and GitHub</strong>. For these teams the
+question is not which tool, but how well the two talk to each other.</p>
+<p>Connected through a Git connector, a commit, branch or pull request that mentions an issue key
+(<code>PAY-142</code>) shows up on that issue in Jira’s <strong>Development panel</strong>. Jira can then search on it: for
+example, issues closed while a pull request is still open,</p>
+<pre><code>development[pullrequests].open &gt; 0 AND statusCategory = Done
+</code></pre>
+<p>Three things decide whether that link is worth having, whatever connector you use:</p>
+<ol>
+<li><strong>It must not fail silently.</strong> A connector that says “connected” while nothing links is worse
+than none. Check that commits actually appear: see
+<a href="github-commits-not-showing-in-jira.html">GitHub commits not showing in Jira</a>.</li>
+<li><strong>It should respect team boundaries.</strong> If one GitHub organization serves several teams, decide
+which repositories each Jira space may link: see
+<a href="restrict-github-repositories-per-jira-project.html">Limit which GitHub repositories each Jira project can link</a>.</li>
+<li><strong>Know which JQL fields work.</strong> Some <code>development[...]</code> fields found online are refused by Jira
+Cloud: see <a href="jira-jql-development-github.html">JQL for GitHub data in Jira</a>.</li>
+</ol>
+<p>To set it up, follow <a href="connect-github-to-jira-cloud.html">How to connect GitHub to Jira Cloud</a>.</p>
+<h2 id="a-quick-way-to-decide">A quick way to decide</h2>
+<ul>
+<li>Only engineers read the tracker, and the code is on GitHub → <strong>GitHub Issues</strong>.</li>
+<li>Non-engineers plan or follow the work, or the process needs enforced steps → <strong>Jira</strong>.</li>
+<li>Both are true → <strong>Jira for planning, GitHub for code, connected</strong>, and check the link works.</li>
+</ul>
+<p><a href="index.html">Linkwright for Jira</a> is a GitHub connector for Jira Cloud that shows the state of every
+repository’s sync, so a missing link is visible. It is in free beta: <a href="beta.html">install it</a>.</p>
+
+  </div>
+</main>
+
+<footer class="site">
+  <div class="wrap">
+    <span>&copy; 2026 Linkwright. Built in France by an independent developer.</span>
+    <nav>
+      <a href="/">Home</a>
+      <a href="/guides.html">Guides</a>
+      <a href="/docs.html">Documentation</a>
+      <a href="/security.html">Security</a>
+      <a href="/about.html">About</a>
+      <a href="/changelog.html">Changelog</a>
+      <a href="/support.html">Support</a>
+      <a href="mailto:support@linkwright.io">Contact</a>
+      <a href="/privacy.html">Privacy</a>
+      <a href="/terms.html">Terms</a>
+      <a href="/legal.html">Legal notice</a>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>

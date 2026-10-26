@@ -24,6 +24,7 @@ Key facts:
 - [Connect GitHub to Jira Cloud](https://linkwright.io/connect-github-to-jira-cloud.html): the setup steps
 - [JQL for GitHub data in Jira](https://linkwright.io/jira-jql-development-github.html): which development[...] fields Jira Cloud accepts
 - [Limit which GitHub repositories each Jira project can link](https://linkwright.io/restrict-github-repositories-per-jira-project.html): per-project and per-site repository boundaries, GitHub for Atlassian (JRACLOUD-99914), checklist
+- [GitHub Issues vs Jira](https://linkwright.io/github-issues-vs-jira.html): both compared on vendor documentation (October 2026), when teams use both, and connecting them
 - [GitHub for Atlassian is moving to Forge](https://linkwright.io/github-for-atlassian-forge-migration.html): Atlassian's October 2026 rollout, and a before/after check of your development data
 - [Free beta](https://linkwright.io/beta.html): what the beta does and how it installs in three steps
 - [Security](https://linkwright.io/security.html): data handled, architecture, vulnerability reporting
