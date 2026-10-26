@@ -41,8 +41,8 @@
     <h1>Limit which GitHub repositories each Jira project can link</h1>
     <div class="toc"><p>On this page</p><ul><li><a href="#what-atlassians-own-tracker-says-about-github-for-atlassian">What Atlassian’s own tracker says about GitHub for Atlassian</a></li><li><a href="#three-boundaries-from-the-outside-in">Three boundaries, from the outside in</a></li><li><a href="#how-linkwright-draws-them">How Linkwright draws them</a></li><li><a href="#what-this-does-not-do">What this does not do</a></li><li><a href="#checklist">Checklist</a></li></ul></div>
 <p>When a GitHub organization is connected to Jira Cloud, which repositories can link to which issues?
-With most connectors the answer is “all of them, everywhere”: any issue key in any commit of any
-connected repository creates a link. That is fine for a single team. It is not fine when one GitHub
+With GitHub for Atlassian, Atlassian’s own tracker gives the answer: all of them, everywhere. Any
+issue key in any commit of any connected repository creates a link. That is fine for a single team. It is not fine when one GitHub
 organization serves several teams, clients or Jira sites that should not see each other’s code.</p>
 <h2 id="what-atlassians-own-tracker-says-about-github-for-atlassian">What Atlassian’s own tracker says about GitHub for Atlassian</h2>
 <p>A public request opened on Atlassian’s tracker on 21 October 2026,
@@ -70,7 +70,7 @@ there.</p>
 list can reach Jira. Keep it as narrow as the teams that use Jira.</li>
 <li><strong>Jira site: which installation the site is connected to.</strong> Decided by whoever connects it.</li>
 <li><strong>Jira project: which repositories can link to its issues.</strong> This is the boundary teams usually
-mean, and the one most connectors do not have.</li>
+mean, and the one JRACLOUD-99914 asks Atlassian for.</li>
 </ol>
 <h2 id="how-linkwright-draws-them">How Linkwright draws them</h2>
 <p><strong>A repository links nothing until it is attached to a project.</strong> Each Jira project has a <em>Git
