@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>GitHub for Jira backfill: what it imports, how to restart it, how to check it — Linkwright</title>
+<meta name="description" content="GitHub for Jira backfill, from Atlassian's documentation (November 2026): what it imports (six months, 50 commits per non-default branch), how to continue or restart it, and a five-minute check that it worked.">
+<link rel="canonical" href="https://linkwright.io/github-for-jira-backfill.html">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://linkwright.io/github-for-jira-backfill.html">
+<meta property="og:site_name" content="Linkwright">
+<meta property="og:title" content="GitHub for Jira backfill: what it imports, how to restart it, how to check it — Linkwright">
+<meta property="og:description" content="GitHub for Jira backfill, from Atlassian's documentation (November 2026): what it imports (six months, 50 commits per non-default branch), how to continue or restart it, and a five-minute check that it worked.">
+<meta property="og:image" content="https://linkwright.io/assets/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="icon" href="/assets/favicon-96.png" type="image/png" sizes="96x96">
+<link rel="icon" href="/assets/logo.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+<meta name="theme-color" content="#14302a">
+<link rel="stylesheet" href="/style.css?v=54ef87ef0d">
+<script data-goatcounter="https://saadlagz.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+<script>(function(){try{var q=new URLSearchParams(location.search).get('src');if(q)sessionStorage.setItem('lw_src',q.slice(0,20));var s=sessionStorage.getItem('lw_src');if(!s)return;document.addEventListener('DOMContentLoaded',function(){document.querySelectorAll('a[href*="install-beta"]').forEach(function(a){if(a.href.indexOf('src=')<0)a.href+=(a.href.indexOf('?')<0?'?':'&')+'src='+encodeURIComponent(s)})})}catch(e){}})();</script>
+</head>
+<body>
+
+<header class="site">
+  <div class="wrap">
+    <a class="brand" href="/"><img src="/assets/logo.svg" alt="" width="28" height="28">Linkwright</a>
+    <nav>
+      <a href="/guides.html">Guides</a>
+      <a href="/docs.html">Documentation</a>
+      <a href="/security.html">Security</a>
+      <a class="nav-cta" href="/#early-access">Book a demo</a>
+    </nav>
+  </div>
+</header>
+
+<main class="doc">
+  <div class="narrow">
+    <h1>GitHub for Jira backfill: what it imports, how to restart it, how to check it</h1>
+    <div class="toc"><p>On this page</p><ul><li><a href="#what-the-backfill-imports">What the backfill imports</a></li><li><a href="#how-long-it-takes">How long it takes</a></li><li><a href="#how-to-continue-or-restart-a-backfill">How to continue or restart a backfill</a></li><li><a href="#finished-does-not-prove-your-history-is-there">“Finished” does not prove your history is there</a></li><li><a href="#what-you-cannot-do-today">What you cannot do today</a></li><li><a href="#does-the-forge-migration-mean-a-new-backfill">Does the Forge migration mean a new backfill?</a></li><li><a href="#how-linkwright-handles-history">How Linkwright handles history</a></li></ul></div>
+<p>When you connect GitHub to Jira Cloud, the connector does not only link what happens from now on: it
+also goes back through your repositories and imports past branches, commits and pull requests. In
+<em>GitHub for Atlassian</em> (the free app many teams still call “GitHub for Jira”) this is called the
+<strong>backfill</strong>. This page sums up what Atlassian documents about it, read on <strong>1 November 2026</strong>, how to
+restart it, and how to check that it really brought your history in.</p>
+<h2 id="what-the-backfill-imports">What the backfill imports</h2>
+<p>From Atlassian’s page <em>Backfill GitHub data in Jira</em>:</p>
+<ul>
+<li><strong>Six months by default.</strong> “When you connect GitHub, Jira automatically imports six months of
+history.” The app’s backfill screen lets you pick an earlier date, and adds that “Branches will be
+backfilled regardless of their age.”</li>
+<li><strong>Default branch first.</strong> On other branches, “only the latest 50 commits from non-default branches
+will be backfilled.”</li>
+<li><strong>Only what names an issue.</strong> Commits are imported only if their message contains an issue key;
+pull requests need the key in their title, description or source branch name; branches need it in
+the branch name, the title of their latest pull request or their last commit message.</li>
+<li><strong>Nothing unreachable.</strong> “Any unreachable commits (like commits from deleted branches) are
+excluded.”</li>
+</ul>
+<p>So a commit that does not name an issue, or that only lived on a branch you deleted, will never
+appear, however long the backfill runs. That is the first thing to rule out when history looks
+incomplete.</p>
+<h2 id="how-long-it-takes">How long it takes</h2>
+<p>Atlassian’s FAQ says that for an organization with little data, backfilling “may only take a few
+minutes”. For a larger one, the app’s own screen warns that going further back “may take a long time
+and can slow down other sync work”. GitHub’s API rate limit is the usual reason: a GitHub App gets
+5,000 requests an hour as a base, up to 12,500 for large installations, and a backfill has to share
+them with day-to-day sync.</p>
+<h2 id="how-to-continue-or-restart-a-backfill">How to continue or restart a backfill</h2>
+<p>The documented path, as of 1 November 2026:</p>
+<ol>
+<li>In Jira, go to <strong>Apps › Manage apps</strong>, then <strong>GitHub for Atlassian</strong>.</li>
+<li>Open the settings menu (<strong>…</strong>) of your GitHub organization and choose <strong>Continue backfill</strong>.</li>
+<li>Pick the date to backfill from, then <strong>Backfill data</strong>.</li>
+<li>To redo the import from scratch rather than extend it, tick <strong>Restart the backfill</strong> first.
+Atlassian describes this as overwriting the existing historical data.</li>
+</ol>
+<p>The same screen shows a status per organization: <strong>Pending</strong>, <strong>In progress</strong>, <strong>Finished</strong> or
+<strong>Failed</strong>. For a failure, the app says it “will automatically retry”, and offers a retry button next
+to the status if it does not. It also reports how many repositories could not be completed, and lists
+the status of each backfill task (pull requests, builds, deployments…) per repository. The causes it
+names: permission issues, GitHub API rate limiting or network outages.</p>
+<h2 id="finished-does-not-prove-your-history-is-there">“Finished” does not prove your history is there</h2>
+<p>A finished backfill tells you the job ended, not what it brought in. Atlassian’s own tracker has an
+open request about exactly this: <strong>JRACLOUD-99641</strong> (created 25 September 2026, “Gathering
+Interest”) asks for clear backfill status and sync summary metrics, because the backfill can end with
+a generic “FINISHED” status even when nothing was ingested.</p>
+<p>To check for yourself, in five minutes:</p>
+<ol>
+<li><strong>Pick three issues you know well</strong>: one with commits on the default branch, one whose work
+happened on a feature branch, one older than a few months.</li>
+<li><strong>Count in GitHub</strong>: search the repository for the issue key in commits and pull requests.</li>
+<li><strong>Count in Jira</strong>: open each issue’s <strong>Development</strong> panel. Atlassian documents that it shows
+only the first <strong>100 commits</strong> of an issue, so for a long-running issue compare up to 100.</li>
+<li><strong>Count across a project</strong> with JQL, for example
+<code>project = CHK AND development[commits].all &gt; 0</code> (more queries in
+<a href="jira-jql-development-github.html">JQL for GitHub data in Jira</a>). Run it before and after the
+backfill: the number of issues should go up, not stay flat.</li>
+<li><strong>Explain each gap</strong> before blaming the backfill: no key in the message, a deleted branch, more
+than 50 commits on a non-default branch, or a date older than the backfill start.</li>
+</ol>
+<h2 id="what-you-cannot-do-today">What you cannot do today</h2>
+<p>Three open requests on Atlassian’s public tracker, read on 1 November 2026, describe current limits:</p>
+<table>
+<thead>
+<tr>
+<th>Request</th>
+<th>What it asks for</th>
+<th>Status</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>JRACLOUD-99984 (28 Oct 2026)</td>
+<td>A public REST API to trigger, restart or monitor a backfill. Atlassian’s description: “Currently, there is no public REST API available in Jira Cloud” for it.</td>
+<td>Gathering Interest, 0 votes</td>
+</tr>
+<tr>
+<td>JRACLOUD-94184 (22 Apr 2025)</td>
+<td>Re-sync only the affected repositories during a manual backfill</td>
+<td>Gathering Interest</td>
+</tr>
+<tr>
+<td>JRACLOUD-96218 (29 Sep 2025)</td>
+<td>Turn the backfill off</td>
+<td>Gathering Interest</td>
+</tr>
+</tbody>
+</table>
+<p>In practice: a backfill is started by hand from the settings screen, for a whole organization, and
+its result is checked by hand.</p>
+<h2 id="does-the-forge-migration-mean-a-new-backfill">Does the Forge migration mean a new backfill?</h2>
+<p>Atlassian is moving GitHub for Atlassian to Forge, with a production rollout in October 2026 and
+“post-rollout verification” in November and December. Its migration page says your “connected GitHub
+organizations, repositories, and settings will carry over automatically”. It does not say whether
+past development data is kept as is or imported again. The safe move is the before/after count
+above; see <a href="github-for-atlassian-forge-migration.html">GitHub for Atlassian is moving to Forge</a>.</p>
+<h2 id="how-linkwright-handles-history">How Linkwright handles history</h2>
+<p><a href="index.html">Linkwright</a> imports less history than GitHub for Atlassian, by design, and says so. On
+the first read after a repository is attached to a Jira project, and again on every <strong>Refresh</strong>, it
+catches up:</p>
+<ul>
+<li>the 100 most recent commits of the default branch;</li>
+<li>the 100 most recently updated pull requests, and the branches;</li>
+<li>the commits of up to 20 branches it has not seen yet (up to 250 per branch); a repository with more
+such branches catches up 20 more at each <strong>Refresh</strong>.</li>
+</ul>
+<p>It does not go back six months. What it adds is visibility: each repository shows its state (Up to
+date, Out of date, Rate limited, Failing, Not authorized) with the time of its last successful read,
+and the <strong>Refresh</strong> button rereads one repository on demand, without restarting a whole
+organization. In our <a href="github-for-atlassian-side-by-side.html">side-by-side test</a> on 1 October 2026,
+GitHub for Atlassian caught up history pushed before connection better at first (3 commits out of 3,
+against 2 for us); after a fix the same day, Linkwright caught up 3 out of 3 as well.</p>
+
+    <h2 id="more-guides">More guides</h2>
+    <ul><li><a href="connect-github-to-jira-cloud.html">How to connect GitHub to Jira Cloud</a></li><li><a href="github-issues-vs-jira.html">GitHub Issues vs Jira</a></li><li><a href="github-commits-not-showing-in-jira.html">GitHub commits not showing in Jira</a></li><li><a href="github-for-atlassian-forge-migration.html">GitHub for Atlassian is moving to Forge: what to check</a></li><li><a href="restrict-github-repositories-per-jira-project.html">Limit which GitHub repositories each Jira project can link</a></li><li><a href="jira-jql-development-github.html">JQL for GitHub data in Jira</a></li><li><a href="github-for-jira-alternatives.html">GitHub for Jira alternatives</a></li><li><a href="github-for-atlassian-side-by-side.html">24 hours side by side with GitHub for Atlassian</a></li></ul>
+
+  </div>
+</main>
+
+<footer class="site">
+  <div class="wrap">
+    <span>&copy; 2026 Linkwright. Built in France by an independent developer.</span>
+    <nav>
+      <a href="/">Home</a>
+      <a href="/guides.html">Guides</a>
+      <a href="/docs.html">Documentation</a>
+      <a href="/security.html">Security</a>
+      <a href="/about.html">About</a>
+      <a href="/changelog.html">Changelog</a>
+      <a href="/support.html">Support</a>
+      <a href="mailto:support@linkwright.io">Contact</a>
+      <a href="/privacy.html">Privacy</a>
+      <a href="/terms.html">Terms</a>
+      <a href="/legal.html">Legal notice</a>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>
