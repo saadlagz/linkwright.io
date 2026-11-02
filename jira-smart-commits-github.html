@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Jira Smart Commits with GitHub: syntax, requirements, and why they do not run — Linkwright</title>
+<meta name="description" content="Jira Smart Commits with GitHub, from Atlassian's documentation (November 2026): #comment, #time and transition syntax, the email rule behind most failures, a checklist, and the security caveat.">
+<link rel="canonical" href="https://linkwright.io/jira-smart-commits-github.html">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://linkwright.io/jira-smart-commits-github.html">
+<meta property="og:site_name" content="Linkwright">
+<meta property="og:title" content="Jira Smart Commits with GitHub: syntax, requirements, and why they do not run — Linkwright">
+<meta property="og:description" content="Jira Smart Commits with GitHub, from Atlassian's documentation (November 2026): #comment, #time and transition syntax, the email rule behind most failures, a checklist, and the security caveat.">
+<meta property="og:image" content="https://linkwright.io/assets/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="icon" href="/assets/favicon-96.png" type="image/png" sizes="96x96">
+<link rel="icon" href="/assets/logo.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+<meta name="theme-color" content="#14302a">
+<link rel="stylesheet" href="/style.css?v=54ef87ef0d">
+<script data-goatcounter="https://saadlagz.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+<script>(function(){try{var q=new URLSearchParams(location.search).get('src');if(q)sessionStorage.setItem('lw_src',q.slice(0,20));var s=sessionStorage.getItem('lw_src');if(!s)return;document.addEventListener('DOMContentLoaded',function(){document.querySelectorAll('a[href*="install-beta"]').forEach(function(a){if(a.href.indexOf('src=')<0)a.href+=(a.href.indexOf('?')<0?'?':'&')+'src='+encodeURIComponent(s)})})}catch(e){}})();</script>
+</head>
+<body>
+
+<header class="site">
+  <div class="wrap">
+    <a class="brand" href="/"><img src="/assets/logo.svg" alt="" width="28" height="28">Linkwright</a>
+    <nav>
+      <a href="/guides.html">Guides</a>
+      <a href="/docs.html">Documentation</a>
+      <a href="/security.html">Security</a>
+      <a class="nav-cta" href="/#early-access">Book a demo</a>
+    </nav>
+  </div>
+</header>
+
+<main class="doc">
+  <div class="narrow">
+    <h1>Jira Smart Commits with GitHub: syntax, requirements, and why they do not run</h1>
+    <div class="toc"><p>On this page</p><ul><li><a href="#the-three-commands">The three commands</a></li><li><a href="#the-rules-that-trip-people-up">The rules that trip people up</a></li><li><a href="#the-rule-behind-most-failures-the-email-address">The rule behind most failures: the email address</a></li><li><a href="#checklist-when-a-smart-commit-does-nothing">Checklist when a Smart Commit does nothing</a></li><li><a href="#a-word-on-security">A word on security</a></li><li><a href="#how-linkwright-handles-smart-commits">How Linkwright handles Smart Commits</a></li></ul></div>
+<p>A Smart Commit is a commit message that does more than mention a Jira issue: it can add a comment,
+log time, or move the issue through its workflow. When it works, it saves a trip to Jira. When it
+does not, nothing tells the developer why: the commit shows up on the issue, and the command is
+silently ignored. This page sums up what Atlassian documents about Smart Commits, read on
+<strong>2 November 2026</strong>, and the checks to run when one does not work.</p>
+<h2 id="the-three-commands">The three commands</h2>
+<p>From Atlassian’s page <em>Process work items with smart commits</em>:</p>
+<table>
+<thead>
+<tr>
+<th>Command</th>
+<th>Example</th>
+<th>What it does</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>#comment</code></td>
+<td><code>CHK-42 #comment Fixed the rounding error</code></td>
+<td>Adds a comment to the issue</td>
+</tr>
+<tr>
+<td><code>#time</code></td>
+<td><code>CHK-42 #time 1d 2h 30m Investigation</code></td>
+<td>Logs work (<code>w</code>, <code>d</code>, <code>h</code>, <code>m</code>, decimals allowed); the text after the time becomes the work log comment</td>
+</tr>
+<tr>
+<td><code>#&lt;transition&gt;</code></td>
+<td><code>CHK-42 #start-progress</code></td>
+<td>Moves the issue through a transition of its workflow</td>
+</tr>
+</tbody>
+</table>
+<p>Commands can be combined on one line and applied to several issues at once:</p>
+<pre><code>CHK-42 CHK-43 #time 2h #comment Ready for review #start-review
+</code></pre>
+<h2 id="the-rules-that-trip-people-up">The rules that trip people up</h2>
+<ul>
+<li><strong>One line per command.</strong> “A Smart Commit command must not span more than one line”, and each
+line of the message must follow the syntax on its own. A <code>#time</code> on a second line, with no issue
+key on that line, is not logged.</li>
+<li><strong>Issue keys in upper case.</strong> Atlassian describes a key as “two or more <em>uppercase</em> letters,
+followed by a hyphen and the work item number”. <code>chk-42 #comment</code> does nothing.</li>
+<li><strong>Transition names.</strong> Jira “only considers the part of a transition name before the first space”.
+If two transitions start with the same word (<em>Start progress</em> and <em>Start review</em>), <code>#start</code> is
+ambiguous: write <code>#start-progress</code> or <code>#start-review</code>.</li>
+<li><strong>Required fields.</strong> “If any other fields have been set as required the transition command will
+silently fail.” A transition that opens a screen asking for a field cannot run from a commit.</li>
+<li><strong>Resolution.</strong> <code>#resolve</code> cannot set the <em>Resolution</em> field.</li>
+<li><strong>Time tracking</strong> must be enabled on the site for <code>#time</code> to work.</li>
+</ul>
+<h2 id="the-rule-behind-most-failures-the-email-address">The rule behind most failures: the email address</h2>
+<p>This is the one that matters most, and the least visible. Jira runs a command <strong>as a Jira user</strong>,
+and finds that user by the commit’s email address: it “must match the email address of a single
+Jira Software user” who has the permission the command needs (comment, log work, or transition in
+that project). “Exactly one”: if no Jira account, or two, use that address, the command does not run.</p>
+<p>On GitHub, that address is the one in your local Git configuration when you commit, not the one
+on your GitHub profile. Check it with:</p>
+<pre><code>git config user.email
+</code></pre>
+<p>Three common mismatches:</p>
+<ul>
+<li>you commit with a personal address and log in to Jira with your work address;</li>
+<li>you commit with GitHub’s private <code>…@users.noreply.github.com</code> address, which is rarely the address of a Jira account;</li>
+<li>your Jira site hides or manages email addresses differently from what you expect: ask a Jira admin
+which address your account carries.</li>
+</ul>
+<p>When a Smart Commit fails, Atlassian says Jira emails the Jira user, or the user of the connected
+tool if it cannot find one, and “in rare cases … the Smart Commit fails silently”. The commit itself
+still appears on the issue either way.</p>
+<h2 id="checklist-when-a-smart-commit-does-nothing">Checklist when a Smart Commit does nothing</h2>
+<ol>
+<li>Does the commit appear on the issue at all (Development panel)? If not, the problem is the link,
+not the command: see <a href="github-commits-not-showing-in-jira.html">GitHub commits not showing in Jira</a>.</li>
+<li>Is the issue key in upper case, on the same line as the command?</li>
+<li>Does <code>git config user.email</code> match exactly one Jira account, with the right permission?</li>
+<li>For a transition: is the name unambiguous, and does the transition require no field?</li>
+<li>For <code>#time</code>: is time tracking enabled?</li>
+<li>Are Smart Commits enabled for that repository? For repositories linked through Jira’s
+<em>DVCS accounts</em> screen, Atlassian puts the switch there (<strong>Settings › Apps › DVCS accounts</strong>),
+enabled by default for new repositories.</li>
+</ol>
+<h2 id="a-word-on-security">A word on security</h2>
+<p>Git lets anyone write any name and email address in a commit. Atlassian’s page on enabling Smart
+Commits says so: “Elevated access rights in Jira apps can result from the way that Git … allow[s]
+commits” to be attributed to other users, and it suggests disabling Smart Commits if that is a risk
+for you. Concretely, someone with push access to a repository could write a commit in a colleague’s
+name and transition an issue as that colleague.</p>
+<h2 id="how-linkwright-handles-smart-commits">How Linkwright handles Smart Commits</h2>
+<p>Linkwright sends commits to Jira’s own Development panel, and since version 2.17.0
+(2 November 2026) it lets Jira run their Smart Commits. We tested it on our own Jira site on
+2 November 2026: <code>#comment</code> commands pushed to an attached repository were added as comments on the
+issue. Until that version, Linkwright did not send the author’s email address, so Jira ran nothing;
+our FAQ said otherwise, and was wrong until we measured it.</p>
+<p>To limit the risk described above, Linkwright passes a commit’s email address to Jira only when:</p>
+<ul>
+<li><strong>the commit is your own and you pushed it</strong>: GitHub must have verified the commit’s email address
+on the same GitHub account that pushed it. A commit written in a colleague’s name, or pushed by
+someone else (after a rebase, for example), is still linked to its issues, but its commands do
+not run. Up to 20 commits with commands are passed on per push;</li>
+<li><strong>every issue key in the message belongs to a project the repository is attached to</strong>. A command
+aimed at an issue of another project is not run, so a repository cannot act on projects it is not
+attached to. To stay on the safe side, any word shaped like a key counts: a message with a command
+that also mentions <code>UTF-8</code> does not run its command;</li>
+<li><strong>the commit arrives live</strong>, by webhook. Commits read later (the first read after attaching a
+repository, the periodic re-read, a <strong>Refresh</strong>) never run commands, so history is not replayed.</li>
+</ul>
+<p>The email address and the full message go to your Jira site with the push and are not stored by
+Linkwright (<a href="privacy.html">privacy policy</a>, § 2.1). Linkwright has no switch of its own to turn
+Smart Commits off yet; if you need one, tell us on the <a href="https://linkwright.io/support.html">support portal</a>.</p>
+
+    <h2 id="more-guides">More guides</h2>
+    <ul><li><a href="connect-github-to-jira-cloud.html">How to connect GitHub to Jira Cloud</a></li><li><a href="github-issues-vs-jira.html">GitHub Issues vs Jira</a></li><li><a href="github-commits-not-showing-in-jira.html">GitHub commits not showing in Jira</a></li><li><a href="github-for-jira-backfill.html">GitHub for Jira backfill: restart it and check it</a></li><li><a href="github-for-atlassian-forge-migration.html">GitHub for Atlassian is moving to Forge: what to check</a></li><li><a href="restrict-github-repositories-per-jira-project.html">Limit which GitHub repositories each Jira project can link</a></li><li><a href="jira-jql-development-github.html">JQL for GitHub data in Jira</a></li><li><a href="github-for-jira-alternatives.html">GitHub for Jira alternatives</a></li><li><a href="github-for-atlassian-side-by-side.html">24 hours side by side with GitHub for Atlassian</a></li></ul>
+
+  </div>
+</main>
+
+<footer class="site">
+  <div class="wrap">
+    <span>&copy; 2026 Linkwright. Built in France by an independent developer.</span>
+    <nav>
+      <a href="/">Home</a>
+      <a href="/guides.html">Guides</a>
+      <a href="/docs.html">Documentation</a>
+      <a href="/security.html">Security</a>
+      <a href="/about.html">About</a>
+      <a href="/changelog.html">Changelog</a>
+      <a href="/support.html">Support</a>
+      <a href="mailto:support@linkwright.io">Contact</a>
+      <a href="/privacy.html">Privacy</a>
+      <a href="/terms.html">Terms</a>
+      <a href="/legal.html">Legal notice</a>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>

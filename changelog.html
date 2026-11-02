@@ -40,6 +40,17 @@
   <div class="narrow">
     <h1>Changelog</h1>
 <p>What changes for people using Linkwright for Jira, newest first.</p>
+<h2 id="2-november-2026-version-217">2 November 2026 — version 2.17</h2>
+<ul>
+<li><strong>Smart Commits run.</strong> A <code>#comment</code>, <code>#time</code> or transition command in a commit message is now run
+by Jira, as with Atlassian’s integration. For safety, only for a commit you wrote and pushed
+yourself (GitHub must have verified its email address on the account that pushed it), whose
+issue keys all belong to projects the repository is attached to, and only when it arrives live:
+history read later is never replayed. Details: <a href="jira-smart-commits-github.html">Smart Commits guide</a>.</li>
+<li><strong>Automatic transitions come from live activity only.</strong> Commits re-sent to Jira later (first
+read after attaching a repository, periodic re-read, Refresh) no longer trigger your Jira
+workflow’s automatic transitions.</li>
+</ul>
 <h2 id="2-october-2026-version-213">2 October 2026 — version 2.13</h2>
 <ul>
 <li><strong>When GitHub takes a repository away from the app, the page says so, and says why.</strong> If a

@@ -114,11 +114,14 @@ repository</strong>. Jira does not show app panels automatically: on an issue, c
 under the issue title</strong>, then choose <strong>Git activity</strong>.</li>
 </ul>
 <blockquote>
-<p>Commits, branches and pull requests sent to the native panel trigger the automatic transitions
-configured in your Jira, as Atlassian’s integrations do. <strong>Smart Commits</strong> (<code>#comment</code>, <code>#time</code>,
-<code>#transition</code> in a commit message) <strong>are not supported yet</strong>: Jira did not run them for a commit
-sent by Linkwright (tested on 2 November 2026). Jira matches a Smart Commit to a Jira user by the
-committer’s email address, and Linkwright does not send it.</p>
+<p>Commits, branches and pull requests pushed while a repository is attached trigger the automatic
+transitions configured in your Jira, as Atlassian’s integrations do; activity read later (first
+read after attaching, periodic re-read, <strong>Refresh</strong>) does not. <strong>Smart Commits</strong> (<code>#comment</code>,
+<code>#time</code>, <code>#transition</code> in a commit message) run too, since version 2.17 (2 November 2026), with
+three conditions: you wrote the commit and pushed it yourself (GitHub must have verified its email
+address on the account that pushed it), every issue key in the message belongs to a project the
+repository is attached to, and the commit arrives live. Jira then runs the command as the Jira user
+whose email address is the commit’s. Details and checklist: <a href="jira-smart-commits-github.html">Smart Commits guide</a>.</p>
 </blockquote>
 <h2 id="3-how-an-issue-is-linked-to-github-activity">3. How an issue is linked to GitHub activity</h2>
 <p>The app looks for the <strong>issue key</strong> (for example <code>CHK-42</code>):</p>
@@ -255,7 +258,9 @@ author and reviewers; review author and state; deployment environment and state;
 state.</li>
 <li><strong>Read from GitHub</strong>: only the repositories the GitHub App can access, read-only.</li>
 <li><strong>Sent to Jira’s Development panel</strong> (Atlassian API, on your site): the same information about
-commits, branches, pull requests and deployments.</li>
+commits, branches, pull requests and deployments.
+For a commit with a Smart Commit command, its full message and author’s email address are also
+sent, and not stored.</li>
 <li><strong>No Jira data is ever sent to GitHub.</strong></li>
 <li>Full privacy policy: published with the Marketplace listing.</li>
 </ul>

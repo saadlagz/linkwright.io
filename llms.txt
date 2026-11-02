@@ -26,6 +26,7 @@ Key facts:
 - [Limit which GitHub repositories each Jira project can link](https://linkwright.io/restrict-github-repositories-per-jira-project.html): per-project and per-site repository boundaries, GitHub for Atlassian (JRACLOUD-99914), checklist
 - [GitHub Issues vs Jira](https://linkwright.io/github-issues-vs-jira.html): both compared on vendor documentation (October 2026), when teams use both, and connecting them
 - [GitHub for Jira backfill](https://linkwright.io/github-for-jira-backfill.html): what GitHub for Atlassian's backfill imports (Atlassian documentation, November 2026), how to continue or restart it, and a five-minute check
+- [Jira Smart Commits with GitHub](https://linkwright.io/jira-smart-commits-github.html): syntax of #comment, #time and transitions (Atlassian documentation, November 2026), why a Smart Commit does not run (the commit email must match exactly one Jira user), a checklist, and how Linkwright limits who can run them
 - [GitHub for Atlassian is moving to Forge](https://linkwright.io/github-for-atlassian-forge-migration.html): Atlassian's October 2026 rollout, and a before/after check of your development data
 - [Atlassian Marketplace listing](https://marketplace.atlassian.com/apps/1218910089): install, pricing, reviews
 - [Security](https://linkwright.io/security.html): data handled, architecture, vulnerability reporting
