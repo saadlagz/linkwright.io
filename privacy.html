@@ -53,6 +53,10 @@ your data to any system we control.</p>
 <li>repository names (<code>owner/name</code>), which include the GitHub login of a personal account owner;</li>
 <li>branch names, and the GitHub name of the user who pushed a new branch;</li>
 <li>commit identifiers, first line of commit messages, author names, dates, number of changed files;</li>
+<li>for a commit pushed while its repository is attached, whose message contains a Smart Commit
+command (<code>#</code> followed by a letter): its full message and its author’s email address, which Jira
+needs to run the command. They are passed to your Jira site and are not stored by the App; they
+are held only in Atlassian Forge’s event queue until they are sent to Jira.</li>
 <li>pull request numbers, titles, states, author logins, requested reviewer logins, comment counts;</li>
 <li>review states and reviewer logins;</li>
 <li>deployment identifiers, environment names, states and commit identifiers.</li>
