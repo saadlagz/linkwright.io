@@ -81,7 +81,7 @@
       "name": "Do Smart Commits, JQL and Automation still work?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Yes. Linkwright fills Jira’s own Development panel, so development[commits] in JQL, board badges, Smart Commits and automatic transitions behave as they do with Atlassian’s integration."
+        "text": "JQL and Automation, yes: Linkwright fills Jira’s own Development panel, so development[commits] in JQL, board badges and automatic transitions behave as they do with Atlassian’s integration. Smart Commits (#comment, #time, #transition in a commit message), not yet: Jira did not run them for a commit sent by Linkwright when we tested it on 2 November 2026."
       }
     },
     {
@@ -384,9 +384,11 @@
         <dd>GitHub.com, through a GitHub App you install on your account or organization. GitHub
           Enterprise Server and GitLab are not supported in this version.</dd>
         <dt>Do Smart Commits, JQL and Automation still work?</dt>
-        <dd>Yes. Linkwright fills Jira&rsquo;s own Development panel, so <code>development[commits]</code>
-          in JQL, board badges, Smart Commits and automatic transitions behave as they do with
-          Atlassian&rsquo;s integration.</dd>
+        <dd>JQL and Automation, yes: Linkwright fills Jira&rsquo;s own Development panel, so
+          <code>development[commits]</code> in JQL, board badges and automatic transitions behave as
+          they do with Atlassian&rsquo;s integration. Smart Commits (<code>#comment</code>,
+          <code>#time</code>, <code>#transition</code> in a commit message), not yet: Jira did not run
+          them for a commit sent by Linkwright when we tested it on 2 November 2026.</dd>
         <dt>What leaves our Jira site?</dt>
         <dd>Nothing is sent to GitHub. Linkwright reads from GitHub and writes to your Jira site, and
           runs entirely on Atlassian Forge: there is no server of mine in between. Details in the

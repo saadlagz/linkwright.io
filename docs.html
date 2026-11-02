@@ -114,8 +114,11 @@ repository</strong>. Jira does not show app panels automatically: on an issue, c
 under the issue title</strong>, then choose <strong>Git activity</strong>.</li>
 </ul>
 <blockquote>
-<p>Commits sent to the native panel trigger the <em>smart commits</em> and automatic transitions configured
-in your Jira, as Atlassian’s integrations do.</p>
+<p>Commits, branches and pull requests sent to the native panel trigger the automatic transitions
+configured in your Jira, as Atlassian’s integrations do. <strong>Smart Commits</strong> (<code>#comment</code>, <code>#time</code>,
+<code>#transition</code> in a commit message) <strong>are not supported yet</strong>: Jira did not run them for a commit
+sent by Linkwright (tested on 2 November 2026). Jira matches a Smart Commit to a Jira user by the
+committer’s email address, and Linkwright does not send it.</p>
 </blockquote>
 <h2 id="3-how-an-issue-is-linked-to-github-activity">3. How an issue is linked to GitHub activity</h2>
 <p>The app looks for the <strong>issue key</strong> (for example <code>CHK-42</code>):</p>

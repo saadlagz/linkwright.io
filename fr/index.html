@@ -82,7 +82,7 @@
       "name": "Les Smart Commits, le JQL et Automation marchent-ils toujours ?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Oui. Linkwright remplit le panneau Développement de Jira lui-même : development[commits] en JQL, les badges des tableaux, les Smart Commits et les transitions automatiques se comportent comme avec l’intégration d’Atlassian."
+        "text": "Le JQL et Automation, oui : Linkwright remplit le panneau Développement de Jira lui-même, donc development[commits] en JQL, les badges des tableaux et les transitions automatiques se comportent comme avec l’intégration d’Atlassian. Les Smart Commits (#comment, #time, #transition dans un message de commit), pas encore : Jira ne les a pas exécutés pour un commit envoyé par Linkwright lors de notre test du 2 novembre 2026."
       }
     },
     {
@@ -353,7 +353,7 @@
         <dt>Quels hébergeurs Git sont pris en charge ?</dt>
         <dd>GitHub.com, par une GitHub App installée sur votre compte ou votre organisation. GitHub Enterprise Server et GitLab ne sont pas pris en charge dans cette version.</dd>
         <dt>Les Smart Commits, le JQL et Automation marchent-ils toujours ?</dt>
-        <dd>Oui. Linkwright remplit le panneau Développement de Jira lui-même : <code>development[commits]</code> en JQL, les badges des tableaux, les Smart Commits et les transitions automatiques se comportent comme avec l’intégration d’Atlassian.</dd>
+        <dd>Le JQL et Automation, oui : Linkwright remplit le panneau Développement de Jira lui-même, donc <code>development[commits]</code> en JQL, les badges des tableaux et les transitions automatiques se comportent comme avec l’intégration d’Atlassian. Les Smart Commits (<code>#comment</code>, <code>#time</code>, <code>#transition</code> dans un message de commit), pas encore : Jira ne les a pas exécutés pour un commit envoyé par Linkwright lors de notre test du 2 novembre 2026.</dd>
         <dt>Qu’est-ce qui sort de notre site Jira ?</dt>
         <dd>Rien n’est envoyé à GitHub. Linkwright lit GitHub et écrit dans votre site Jira, et tourne entièrement sur Atlassian Forge : aucun serveur à moi entre les deux. Détails dans la <a href="/security.html">politique de sécurité</a>.</dd>
         <dt>Qui voit quels dépôts ?</dt>
