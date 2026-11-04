@@ -6,7 +6,7 @@ Key facts:
 
 - Works with Jira Cloud and GitHub.com. Not GitLab, Bitbucket or Azure DevOps (self-hosted GitLab is planned).
 - Webhooks first, with a periodic check that rereads what webhooks missed; a Refresh button rereads a repository on demand.
-- Per-repository sync state: Up to date, Out of date, Rate limited, Failing, Not authorized, with the time of the last webhook and of the last successful read.
+- Per-repository sync state: Up to date, Out of date, Rate limited, Failing, Not authorized, with the time of the last webhook, of the last successful read, and the last commit Jira accepted.
 - Checks five minutes after sending that Jira kept the links, and repairs the ones it dropped.
 - Repositories are attached per Jira project.
 - Measured on a real Jira Cloud site (30 September 2026): a commit reached the issue in 5.7 s; a 500-commit push arrived whole.
@@ -28,6 +28,7 @@ Key facts:
 - [GitHub for Jira backfill](https://linkwright.io/github-for-jira-backfill.html): what GitHub for Atlassian's backfill imports (Atlassian documentation, November 2026), how to continue or restart it, and a five-minute check
 - [Jira Smart Commits with GitHub](https://linkwright.io/jira-smart-commits-github.html): syntax of #comment, #time and transitions (Atlassian documentation, November 2026), why a Smart Commit does not run (the commit email must match exactly one Jira user), a checklist, and how Linkwright limits who can run them
 - [GitHub for Atlassian is moving to Forge](https://linkwright.io/github-for-atlassian-forge-migration.html): Atlassian's October 2026 rollout, and a before/after check of your development data
+- [Permissions and sync statuses](https://linkwright.io/permissions-and-sync-status.html): each GitHub App permission and why (read-only on code; write only on its own webhooks), and what each sync status means, with its threshold
 - [Atlassian Marketplace listing](https://marketplace.atlassian.com/apps/1218910089): install, pricing, reviews
 - [Security](https://linkwright.io/security.html): data handled, architecture, vulnerability reporting
 - [Privacy policy](https://linkwright.io/privacy.html)

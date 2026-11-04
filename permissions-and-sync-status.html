@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Linkwright permissions and sync statuses, explained — Linkwright</title>
+<meta name="description" content="Every permission the Linkwright GitHub App asks for and why, what it never does, and what each of its eight sync statuses means, with the thresholds from the code.">
+<link rel="canonical" href="https://linkwright.io/permissions-and-sync-status.html">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://linkwright.io/permissions-and-sync-status.html">
+<meta property="og:site_name" content="Linkwright">
+<meta property="og:title" content="Linkwright permissions and sync statuses, explained — Linkwright">
+<meta property="og:description" content="Every permission the Linkwright GitHub App asks for and why, what it never does, and what each of its eight sync statuses means, with the thresholds from the code.">
+<meta property="og:image" content="https://linkwright.io/assets/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="icon" href="/assets/favicon-96.png" type="image/png" sizes="96x96">
+<link rel="icon" href="/assets/logo.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+<meta name="theme-color" content="#14302a">
+<link rel="stylesheet" href="/style.css?v=54ef87ef0d">
+<script data-goatcounter="https://saadlagz.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+<script>(function(){try{var q=new URLSearchParams(location.search).get('src');if(q)sessionStorage.setItem('lw_src',q.slice(0,20));var s=sessionStorage.getItem('lw_src');if(!s)return;document.addEventListener('DOMContentLoaded',function(){document.querySelectorAll('a[href*="install-beta"]').forEach(function(a){if(a.href.indexOf('src=')<0)a.href+=(a.href.indexOf('?')<0?'?':'&')+'src='+encodeURIComponent(s)})})}catch(e){}})();</script>
+</head>
+<body>
+
+<header class="site">
+  <div class="wrap">
+    <a class="brand" href="/"><img src="/assets/logo.svg" alt="" width="28" height="28">Linkwright</a>
+    <nav>
+      <a href="/guides.html">Guides</a>
+      <a href="/docs.html">Documentation</a>
+      <a href="/security.html">Security</a>
+      <a class="nav-cta" href="/#early-access">Book a demo</a>
+    </nav>
+  </div>
+</header>
+
+<main class="doc">
+  <div class="narrow">
+    <h1>Linkwright permissions and sync statuses, explained</h1>
+    <div class="toc"><p>On this page</p><ul><li><a href="#what-the-github-app-can-do-and-why">What the GitHub App can do, and why</a></li><li><a href="#what-each-sync-status-means">What each sync status means</a></li></ul></div>
+<p>Before you install an app that reads your code, you should know exactly what it can do, and what the
+screens will tell you once it runs. This page lists both.</p>
+<h2 id="what-the-github-app-can-do-and-why">What the GitHub App can do, and why</h2>
+<p>The Linkwright for Jira GitHub App asks for these permissions, on <strong>the repositories you choose
+only</strong> (checked on 4 November 2026):</p>
+<table>
+<thead>
+<tr>
+<th>Permission</th>
+<th>Level</th>
+<th>Why</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Contents</td>
+<td>read</td>
+<td>Read commits and branches, to find the Jira issue keys in them</td>
+</tr>
+<tr>
+<td>Pull requests</td>
+<td>read</td>
+<td>Read pull requests and their reviews</td>
+</tr>
+<tr>
+<td>Deployments</td>
+<td>read</td>
+<td>Read deployment statuses, to mark commits as deployed</td>
+</tr>
+<tr>
+<td>Metadata</td>
+<td>read</td>
+<td>Required by GitHub for every app (repository names)</td>
+</tr>
+<tr>
+<td>Members</td>
+<td>read</td>
+<td>Check that the person who connects your GitHub organization to Jira is an <strong>owner</strong> of it</td>
+</tr>
+<tr>
+<td>Repository webhooks</td>
+<td>write</td>
+<td>Create <strong>its own</strong> webhook when you attach a repository, and delete it when you detach it or uninstall</td>
+</tr>
+</tbody>
+</table>
+<p>It cannot change your code, your pull requests, your settings, or any webhook it did not create.</p>
+<h3 id="why-it-asks-for-webhooks">Why it asks for webhooks</h3>
+<p>Linkwright could have asked for read access only and checked GitHub every few minutes. It doesn’t,
+for two reasons:</p>
+<ul>
+<li><strong>Speed.</strong> With a webhook, GitHub tells Linkwright about a push as it happens. Measured on
+30 September 2026: a commit was linked to its issue <strong>5.7 s</strong> after the push and sent to Jira at
+<strong>7.2 s</strong>. Jira then took about a minute to show it in the Development panel; that part is Jira’s
+own indexing and is the same for every app. An app that checks every 5 minutes adds up to 5
+minutes before that.</li>
+<li><strong>GitHub’s rate limit.</strong> Webhooks cost nothing against it. Linkwright still re-reads every
+attached repository every 30 minutes, to catch anything a webhook missed, but it spends its
+quota on checking, not on waiting for news.</li>
+</ul>
+<p>The webhook is scoped: one per attached repository, signed with a secret unique to your Jira site,
+pointing to your Jira site’s own Linkwright address. Detach the repository from its last Jira
+project and the webhook is deleted.</p>
+<h3 id="why-it-reads-organization-membership">Why it reads organization membership</h3>
+<p>Anyone who is a Jira administrator can open Linkwright’s settings. Without a check, a Jira admin who
+is only a regular member of a GitHub organization could connect that organization to Jira and expose
+its repositories there. Linkwright reads membership for one thing: to accept the connection only from
+an <strong>owner</strong> of the organization (or the account itself, for a personal account).</p>
+<h2 id="what-each-sync-status-means">What each sync status means</h2>
+<p>Every attached repository shows one status. A healthy status is never shown on a guess: each one
+comes from dated evidence. Next to it, the screens show the proof that sync happened: <strong>the last
+commit Jira accepted, and when</strong> (“Last delivered to Jira: commit abc1234, 3 min ago”), or
+“Nothing delivered to Jira yet” when nothing has been sent. Search and the <strong>Needs attention</strong>
+filter find the repositories that are not up to date.</p>
+<table>
+<thead>
+<tr>
+<th>Status</th>
+<th>What it means</th>
+<th>What to do</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Up to date</strong></td>
+<td>Read successfully less than 2 hours ago, with fewer than 3 failed reads in a row</td>
+<td>Nothing</td>
+</tr>
+<tr>
+<td><strong>Out of date</strong></td>
+<td>The last successful read is more than 2 hours old</td>
+<td>Click <strong>Refresh</strong> if you need it current now</td>
+</tr>
+<tr>
+<td><strong>Never checked</strong></td>
+<td>Attached, but not read successfully yet</td>
+<td>Wait a few minutes, or click <strong>Refresh</strong></td>
+</tr>
+<tr>
+<td><strong>Webhook down</strong></td>
+<td>Meant for a webhook proven broken (3 changes found by the re-read that no webhook announced). <strong>Not detected automatically yet</strong>: this version does not count those changes, so the status does not appear</td>
+<td>If new commits reach Jira only after the 30-minute re-read, check the webhook’s recent deliveries on GitHub</td>
+</tr>
+<tr>
+<td><strong>Failing</strong></td>
+<td>3 or more reads in a row failed; the screen shows the error</td>
+<td>Read the error; contact support if it persists</td>
+</tr>
+<tr>
+<td><strong>Rate limited</strong></td>
+<td>GitHub’s request quota is used up for the current window</td>
+<td>Nothing: it resumes on its own, and the screen says when</td>
+</tr>
+<tr>
+<td><strong>Not authorized</strong></td>
+<td>GitHub no longer gives access: the repository was removed from the GitHub App, renamed or deleted, or the connection was revoked</td>
+<td>Add the repository back in the GitHub App’s settings, or detach it</td>
+</tr>
+<tr>
+<td><strong>Disabled</strong></td>
+<td>Sync turned off for this repository. <strong>Not used yet</strong>: this version has no switch for it, so the status does not appear</td>
+<td>To stop syncing a repository, detach it</td>
+</tr>
+</tbody>
+</table>
+<p>Two of these, <strong>Webhook down</strong> and <strong>Disabled</strong>, cannot appear yet. They are listed because they
+are part of the app’s vocabulary, and saying so is more useful than leaving you to wonder.</p>
+<p>Already-linked commits stay on your issues whatever the status: a problem stops new activity from
+arriving, it does not erase what is there.</p>
+
+    <h2 id="more-guides">More guides</h2>
+    <ul><li><a href="connect-github-to-jira-cloud.html">How to connect GitHub to Jira Cloud</a></li><li><a href="github-issues-vs-jira.html">GitHub Issues vs Jira</a></li><li><a href="github-commits-not-showing-in-jira.html">GitHub commits not showing in Jira</a></li><li><a href="github-for-jira-backfill.html">GitHub for Jira backfill: restart it and check it</a></li><li><a href="jira-smart-commits-github.html">Jira Smart Commits with GitHub: syntax and checks</a></li><li><a href="github-for-atlassian-forge-migration.html">GitHub for Atlassian is moving to Forge: what to check</a></li><li><a href="restrict-github-repositories-per-jira-project.html">Limit which GitHub repositories each Jira project can link</a></li><li><a href="jira-jql-development-github.html">JQL for GitHub data in Jira</a></li><li><a href="github-for-jira-alternatives.html">GitHub for Jira alternatives</a></li><li><a href="github-for-atlassian-side-by-side.html">24 hours side by side with GitHub for Atlassian</a></li></ul>
+
+  </div>
+</main>
+
+<footer class="site">
+  <div class="wrap">
+    <span>&copy; 2026 Linkwright. Built in France by an independent developer.</span>
+    <nav>
+      <a href="/">Home</a>
+      <a href="/guides.html">Guides</a>
+      <a href="/docs.html">Documentation</a>
+      <a href="/security.html">Security</a>
+      <a href="/about.html">About</a>
+      <a href="/changelog.html">Changelog</a>
+      <a href="/support.html">Support</a>
+      <a href="mailto:support@linkwright.io">Contact</a>
+      <a href="/privacy.html">Privacy</a>
+      <a href="/terms.html">Terms</a>
+      <a href="/legal.html">Legal notice</a>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>

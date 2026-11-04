@@ -63,7 +63,8 @@ GitHub account or organization, then choose <strong>the repositories</strong> it
 deployments, and <strong>manages its own webhooks</strong> (created when a repository is attached, deleted when
 it is detached). It never changes code, pull requests or other webhooks of the repository. It also reads the
 organization’s <strong>membership</strong>, only to check that the person connecting it to Jira is an owner
-(section 2.3).</p>
+(section 2.3). Each permission and the reason for it: <a href="https://linkwright.io/permissions-and-sync-status.html">Permissions and sync statuses,
+explained</a>.</p>
 <h3 id="23-connect-your-github-account-or-organization-to-jira-once">2.3 Connect your GitHub account or organization to Jira (once)</h3>
 <p>Done by a <strong>Jira administrator</strong> who is also an <strong>owner</strong> of the GitHub account or organization —
 usually the person who just installed the GitHub App.</p>
@@ -218,17 +219,20 @@ commit.</li>
 </tr>
 <tr>
 <td><strong>Webhook down</strong></td>
-<td>The periodic check found changes no webhook announced.</td>
-<td>Check the repository’s webhook on GitHub: recent failed deliveries.</td>
+<td>Reserved for a webhook proven broken. Not detected automatically in this version: the state does not appear yet.</td>
+<td>If new commits reach Jira only after the periodic check, look at the webhook’s recent deliveries on GitHub.</td>
 </tr>
 </tbody>
 </table>
 <p>Webhooks bring activity within seconds. On top of that, the app re-reads each attached repository
 regularly (about every 35 minutes) to catch anything that might have been missed.</p>
+<p>Under each repository, <strong>Last delivered to Jira</strong> shows the last commit Jira accepted and when
+(“Nothing delivered to Jira yet” if none). Search by name, or use the <strong>Needs attention</strong> and
+<strong>Not checked yet</strong> filters to find the repositories that are not up to date.</p>
 <h3 id="refresh">Refresh</h3>
 <p>The <strong>Refresh</strong> button (in <strong>Git repositories</strong>) re-reads the repository from GitHub immediately.
-The message “Check started” appears; the result arrives a few seconds later — reload the page to
-see it.</p>
+The screen shows “Reading 0 of 1 repository…” and updates itself when the reading is done, usually
+within a few seconds; no need to reload. The same counter appears after a repository is attached.</p>
 <p>It also re-sends the repository to Jira’s <strong>Development</strong> panel, rebuilding it: its commits are
 removed then recreated. Allow <strong>a few minutes</strong> (the next cycle, then Jira’s processing) before
 seeing them all on the issue again.</p>
@@ -276,7 +280,8 @@ within 10 minutes.</li>
 </ol>
 <p><strong>A commit does not appear on the issue.</strong></p>
 <ol>
-<li>Is the key written in upper case in the message (<code>CHK-42</code>)?</li>
+<li>Is the key in the commit message, in upper case (<code>CHK-42</code>), or in the name of the branch the commit was
+pushed to (<code>feature/chk-42-login</code>, any case)?</li>
 <li>Is the repository attached <strong>to this project</strong>?</li>
 <li>Was the commit pushed before attachment, on a branch other than the default one? <strong>Refresh</strong>
 catches up the commits of up to 20 branches not seen yet (see §6).</li>

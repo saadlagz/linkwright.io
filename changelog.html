@@ -40,6 +40,19 @@
   <div class="narrow">
     <h1>Changelog</h1>
 <p>What changes for people using Linkwright for Jira, newest first.</p>
+<h2 id="4-november-2026-version-219">4 November 2026 — version 2.19</h2>
+<ul>
+<li><strong>Proof that sync happened.</strong> Under each repository, on “Git repositories” and “Git sync
+health”: “Last delivered to Jira: commit abc1234, 3 min ago”, the last commit Jira accepted.
+When nothing has been sent yet, the screen says “Nothing delivered to Jira yet”.</li>
+<li><strong>Search and filters.</strong> Find a repository by name, and narrow the list to <strong>Needs attention</strong> or
+<strong>Not checked yet</strong>. When no repository needs attention, the screen says so.</li>
+<li><strong>A reading in progress counts itself.</strong> After attaching a repository or clicking Refresh, the
+screen shows “Reading 1 of 2 repositories…” with a progress bar and updates itself when done:
+no more reloading the page.</li>
+<li><strong>What each permission and status means</strong>, on one page: <a href="permissions-and-sync-status.html">Permissions and sync statuses,
+explained</a>.</li>
+</ul>
 <h2 id="2-november-2026-version-217">2 November 2026 — version 2.17</h2>
 <ul>
 <li><strong>Smart Commits run.</strong> A <code>#comment</code>, <code>#time</code> or transition command in a commit message is now run
