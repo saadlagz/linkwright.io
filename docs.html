@@ -93,7 +93,8 @@ page appears for every user in Jira’s <strong>Apps</strong> menu (“Linkwrigh
 invitation it shows nothing and allows nothing.</p>
 <p><strong>Authorized the wrong GitHub account?</strong> Click <strong>Use another GitHub account</strong> and choose the right
 one.</p>
-<p>A <strong>Get started</strong> checklist at the top of <strong>Git sync health</strong> shows where the site stands: GitHub
+<p>A <strong>Get started</strong> checklist at the top of <strong>Git sync health</strong> (<strong>Get Started</strong>, in the <strong>⋯</strong> menu of Linkwright under <strong>Site settings ›
+Connected apps</strong>, opens the same page) shows where the site stands: GitHub
 App installed and organization connected, repositories read, repositories attached. Each step is
 ticked from what the site actually holds; once all are done, a single line remains.</p>
 <p>The installation’s repositories are read immediately, then <strong>every 10 minutes</strong>, and again <strong>each
@@ -116,7 +117,9 @@ installed: connect it again at any time.</p>
 </ol>
 <p>Repositories whose recent commits cite the project’s key are listed first, marked <strong>Suggested</strong> with
 the number of commits; <strong>Attach the suggested repositories</strong> attaches them all at once. Suggestions
-are refreshed once a day per repository; they never link anything by themselves.</p>
+are refreshed once a day per repository; they never link anything by themselves. Right after an
+organization is connected they are still being read, 15 repositories every 5 minutes: the page says how
+many so far.</p>
 <p>When a repository is attached, the app creates its webhook to your Jira site automatically and
 starts reading the repository at once: its state usually turns <strong>Up to date</strong> within seconds. If the webhook
 cannot be created, a red message says so: the repository stays attached, but its activity may not
@@ -194,7 +197,9 @@ ships</strong> since the previous successful deployment of the same environment,
 commit.</li>
 <li><strong>Branches</strong>: including <strong>deleted</strong> branches, marked as such.</li>
 <li><strong>Commits</strong>: the 10 most recent, then the count of the others.</li>
-<li>At the top: the <strong>freshness</strong> of each repository attached to the project.</li>
+<li>At the top: the <strong>freshness</strong> of each repository attached to the project. Above 10 repositories,
+only those holding this issue’s links (or, if it has none, those that need attention), and the
+number of others.</li>
 </ul>
 <h2 id="5-sync-states">5. Sync states</h2>
 <p>Shown on the panel and in <strong>Git repositories</strong>.</p>

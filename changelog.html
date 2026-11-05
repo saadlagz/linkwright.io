@@ -40,6 +40,20 @@
   <div class="narrow">
     <h1>Changelog</h1>
 <p>What changes for people using Linkwright for Jira, newest first.</p>
+<h2 id="5-november-2026-version-223">5 November 2026 — version 2.23</h2>
+<ul>
+<li><strong>Get started.</strong> The menu of Linkwright under Site settings › Connected apps now has a Get Started
+entry, opening the same page as Git sync health.</li>
+<li><strong>Large accounts.</strong> New links are written together rather than one by one, one issue cited by
+thousands of commits stays readable, and suggestions are read faster after an organization is
+connected, with the page saying how many repositories have been read so far.</li>
+<li><strong>Issue panel.</strong> Above 10 repositories in a project, it lists those holding this issue’s links and
+counts the others.</li>
+<li><strong>Nothing lost in silence.</strong> When Jira could not be told about commits because the queue refused
+them, a full send is now owed and the screens say so. A repository whose check keeps failing no
+longer holds up the others.</li>
+<li><strong>Logs.</strong> Email addresses are removed from most of the Jira refusals we log.</li>
+</ul>
 <h2 id="5-november-2026-version-222">5 November 2026 — version 2.22</h2>
 <ul>
 <li><strong>Security fixes.</strong> A repository can now be detached only by a project it is attached to. Nothing
