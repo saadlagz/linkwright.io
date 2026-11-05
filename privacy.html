@@ -39,7 +39,7 @@
 <main class="doc">
   <div class="narrow">
     <h1>Privacy Policy — Linkwright for Jira</h1>
-<p><strong>Effective date:</strong> 30 September 2026</p>
+<p><strong>Effective date:</strong> 5 November 2026</p>
 <p>Saad Lagzouli, sole proprietor (entrepreneur individuel) trading as Linkwright (SIREN 130 855 364, France) (“we”) publishes Linkwright for Jira (the “App”), an Atlassian Forge app that shows
 GitHub activity — commits, branches, pull requests, reviews and deployments — on Jira issues.</p>
 <h2 id="1-where-the-app-runs-and-where-data-is-stored">1. Where the App runs and where data is stored</h2>
@@ -71,6 +71,12 @@ corresponding organizations, to verify they control the installation. The App st
 installation identifier, the account name and type, and <strong>the administrator’s GitHub login</strong>. The
 OAuth token is stored and refreshed by Atlassian Forge, not by our code.
 The App does <strong>not</strong> store Atlassian account identifiers.</p>
+<p>The same applies when an administrator invites a GitHub owner to make that association instead: the
+owner’s GitHub login is what is stored, once they connect. The invitation itself holds the GitHub
+organization or account name the administrator typed, its creation and expiry dates, and a hash of
+its link, not the link itself. That name can be a person’s GitHub login, for a personal account. An
+invitation stays in your site’s Forge storage under the rules of section 6 after it expires or is
+used.</p>
 <h3 id="23-operational-data">2.3 Operational data</h3>
 <p>Synchronization state per repository (timestamps, error kinds), identifiers of the commits already
 sent to Jira’s Development panel (so none is sent twice), GitHub API quota counters, webhook

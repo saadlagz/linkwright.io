@@ -40,6 +40,28 @@
   <div class="narrow">
     <h1>Changelog</h1>
 <p>What changes for people using Linkwright for Jira, newest first.</p>
+<h2 id="5-november-2026-version-221">5 November 2026 — version 2.21</h2>
+<ul>
+<li><strong>Admin actions check the caller’s Jira permissions.</strong> Every action behind the admin screens now
+asks Jira whether the person is an administrator of the site or of the project, and refuses
+otherwise. Before this, the app relied on the screen being reachable only by administrators.</li>
+<li><strong>The Jira admin no longer has to be the GitHub owner.</strong> Create an invitation link in <strong>Git sync
+health</strong> and send it to an owner of the organization. It works once, for that organization only,
+and expires in 72 hours. The owner needs access to Jira on your site, but doesn’t need to be an
+administrator.</li>
+<li><strong>Authorized the wrong GitHub account?</strong> <strong>Use another GitHub account</strong> now lets you choose.</li>
+<li><strong>Same branch name in two repositories.</strong> Deleting it in one repository no longer marks it deleted
+in the other, on the issue panel or in Jira’s Development panel.</li>
+<li><strong>More failures are shown.</strong> When Jira refuses or loses what a repository sends, or a webhook could
+not be created, the repository says so with the reason, instead of looking up to date. Limits a
+first read ran into are listed next to <strong>Up to date</strong>.</li>
+<li><strong>Large accounts.</strong> Installations of more than 500 repositories are listed in full, up to 5,000.
+Readings are spread over 5 minutes, and a GitHub secondary rate limit is no longer read as a revoked
+access.</li>
+<li><strong>Refresh on a large repository.</strong> Above 400 items, <strong>Refresh</strong> re-reads GitHub without rebuilding
+what Jira holds, and the screen says so.</li>
+<li><strong>A branch name to copy.</strong> The issue panel suggests one that contains the issue key.</li>
+</ul>
 <h2 id="5-november-2026-version-220">5 November 2026 — version 2.20</h2>
 <ul>
 <li><strong>A broken webhook now says so.</strong> When at least 3 commits appear on a repository’s default

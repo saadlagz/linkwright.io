@@ -77,13 +77,31 @@ usually the person who just installed the GitHub App.</p>
 <p>Why the owner role is required: without it, any member of an organization could expose in Jira
 private repositories they cannot see themselves. An installation you do not control is listed with
 the reason it cannot be connected, and who can connect it instead.</p>
+<p><strong>Are the Jira admin and the GitHub owner two people?</strong> The admin invites the owner with a link:</p>
+<ol>
+<li><strong>Jira settings → Apps → Git sync health</strong>, section <strong>Is the GitHub owner someone else?</strong>: type
+the organization’s name, then click <strong>Create an invitation link</strong>.</li>
+<li>Send the link to the owner. It works once, only for that organization, and expires in 72 hours.
+It is shown only when created; creating another one cancels the previous one, and <strong>Cancel
+invitation</strong> disables it.</li>
+<li>The owner opens the link, installs the GitHub App if it isn’t installed yet, then authorizes
+GitHub and connects the organization.</li>
+</ol>
+<p><strong>Limit:</strong> the owner needs access to Jira on this site, so they use a Jira license: Atlassian doesn’t
+open this kind of page to people without Jira access. They don’t need to be an administrator. The
+page appears for every user in Jira’s <strong>Apps</strong> menu (“Linkwright: connect GitHub”); without a valid
+invitation it shows nothing and allows nothing.</p>
+<p><strong>Authorized the wrong GitHub account?</strong> Click <strong>Use another GitHub account</strong> and choose the right
+one.</p>
 <p>A <strong>Get started</strong> checklist at the top of <strong>Git sync health</strong> shows where the site stands: GitHub
 App installed and organization connected, repositories read, repositories attached. Each step is
 ticked from what the site actually holds; once all are done, a single line remains.</p>
 <p>The installation’s repositories are read immediately, then <strong>every 10 minutes</strong>, and again <strong>each
 time an administrator opens Git sync health or a project’s Git repositories page</strong> (at most once a
 minute): a repository just added to the GitHub App shows up on that page within seconds, without
-anything being pushed to it.</p>
+anything being pushed to it. An installation of more than 500 repositories is read in full once an
+hour, so a new repository can take up to an hour to appear; the screen shows how old the last reading
+is. Above 5,000 repositories, the screen says the list is incomplete.</p>
 <p>The very first screen after installing the app can take up to 20 seconds while the app prepares
 its database; it says so while it waits.</p>
 <p>To <strong>disconnect</strong> an installation, click <strong>Disconnect</strong> next to it, then confirm. Every repository
@@ -236,6 +254,8 @@ within a few seconds; no need to reload. The same counter appears after a reposi
 <p>It also re-sends the repository to Jira’s <strong>Development</strong> panel, rebuilding it: its commits are
 removed then recreated. Allow <strong>a few minutes</strong> (the next cycle, then Jira’s processing) before
 seeing them all on the issue again.</p>
+<p>On a repository holding more than 400 items in Jira, <strong>Refresh</strong> re-reads GitHub but doesn’t rebuild
+what Jira holds, because the app couldn’t confirm the result. The screen says so.</p>
 <h2 id="6-limits-of-this-version">6. Limits of this version</h2>
 <ul>
 <li><strong>GitHub only</strong> (<a href="https://github.com">github.com</a>). GitLab is planned for a later version.</li>

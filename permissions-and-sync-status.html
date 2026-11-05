@@ -107,7 +107,16 @@ project and the webhook is deleted.</p>
 <p>Anyone who is a Jira administrator can open Linkwright’s settings. Without a check, a Jira admin who
 is only a regular member of a GitHub organization could connect that organization to Jira and expose
 its repositories there. Linkwright reads membership for one thing: to accept the connection only from
-an <strong>owner</strong> of the organization (or the account itself, for a personal account).</p>
+an <strong>owner</strong> of the organization (or the account itself, for a personal account). If the Jira
+administrator isn’t an owner, they can send an owner a single-use invitation link, and the same check
+applies to the person who uses it.</p>
+<h3 id="what-a-project-administrator-can-do">What a project administrator can do</h3>
+<p>Connecting an organization is reserved for its owner. After that, attaching repositories is a Jira
+project setting: an administrator of a Jira project can attach any repository of a connected
+organization to that project, and its activity then appears on that project’s issues. A repository
+feeds only the projects it is attached to, but this choice isn’t limited to the repositories that
+administrator can see on GitHub. If that matters to you, limit who administers your Jira projects, or
+choose fewer repositories in the GitHub App.</p>
 <h2 id="what-each-sync-status-means">What each sync status means</h2>
 <p>Every attached repository shows one status. A healthy status is never shown on a guess: each one
 comes from dated evidence. Next to it, the screens show the proof that sync happened: <strong>the last
@@ -140,13 +149,13 @@ filter find the repositories that are not up to date.</p>
 </tr>
 <tr>
 <td><strong>Webhook down</strong></td>
-<td>At least 3 commits appeared on the default branch with no webhook behind them: the re-read found them, and no delivery of any kind arrived in the 15 minutes that followed</td>
+<td>The webhook could not be created (the screen gives the reason), or at least 3 commits appeared on the default branch with no webhook behind them: the re-read found them, and no delivery of any kind arrived in the 15 minutes that followed</td>
 <td>On GitHub, open the repository’s Settings, then Webhooks: check that Linkwright’s webhook exists and is active, and read its recent deliveries. The status clears at the next delivery; if the webhook is gone, detach and re-attach the repository. Commits keep arriving through the re-read, later</td>
 </tr>
 <tr>
 <td><strong>Failing</strong></td>
-<td>3 or more reads in a row failed; the screen shows the error</td>
-<td>Read the error; contact support if it persists</td>
+<td>3 or more reads in a row failed, or Jira refused or lost what the repository sent; the screen shows the cause</td>
+<td>Read the cause; contact support if it persists</td>
 </tr>
 <tr>
 <td><strong>Rate limited</strong></td>
