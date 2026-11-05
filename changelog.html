@@ -40,6 +40,15 @@
   <div class="narrow">
     <h1>Changelog</h1>
 <p>What changes for people using Linkwright for Jira, newest first.</p>
+<h2 id="5-november-2026-version-222">5 November 2026 — version 2.22</h2>
+<ul>
+<li><strong>Security fixes.</strong> A repository can now be detached only by a project it is attached to. Nothing
+of a Jira site is kept in memory between two calls, so a process reused for another site can’t
+verify its webhooks with the wrong secret. Once a GitHub account is disconnected, the daily
+suggestions stop reading its repositories. A deployment link on an issue must be an http(s) address.</li>
+<li><strong>Screens.</strong> Menu names match what Jira shows today, and the message after disconnecting an account
+with no attached repository is worded correctly.</li>
+</ul>
 <h2 id="5-november-2026-version-221">5 November 2026 — version 2.21</h2>
 <ul>
 <li><strong>Admin actions check the caller’s Jira permissions.</strong> Every action behind the admin screens now
