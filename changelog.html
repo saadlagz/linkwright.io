@@ -40,6 +40,14 @@
   <div class="narrow">
     <h1>Changelog</h1>
 <p>What changes for people using Linkwright for Jira, newest first.</p>
+<h2 id="5-november-2026-version-220">5 November 2026 — version 2.20</h2>
+<ul>
+<li><strong>A broken webhook now says so.</strong> When at least 3 commits appear on a repository’s default
+branch with no webhook behind them, its state turns <strong>Webhook down</strong>, with what to check on
+GitHub. Commits from before you attached the repository never count, a late delivery is given
+15 minutes, and any delivery clears the state. Until now this state could not appear.
+<a href="permissions-and-sync-status.html">How it avoids false alarms</a>.</li>
+</ul>
 <h2 id="4-november-2026-version-219">4 November 2026 — version 2.19</h2>
 <ul>
 <li><strong>Proof that sync happened.</strong> Under each repository, on “Git repositories” and “Git sync

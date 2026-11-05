@@ -140,8 +140,8 @@ filter find the repositories that are not up to date.</p>
 </tr>
 <tr>
 <td><strong>Webhook down</strong></td>
-<td>Meant for a webhook proven broken (3 changes found by the re-read that no webhook announced). <strong>Not detected automatically yet</strong>: this version does not count those changes, so the status does not appear</td>
-<td>If new commits reach Jira only after the 30-minute re-read, check the webhook’s recent deliveries on GitHub</td>
+<td>At least 3 commits appeared on the default branch with no webhook behind them: the re-read found them, and no delivery of any kind arrived in the 15 minutes that followed</td>
+<td>On GitHub, open the repository’s Settings, then Webhooks: check that Linkwright’s webhook exists and is active, and read its recent deliveries. The status clears at the next delivery; if the webhook is gone, detach and re-attach the repository. Commits keep arriving through the re-read, later</td>
 </tr>
 <tr>
 <td><strong>Failing</strong></td>
@@ -165,8 +165,22 @@ filter find the repositories that are not up to date.</p>
 </tr>
 </tbody>
 </table>
-<p>Two of these, <strong>Webhook down</strong> and <strong>Disabled</strong>, cannot appear yet. They are listed because they
-are part of the app’s vocabulary, and saying so is more useful than leaving you to wonder.</p>
+<p><strong>Disabled</strong> cannot appear yet. It is listed because it is part of the app’s vocabulary, and saying
+so is more useful than leaving you to wonder.</p>
+<h3 id="how-webhook-down-avoids-false-alarms">How Webhook down avoids false alarms</h3>
+<p>A quiet repository receives no webhooks, so silence proves nothing. Linkwright only counts a
+contradiction: commits GitHub now shows that no delivery came with. These never count:</p>
+<ul>
+<li>commits from before you attached the repository, and everything its first read finds;</li>
+<li>commits a webhook arrives for within 15 minutes, or any commit when a delivery arrives meanwhile;</li>
+<li>commits older than a delivery that did arrive: an outage that has ended says nothing about now;</li>
+<li>the history after a force-push or a change of default branch.</li>
+</ul>
+<p>Any delivery resets the count to zero, and so does detaching the repository from its last Jira
+project. Three limits: the status takes about an hour to appear, because commits are confirmed at
+the re-read after the one that found them (68 minutes in our test of 5 November 2026); only the
+default branch is checked, so a broken webhook goes unnoticed until commits land there; and one lost
+delivery of 3 or more commits shows the status until the next delivery arrives.</p>
 <p>Already-linked commits stay on your issues whatever the status: a problem stops new activity from
 arriving, it does not erase what is there.</p>
 

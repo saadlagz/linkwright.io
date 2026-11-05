@@ -219,8 +219,8 @@ commit.</li>
 </tr>
 <tr>
 <td><strong>Webhook down</strong></td>
-<td>Reserved for a webhook proven broken. Not detected automatically in this version: the state does not appear yet.</td>
-<td>If new commits reach Jira only after the periodic check, look at the webhook’s recent deliveries on GitHub.</td>
+<td>At least 3 commits appeared on the default branch with no webhook behind them: the periodic check found them, and no delivery arrived in the 15 minutes that followed. Commits from before attachment or from the first check never count.</td>
+<td>On GitHub, open the repository’s Settings, then Webhooks: check that Linkwright’s webhook exists and is active, and read its recent deliveries. The state clears at the next delivery; if the webhook is gone, detach and re-attach the repository. Commits keep arriving through the periodic check, later.</td>
 </tr>
 </tbody>
 </table>

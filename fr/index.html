@@ -106,7 +106,7 @@
       "name": "Que se passe-t-il quand un lien casse ?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "L’état du dépôt passe à Quota épuisé, En échec ou Non autorisé, avec la raison et l’heure du dernier succès. Rafraîchir le relit depuis GitHub. Ce que veut dire chaque état (en anglais)."
+        "text": "L’état du dépôt passe à Webhook en panne, Quota épuisé, En échec ou Non autorisé, avec la raison et l’heure du dernier succès. Rafraîchir le relit depuis GitHub. Ce que veut dire chaque état (en anglais)."
       }
     },
     {
@@ -260,7 +260,7 @@
     <div class="feature">
       <div class="feature-text">
         <h3>Savoir ce qui est à jour, avant d’en rendre compte</h3>
-        <p>Chaque dépôt affiche son dernier webhook, sa dernière lecture complète, le dernier commit accepté par Jira et un état clair : <em>À jour</em>, <em>Pas à jour</em>, <em>Quota épuisé</em>, <em>En échec</em> ou <em>Non autorisé</em>, avec la raison. Un clic le relit depuis GitHub.</p>
+        <p>Chaque dépôt affiche son dernier webhook, sa dernière lecture complète, le dernier commit accepté par Jira et un état clair : <em>À jour</em>, <em>Pas à jour</em>, <em>Webhook en panne</em>, <em>Quota épuisé</em>, <em>En échec</em> ou <em>Non autorisé</em>, avec la raison. Un clic le relit depuis GitHub.</p>
       </div>
       <figure>
         <a class="shot-link" href="/assets/shot-health.png"><img src="/assets/shot-health.png" alt="L’écran Dépôts Git, avec pour chaque dépôt son état de synchronisation et l’heure de sa dernière lecture réussie." loading="lazy" width="1840" height="900"></a>
@@ -359,7 +359,7 @@
         <dt>Qui voit quels dépôts ?</dt>
         <dd>Un dépôt n’alimente que les projets Jira auxquels il est rattaché, et seul un propriétaire de l’organisation GitHub peut l’associer à votre site. Personne ne voit dans Jira un dépôt privé qu’il ne pourrait pas voir sur GitHub. <a href="/permissions-and-sync-status.html">Chaque permission de la GitHub App, et pourquoi</a> (en anglais).</dd>
         <dt>Que se passe-t-il quand un lien casse ?</dt>
-        <dd>L’état du dépôt passe à <em>Quota épuisé</em>, <em>En échec</em> ou <em>Non autorisé</em>, avec la raison et l’heure du dernier succès. <em>Rafraîchir</em> le relit depuis GitHub. <a href="/permissions-and-sync-status.html">Ce que veut dire chaque état</a> (en anglais).</dd>
+        <dd>L’état du dépôt passe à <em>Webhook en panne</em>, <em>Quota épuisé</em>, <em>En échec</em> ou <em>Non autorisé</em>, avec la raison et l’heure du dernier succès. <em>Rafraîchir</em> le relit depuis GitHub. <a href="/permissions-and-sync-status.html">Ce que veut dire chaque état</a> (en anglais).</dd>
         <dt>Qui est derrière, et en combien de temps le support répond-il ?</dt>
         <dd>Un développeur indépendant, immatriculé en France. Première réponse sous deux jours ouvrés, sur le <a href="/support.html">portail de support</a> ou à <a href="mailto:support@linkwright.io">support@linkwright.io</a>, en français ou en anglais.</dd>
       </dl>

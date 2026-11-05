@@ -105,7 +105,7 @@
       "name": "What happens when a link breaks?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "The repository’s state changes to Rate limited, Failing or Not authorized, with the reason and the time of the last success. Refresh re-reads it from GitHub. What each state means."
+        "text": "The repository’s state changes to Webhook down, Rate limited, Failing or Not authorized, with the reason and the time of the last success. Refresh re-reads it from GitHub. What each state means."
       }
     },
     {
@@ -271,8 +271,8 @@
       <div class="feature-text">
         <h3>Know what is current, before you report on it</h3>
         <p>Every repository shows its last webhook, its last full check, the last commit Jira accepted,
-          and a plain state: <em>Up to date</em>, <em>Out of date</em>, <em>Rate limited</em>,
-          <em>Failing</em> or <em>Not authorized</em>, with the reason. One click re-reads it from
+          and a plain state: <em>Up to date</em>, <em>Out of date</em>, <em>Webhook down</em>,
+          <em>Rate limited</em>, <em>Failing</em> or <em>Not authorized</em>, with the reason. One click re-reads it from
           GitHub.</p>
       </div>
       <figure>
@@ -400,8 +400,8 @@
           they could not see on GitHub. <a href="permissions-and-sync-status.html">Every permission
           the GitHub App asks for, and why</a>.</dd>
         <dt>What happens when a link breaks?</dt>
-        <dd>The repository&rsquo;s state changes to <em>Rate limited</em>, <em>Failing</em> or
-          <em>Not authorized</em>, with the reason and the time of the last success.
+        <dd>The repository&rsquo;s state changes to <em>Webhook down</em>, <em>Rate limited</em>,
+          <em>Failing</em> or <em>Not authorized</em>, with the reason and the time of the last success.
           <em>Refresh</em> re-reads it from GitHub. <a href="permissions-and-sync-status.html">What
           each state means</a>.</dd>
         <dt>Who is behind it, and how fast is support?</dt>

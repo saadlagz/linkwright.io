@@ -6,7 +6,7 @@ Key facts:
 
 - Works with Jira Cloud and GitHub.com. Not GitLab, Bitbucket or Azure DevOps (self-hosted GitLab is planned).
 - Webhooks first, with a periodic check that rereads what webhooks missed; a Refresh button rereads a repository on demand.
-- Per-repository sync state: Up to date, Out of date, Rate limited, Failing, Not authorized, with the time of the last webhook, of the last successful read, and the last commit Jira accepted.
+- Per-repository sync state: Up to date, Out of date, Webhook down, Rate limited, Failing, Not authorized, with the time of the last webhook, of the last successful read, and the last commit Jira accepted.
 - Checks five minutes after sending that Jira kept the links, and repairs the ones it dropped.
 - Repositories are attached per Jira project.
 - Measured on a real Jira Cloud site (30 September 2026): a commit reached the issue in 5.7 s; a 500-commit push arrived whole.

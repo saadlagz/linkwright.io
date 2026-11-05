@@ -107,7 +107,7 @@ before you disconnect and reconnect everything: a reconnection can cost you the 
 <h2 id="how-linkwright-handles-this">How Linkwright handles this</h2>
 <p><a href="https://linkwright.io/">Linkwright for Jira</a> was built around point 7. For every repository, it
 shows the time of the last webhook, the time of the last successful full read, and a plain state:
-<em>Up to date</em>, <em>Out of date</em>, <em>Rate limited</em>, <em>Failing</em> or <em>Not authorized</em>, with the reason. A
+<em>Up to date</em>, <em>Out of date</em>, <em>Webhook down</em>, <em>Rate limited</em>, <em>Failing</em> or <em>Not authorized</em>, with the reason. A
 <strong>Refresh</strong> button rereads a repository from GitHub on demand, and the app checks five minutes after
 sending that Jira really kept the links, and repairs the ones it dropped. It feeds Jira’s native
 Development panel, so JQL and Automation work as usual.</p>
