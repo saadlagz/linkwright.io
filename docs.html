@@ -200,7 +200,13 @@ commit.</li>
 <li>At the top: the <strong>freshness</strong> of each repository attached to the project. Above 10 repositories,
 only those holding this issue’s links (or, if it has none, those that need attention), and the
 number of others.</li>
+<li>At the bottom: a <strong>branch name to copy</strong>, as a <code>git switch -c</code> command. The app has no write access
+to GitHub: it does not create the branch.</li>
 </ul>
+<p>A project administrator chooses that name’s format under Space settings › Apps › Git repositories, for
+example <code>feature/{key}-{description}</code> or <code>{type}/{key}-{description}</code>. <code>{key}</code> is the issue key
+(required), <code>{description}</code> what the developer types, <code>{type}</code> the issue type in lower case. A format
+that would not link a branch to its issue, or that Git would refuse, is not accepted.</p>
 <h2 id="5-sync-states">5. Sync states</h2>
 <p>Shown on the panel and in <strong>Git repositories</strong>.</p>
 <table>
@@ -293,7 +299,8 @@ is no longer synced until the license is renewed, then it is caught up within th
 <li><strong>Stored in Jira</strong> (your site’s Forge storage, isolated from other customers): repository and
 branch names; commit identifiers, first line of the message, author and date; pull request title,
 author and reviewers; review author and state; deployment environment and state; repository sync
-state; the GitHub login of the person who connected an organization. Also, for <strong>every</strong> repository
+state; the GitHub login of the person who connected an organization; the branch name format a project
+administrator chose. Also, for <strong>every</strong> repository
 of a connected organization, attached or not: its name, and how many recent commits cite each
 project key (for suggestions, not the commits).</li>
 <li><strong>Read from GitHub</strong>: only the repositories the GitHub App can access, read-only. Attached
