@@ -61,9 +61,14 @@ are held only in Atlassian Forge’s event queue until they are sent to Jira.</l
 <li>review states and reviewer logins;</li>
 <li>deployment identifiers, environment names, states and commit identifiers.</li>
 </ul>
-<p>Only repositories that (a) the GitHub App has been granted access to by the GitHub account owner,
-(b) belong to a GitHub installation associated with your Jira site, and © are attached to a
-Jira project by a project administrator are read.</p>
+<p>This activity is only read from repositories that (a) the GitHub App has been granted access to by
+the GitHub account owner, (b) belong to a GitHub installation associated with your Jira site, and
+© are attached to a Jira project by an administrator.</p>
+<h3 id="21-bis-from-the-other-repositories-of-an-associated-installation">2.1 bis From the other repositories of an associated installation</h3>
+<p>For every repository the GitHub App can access in an installation associated with your Jira site,
+attached or not, the App stores its name. Once a day it also reads its 50 most recent commits, to
+suggest attaching it to the Jira projects they cite. It keeps only how many commits cite each project
+key and when they were read, not the commits.</p>
 <h3 id="22-when-a-jira-administrator-associates-a-github-installation">2.2 When a Jira administrator associates a GitHub installation</h3>
 <p>The administrator authorizes the App on GitHub once. Through that authorization the App reads the
 administrator’s GitHub user, the installations of the App they can access, and their role in the
@@ -79,8 +84,8 @@ invitation stays in your site’s Forge storage under the rules of section 6 aft
 used.</p>
 <h3 id="23-operational-data">2.3 Operational data</h3>
 <p>Synchronization state per repository (timestamps, error kinds), identifiers of the commits already
-sent to Jira’s Development panel (so none is sent twice), GitHub API quota counters, webhook
-delivery identifiers (kept 24 hours to discard duplicates), and a per-site webhook secret and GitHub
+sent to Jira’s Development panel (so none is sent twice), the latest commit identifiers read on the default branch,
+GitHub API quota counters and cache tags, webhook delivery identifiers (kept 24 hours to discard duplicates), and a per-site webhook secret and GitHub
 installation token held in Forge encrypted storage.</p>
 <h2 id="3-how-the-data-is-used">3. How the data is used</h2>
 <p>Solely to provide the App’s features on your Jira site: linking GitHub activity to issues,
@@ -97,16 +102,20 @@ secret. <strong>No Jira data is sent to GitHub.</strong></li>
 <li>No other third party receives data.</li>
 </ul>
 <h2 id="5-logs">5. Logs</h2>
-<p>Forge function logs, visible to us for support and debugging, contain repository names, issue keys,
-branch names, environment names, counters, identifiers and error messages. They do not contain
-commit messages, author names or emails, reviewer logins, tokens or secrets. Repository names can
-contain a personal GitHub login (see §2.1). Logs are retained according to Atlassian Forge’s log
+<p>Forge function logs, visible to us for support and debugging, contain repository names, GitHub account
+names, issue keys, branch names, environment names, counters, identifiers and error messages. The App
+does not write commit messages, author names, reviewer logins, tokens or secrets to them. When Jira
+refuses data, up to 500 characters of its answer are logged; that answer
+could quote what it refuses. Repository and account names can contain a personal GitHub login (see §2.1). Logs are retained according to Atlassian Forge’s log
 retention.</p>
 <h2 id="6-retention-and-deletion">6. Retention and deletion</h2>
 <ul>
 <li>Data stays in your site’s Forge storage while the App is installed.</li>
 <li>Detaching a repository from its last project deletes its webhook on GitHub and removes it from
-Jira’s Development panel.</li>
+Jira’s Development panel. The App’s own Git activity panel keeps the history it indexed for that
+repository while the App is installed.</li>
+<li>Before it is uninstalled, the App deletes its webhooks on GitHub, as many as Atlassian’s time limit
+allows. On a site with many repositories, some may have to be deleted in GitHub’s settings.</li>
 <li><strong>Uninstalling the App</strong> deletes the data the App sent to Jira’s Development panel (Jira behaviour)
 and the App’s Forge storage for your site, according to Atlassian Forge’s data deletion rules:
 Forge keeps that storage for <strong>28 days</strong> after uninstallation (soft deletion, so that an accidental

@@ -53,25 +53,34 @@ deliveries are rejected. Replayed deliveries are detected and ignored.</p>
 <ul>
 <li>On GitHub, the app reads only the repositories the GitHub account owner granted it, and manages
 only the webhooks it created itself. It never writes code, pull requests or other webhooks.
-It reads organization membership only to check that the administrator who connects an
+It reads organization membership only to check that the person who connects an
 installation to Jira controls it.</li>
 <li>A repository only feeds issues of the Jira projects it is attached to.</li>
-<li>Associating a GitHub organization with a Jira site requires a Jira administrator who is also an
-owner of that GitHub organization, checked on GitHub at association time.</li>
+<li>Associating a GitHub organization with a Jira site requires an owner of that organization, checked
+on GitHub at association time: a Jira administrator who is one, or an owner invited by a Jira
+administrator with a single-use link that expires after 72 hours. An invited owner needs access to
+Jira on that site, not administrator rights. Once associated, any administrator of a Jira project
+can attach any repository of that organization to their project.</li>
+<li>Every administration action checks the caller’s Jira permissions on the server, and is refused in
+case of doubt.</li>
 <li>Each Jira permission scope requested is used by the code and justified in the listing.</li>
 </ul>
 <h2 id="secrets">Secrets</h2>
 <p>The GitHub App private key is held in Forge encrypted environment variables. Installation tokens
 and per-site webhook secrets are held in Forge encrypted storage. The GitHub OAuth token of the
-administrator who associates an organization is held and refreshed by Forge. No secret is written
-to logs, URLs or source code.</p>
+person who associates an organization is held and refreshed by Forge. No secret is written to logs
+or source code. The one secret in a URL is the code of an owner invitation link, by design: it is
+shown once, works once, and only its hash is stored.</p>
 <h2 id="data-handling">Data handling</h2>
-<p>Logs contain identifiers, repository and branch names, issue keys, counters and error messages;
-never commit messages, author names, emails, tokens or secrets. Database queries are parameterized.
+<p>Logs contain identifiers, repository, branch and GitHub account names, issue keys, counters and error
+messages. The app does not write commit messages, author names, tokens or secrets to them. When Jira
+refuses data, up to 500 characters of its answer are logged; that
+answer could quote what it refuses. Database queries are parameterized.
 See the Privacy Policy for the full list of data processed and retention.</p>
 <h2 id="dependencies">Dependencies</h2>
-<p>Production dependencies are audited before every release; no release ships with a known critical
-or high vulnerability.</p>
+<p>Production dependencies are watched by Dependabot alerts and <code>npm audit</code>. Some findings sit in
+packages that Atlassian’s Forge libraries pull in; those are assessed for what can be reached at run
+time, and stay until Atlassian updates its libraries when they cannot be.</p>
 <h2 id="reporting-a-vulnerability">Reporting a vulnerability</h2>
 <p>Email <code>security@linkwright.io</code>. We acknowledge reports within 2 business days and fix vulnerabilities
 within the timeframes of the Atlassian Marketplace Security Bug Fix Policy (critical: 10 days).
