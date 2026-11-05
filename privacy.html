@@ -86,7 +86,9 @@ used.</p>
 <p>Synchronization state per repository (timestamps, error kinds), identifiers of the commits already
 sent to Jira’s Development panel (so none is sent twice), the latest commit identifiers read on the default branch,
 GitHub API quota counters and cache tags, webhook delivery identifiers (kept 24 hours to discard duplicates), and a per-site webhook secret and GitHub
-installation token held in Forge encrypted storage.</p>
+installation token held in Forge encrypted storage.
+For each project where an administrator chooses one, the App also stores the format of the branch name
+it proposes, as that administrator typed it (for example <code>feature/{key}-{description}</code>), and the date it was saved.</p>
 <h2 id="3-how-the-data-is-used">3. How the data is used</h2>
 <p>Solely to provide the App’s features on your Jira site: linking GitHub activity to issues,
 displaying it in the App’s issue panel and in Jira’s native Development panel, and reporting how
@@ -105,7 +107,7 @@ secret. <strong>No Jira data is sent to GitHub.</strong></li>
 <p>Forge function logs, visible to us for support and debugging, contain repository names, GitHub account
 names, issue keys, branch names, environment names, counters, identifiers and error messages. The App
 does not write commit messages, author names, reviewer logins, tokens or secrets to them. When Jira
-refuses data, up to 500 characters of its answer are logged; that answer
+refuses data, up to 500 characters of its answer are logged with any email address removed; that answer
 could quote what it refuses. Repository and account names can contain a personal GitHub login (see §2.1). Logs are retained according to Atlassian Forge’s log
 retention.</p>
 <h2 id="6-retention-and-deletion">6. Retention and deletion</h2>
