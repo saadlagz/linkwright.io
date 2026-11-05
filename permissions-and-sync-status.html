@@ -82,11 +82,11 @@ only</strong> (checked on 4 November 2026):</p>
 <tr>
 <td>Repository webhooks</td>
 <td>write</td>
-<td>Create <strong>its own</strong> webhook when you attach a repository, and delete it when you detach it or uninstall</td>
+<td>Create <strong>its own</strong> webhook when you attach a repository, and delete it when you detach it or uninstall (at uninstall, as many as Atlassian’s time limit allows: a site with many repositories may have to delete the rest by hand)</td>
 </tr>
 </tbody>
 </table>
-<p>It cannot change your code, your pull requests, your settings, or any webhook it did not create.</p>
+<p>It cannot change your code, your pull requests or your settings. GitHub’s webhook permission covers every webhook of a chosen repository, so it is the app’s code, not GitHub, that keeps it to its own: it only ever touches webhooks that point to your Jira site’s Linkwright address.</p>
 <h3 id="why-it-asks-for-webhooks">Why it asks for webhooks</h3>
 <p>Linkwright could have asked for read access only and checked GitHub every few minutes. It doesn’t,
 for two reasons:</p>
@@ -97,8 +97,10 @@ for two reasons:</p>
 own indexing and is the same for every app. An app that checks every 5 minutes adds up to 5
 minutes before that.</li>
 <li><strong>GitHub’s rate limit.</strong> Webhooks cost nothing against it. Linkwright still re-reads every
-attached repository every 30 minutes, to catch anything a webhook missed, but it spends its
-quota on checking, not on waiting for news.</li>
+attached repository about every 35 minutes, to catch what a webhook missed on the default branch,
+in pull requests and in branch names, but it spends its quota on checking, not on waiting for
+news. Reviews, deployments and commits on other branches are not caught up by that re-read: they
+come by webhook, and <strong>Refresh</strong> catches up the commits of branches not seen yet.</li>
 </ul>
 <p>The webhook is scoped: one per attached repository, signed with a secret unique to your Jira site,
 pointing to your Jira site’s own Linkwright address. Detach the repository from its last Jira
@@ -113,7 +115,8 @@ applies to the person who uses it.</p>
 <h3 id="what-a-project-administrator-can-do">What a project administrator can do</h3>
 <p>Connecting an organization is reserved for its owner. After that, attaching repositories is a Jira
 project setting: an administrator of a Jira project can attach any repository of a connected
-organization to that project, and its activity then appears on that project’s issues. A repository
+organization to that project, and its activity then appears on that project’s issues for anyone who
+can see them. Every project’s settings page lists the names of those repositories. A repository
 feeds only the projects it is attached to, but this choice isn’t limited to the repositories that
 administrator can see on GitHub. If that matters to you, limit who administers your Jira projects, or
 choose fewer repositories in the GitHub App.</p>
@@ -150,7 +153,7 @@ filter find the repositories that are not up to date.</p>
 <tr>
 <td><strong>Webhook down</strong></td>
 <td>The webhook could not be created (the screen gives the reason), or at least 3 commits appeared on the default branch with no webhook behind them: the re-read found them, and no delivery of any kind arrived in the 15 minutes that followed</td>
-<td>On GitHub, open the repository’s Settings, then Webhooks: check that Linkwright’s webhook exists and is active, and read its recent deliveries. The status clears at the next delivery; if the webhook is gone, detach and re-attach the repository. Commits keep arriving through the re-read, later</td>
+<td>On GitHub, open the repository’s Settings, then Webhooks: check that Linkwright’s webhook exists and is active, and read its recent deliveries. The status clears at the next delivery; if the webhook is gone, detach and re-attach the repository. Commits on the default branch keep arriving through the re-read, later; other activity waits for the webhook</td>
 </tr>
 <tr>
 <td><strong>Failing</strong></td>

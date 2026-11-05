@@ -101,14 +101,16 @@ Our first version only said so at the next re-read and gave the wrong cause; bot
 <p><strong>What I learned that is useful whichever connector you run:</strong></p>
 <ol>
 <li><strong>Two connectors on the same repository get in each other’s way.</strong> On a shared repository in a first
-run, each app’s repair work cost the other one links. If you trial a second connector, give it
-different repositories, or remove them from the first one.</li>
+run, the official app lost 20 commits at the moment our own repair ran, and we lost 20 of 30 links
+around the time it was active; we never proved a cause for that second part. That same run also
+exposed defects of ours (21 failed database calls under a burst of 30 branches), fixed that day. If
+you trial a second connector, give it different repositories, or remove them from the first one.</li>
 <li><strong>Large pushes are where links go missing quietly.</strong> If your team squashes rarely or imports
 history, check an issue touched by a big push with JQL <code>development[commits].all &gt; 0</code>.</li>
 <li><strong>“Connected” is not “up to date”.</strong> Ask your connector when it last heard from each repository.</li>
 </ol>
 <p><strong>Limits of this test.</strong> One site, small repositories, one day, run by the vendor of one of the two
-apps. The detailed protocol and raw readings are available on request, and I would like nothing more
+apps. It predates Atlassian’s move of its app to Forge (from October 2026), so these results may no longer hold. The detailed protocol and raw readings are available on request, and I would like nothing more
 than someone re-running it.</p>
 <p>Linkwright is on the <a href="https://marketplace.atlassian.com/apps/1218910089">Atlassian Marketplace</a>, free for up to 10 users. Questions and corrections are welcome at
 <a href="mailto:support@linkwright.io">support@linkwright.io</a>.</p>

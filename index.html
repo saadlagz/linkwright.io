@@ -89,7 +89,7 @@
       "name": "What leaves our Jira site?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Nothing is sent to GitHub. Linkwright reads from GitHub and writes to your Jira site, and runs entirely on Atlassian Forge: there is no server of mine in between. Details in the security policy."
+        "text": "No Jira data is sent to GitHub, only what it takes to read your repositories and, for each webhook, your site’s address and secret. Linkwright reads from GitHub and writes to your Jira site, and runs entirely on Atlassian Forge: there is no server of mine in between. Details in the security policy."
       }
     },
     {
@@ -97,7 +97,7 @@
       "name": "Who can see which repositories?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "A repository feeds only the Jira projects it is attached to, and only an owner of the GitHub organization can connect it to your site. Nobody sees in Jira a private repository they could not see on GitHub. Every permission the GitHub App asks for, and why."
+        "text": "A repository feeds only the Jira projects it is attached to, and only an owner of the GitHub organization can connect it to your site. Once connected, access follows Jira, not GitHub: anyone who can see an issue sees the activity linked to it, even from a private repository they cannot open on GitHub. Every permission the GitHub App asks for, and why."
       }
     },
     {
@@ -284,7 +284,7 @@
       <div class="feature-text">
         <h3>Your boards, JQL and Automation keep working</h3>
         <p>Commits, branches, pull requests with approvals and deployments land in Jira&rsquo;s
-          native Development panel, so boards, JQL and Automation keep working exactly as they do
+          native Development panel, so boards, JQL and Automation keep working as they do
           with Atlassian&rsquo;s own integration. A deployment is linked to every commit it ships,
           not only to the last one.</p>
       </div>
@@ -295,10 +295,11 @@
 
     <div class="feature">
       <div class="feature-text">
-        <h3>Nobody sees a repository they should not</h3>
+        <h3>Repositories stay in the projects you choose</h3>
         <p>A repository only links to issues of the Jira projects it is attached to. Connecting a
-          GitHub organization requires one of its owners, so nobody can expose private
-          repositories inside Jira that they cannot see on GitHub themselves.</p>
+          GitHub organization requires one of its owners. After that, Jira decides: a project
+          administrator can attach any repository of that organization, and whoever can see the
+          project&rsquo;s issues sees its activity.</p>
       </div>
       <figure>
         <a class="shot-link" href="assets/shot-connect.png"><img src="assets/shot-connect.png" alt="Connecting a GitHub organization from Jira administration; only a GitHub owner of that organization can connect it." loading="lazy" width="1840" height="900"></a>
@@ -320,8 +321,9 @@
         titles, only for the projects that repository is attached to.</p></li>
       <li><h3>Jira is updated</h3><p>Straight into the native Development panel, so everything you
         already built on it keeps working.</p></li>
-      <li><h3>A periodic check catches the rest</h3><p>Unchanged data costs nothing to re-check.
-        Anything a webhook missed is picked up within about 35 minutes.</p></li>
+      <li><h3>A periodic check catches most of the rest</h3><p>Unchanged data costs little to re-check.
+        What a webhook missed on the default branch, in pull requests or in branch names is picked
+        up within about 35 minutes.</p></li>
     </ol>
     <p class="forge">Linkwright runs <strong>entirely on Atlassian Forge</strong>. Your data stays in
       your own Jira site&rsquo;s storage, there is no server of mine anywhere, and no Jira data is
@@ -362,7 +364,7 @@
           and branches are linked, plus the commits of up to 20 branches not seen yet. Each
           <em>Refresh</em> catches up 20 more.</dd>
         <dt>Reviews and deployments come by webhook only</dt>
-        <dd>The periodic check does not back-fill them.</dd>
+        <dd>The periodic check does not back-fill them, nor commits on branches other than the default one: Refresh catches those up.</dd>
         <dt>No certification</dt>
         <dd>No SOC&nbsp;2, no ISO&nbsp;27001. It is made for self-service teams of 20 to 200 people,
           not for enterprise procurement.</dd>
@@ -391,13 +393,15 @@
           for commits you write and push yourself, on issues of the projects the repository is attached
           to: see the <a href="jira-smart-commits-github.html">Smart Commits guide</a>.</dd>
         <dt>What leaves our Jira site?</dt>
-        <dd>Nothing is sent to GitHub. Linkwright reads from GitHub and writes to your Jira site, and
+        <dd>No Jira data is sent to GitHub, only what it takes to read your repositories and, for
+          each webhook, your site&rsquo;s address and secret. Linkwright reads from GitHub and writes to your Jira site, and
           runs entirely on Atlassian Forge: there is no server of mine in between. Details in the
           <a href="security.html">security policy</a>.</dd>
         <dt>Who can see which repositories?</dt>
         <dd>A repository feeds only the Jira projects it is attached to, and only an owner of the
-          GitHub organization can connect it to your site. Nobody sees in Jira a private repository
-          they could not see on GitHub. <a href="permissions-and-sync-status.html">Every permission
+          GitHub organization can connect it to your site. Once connected, access follows Jira, not
+          GitHub: anyone who can see an issue sees the activity linked to it, even from a private
+          repository they cannot open on GitHub. <a href="permissions-and-sync-status.html">Every permission
           the GitHub App asks for, and why</a>.</dd>
         <dt>What happens when a link breaks?</dt>
         <dd>The repository&rsquo;s state changes to <em>Webhook down</em>, <em>Rate limited</em>,

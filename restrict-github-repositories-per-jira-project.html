@@ -77,8 +77,9 @@ mean, and the one JRACLOUD-99914 asks Atlassian for.</li>
 repositories</em> page (Project settings → Apps). A repository creates links only on issues of the
 projects it is attached to; a commit in that repository that mentions an issue of another project
 is ignored there. Attaching a repository to two projects is allowed, and explicit.</p>
-<p><strong>Connecting an organization requires its owner role.</strong> A Jira administrator connects a GitHub
-installation from the app’s admin page by signing in to GitHub once. The app checks that this person
+<p><strong>Connecting an organization requires its owner role.</strong> A Jira administrator who is an owner connects a GitHub
+installation from the app’s admin page by signing in to GitHub once; one who isn’t can invite an owner
+with a single-use link. The app checks that this person
 is an owner of the organization (or the account itself), and checks again on the server when the
 connection is saved. Without that check, any organization member who is also a Jira admin could
 expose in Jira private repositories they cannot see themselves.</p>
@@ -91,6 +92,10 @@ webhook and its entries in Jira’s Development panel within minutes. Disconnect
 detaches all of its repositories from every project.</p>
 <h2 id="what-this-does-not-do">What this does not do</h2>
 <ul>
+<li>It does not follow GitHub’s own access rights. Once an organization is connected, an administrator
+of any Jira project can attach any of its repositories and sees all their names on the project’s
+settings page, and whoever can see that project’s issues sees the linked activity. To narrow this,
+limit who administers your Jira projects, or choose fewer repositories in the GitHub App.</li>
 <li>Linkwright’s data appears in Jira’s native Development panel, like every connector’s. Who can see
 that panel is still governed by the <em>View Development Tools</em> permission of each space.</li>
 <li>Linkwright’s own <em>Git activity</em> panel keeps showing the history it indexed for a repository after

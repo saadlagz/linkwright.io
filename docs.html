@@ -118,12 +118,14 @@ installed: connect it again at any time.</p>
 the number of commits; <strong>Attach the suggested repositories</strong> attaches them all at once. Suggestions
 are refreshed once a day per repository; they never link anything by themselves.</p>
 <p>When a repository is attached, the app creates its webhook to your Jira site automatically and
-starts reading the repository at once: its state turns <strong>Up to date</strong> within seconds. If the webhook
+starts reading the repository at once: its state usually turns <strong>Up to date</strong> within seconds. If the webhook
 cannot be created, a red message says so: the repository stays attached, but its activity may not
 arrive until the problem is fixed. An empty repository is fine: it is up to date with nothing in it.</p>
 <blockquote>
 <p><strong>Scoped per project.</strong> A repository only creates links on issues of the projects it is attached
-to. A commit that mentions an issue from another project is ignored there.</p>
+to. A commit that mentions an issue from another project is ignored there. The choice belongs to
+Jira: an administrator of any project can see the names of all repositories of connected
+organizations and attach any of them, and whoever can see that project’s issues sees the activity.</p>
 </blockquote>
 <h3 id="25-where-to-see-activity-on-an-issue">2.5 Where to see activity on an issue</h3>
 <ul>
@@ -222,7 +224,7 @@ commit.</li>
 </tr>
 <tr>
 <td><strong>Rate limited</strong></td>
-<td>The GitHub API request quota is used up for the current hour.</td>
+<td>The GitHub API request quota is used up for now.</td>
 <td>Nothing: resumes automatically.</td>
 </tr>
 <tr>
@@ -238,12 +240,13 @@ commit.</li>
 <tr>
 <td><strong>Webhook down</strong></td>
 <td>At least 3 commits appeared on the default branch with no webhook behind them: the periodic check found them, and no delivery arrived in the 15 minutes that followed. Commits from before attachment or from the first check never count.</td>
-<td>On GitHub, open the repository’s Settings, then Webhooks: check that Linkwright’s webhook exists and is active, and read its recent deliveries. The state clears at the next delivery; if the webhook is gone, detach and re-attach the repository. Commits keep arriving through the periodic check, later.</td>
+<td>On GitHub, open the repository’s Settings, then Webhooks: check that Linkwright’s webhook exists and is active, and read its recent deliveries. The state clears at the next delivery; if the webhook is gone, detach and re-attach the repository. Commits on the default branch keep arriving through the periodic check, later; other activity waits for the webhook (see §6).</td>
 </tr>
 </tbody>
 </table>
 <p>Webhooks bring activity within seconds. On top of that, the app re-reads each attached repository
-regularly (about every 35 minutes) to catch anything that might have been missed.</p>
+regularly (about every 35 minutes) to catch what was missed on the default branch, in pull requests
+and in branch names (see §6).</p>
 <p>Under each repository, <strong>Last delivered to Jira</strong> shows the last commit Jira accepted and when
 (“Nothing delivered to Jira yet” if none). Search by name, or use the <strong>Needs attention</strong> and
 <strong>Not checked yet</strong> filters to find the repositories that are not up to date.</p>
@@ -269,6 +272,9 @@ stops and the failure is recorded on the repository; the remaining commits are n
 <li><strong>First deployment of an environment</strong>: with no previous deployment, it is linked to the 100 most
 recent commits of the deployed version.</li>
 <li><strong>Reviews and deployments</strong> arrive by webhook only: the periodic check does not catch them up.</li>
+<li><strong>A webhook that missed a push on another branch</strong>: the periodic check does not read those commits.
+<strong>Refresh</strong> catches them up (up to 20 branches each time).</li>
+<li><strong>Long deployment ranges</strong>: up to 1,000 commits between two deployments are read.</li>
 <li><strong>Superseded deployment</strong>: a deployment replaced by a newer one still shows as “Deployed”.</li>
 <li><strong>Native panel</strong>: a branch with no commit known to the app is not shown there (Jira requires its
 last commit); after a project is attached to or detached from a repository, the panel is corrected
@@ -282,8 +288,11 @@ is no longer synced until the license is renewed, then it is caught up within th
 <li><strong>Stored in Jira</strong> (your site’s Forge storage, isolated from other customers): repository and
 branch names; commit identifiers, first line of the message, author and date; pull request title,
 author and reviewers; review author and state; deployment environment and state; repository sync
-state.</li>
-<li><strong>Read from GitHub</strong>: only the repositories the GitHub App can access, read-only.</li>
+state; the GitHub login of the person who connected an organization. Also, for <strong>every</strong> repository
+of a connected organization, attached or not: its name, and how many recent commits cite each
+project key (for suggestions, not the commits).</li>
+<li><strong>Read from GitHub</strong>: only the repositories the GitHub App can access, read-only. Attached
+repositories in full; the others only their 50 most recent commits, once a day, for suggestions.</li>
 <li><strong>Sent to Jira’s Development panel</strong> (Atlassian API, on your site): the same information about
 commits, branches, pull requests and deployments.
 For a commit with a Smart Commit command, its full message and author’s email address are also

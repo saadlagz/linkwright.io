@@ -90,7 +90,7 @@
       "name": "Qu’est-ce qui sort de notre site Jira ?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Rien n’est envoyé à GitHub. Linkwright lit GitHub et écrit dans votre site Jira, et tourne entièrement sur Atlassian Forge : aucun serveur à moi entre les deux. Détails dans la politique de sécurité."
+        "text": "Aucune donnée Jira n’est envoyée à GitHub, seulement ce qu’il faut pour lire vos dépôts et, pour chaque webhook, l’adresse et le secret de votre site. Linkwright lit GitHub et écrit dans votre site Jira, et tourne entièrement sur Atlassian Forge : aucun serveur à moi entre les deux. Détails dans la politique de sécurité."
       }
     },
     {
@@ -98,7 +98,7 @@
       "name": "Qui voit quels dépôts ?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Un dépôt n’alimente que les projets Jira auxquels il est rattaché, et seul un propriétaire de l’organisation GitHub peut l’associer à votre site. Personne ne voit dans Jira un dépôt privé qu’il ne pourrait pas voir sur GitHub. Chaque permission de la GitHub App, et pourquoi (en anglais)."
+        "text": "Un dépôt n’alimente que les projets Jira auxquels il est rattaché, et seul un propriétaire de l’organisation GitHub peut l’associer à votre site. Une fois l’organisation associée, l’accès suit Jira, pas GitHub : qui voit un ticket voit l’activité qui lui est liée, même celle d’un dépôt privé qu’il ne peut pas ouvrir sur GitHub. Chaque permission de la GitHub App, et pourquoi (en anglais)."
       }
     },
     {
@@ -270,7 +270,7 @@
     <div class="feature">
       <div class="feature-text">
         <h3>Vos tableaux, votre JQL et Automation continuent de marcher</h3>
-        <p>Commits, branches, pull requests avec leurs approbations et déploiements arrivent dans le panneau Développement natif de Jira : tableaux, JQL et Automation marchent exactement comme avec l’intégration d’Atlassian. Un déploiement est relié à chaque commit qu’il livre, pas seulement au dernier.</p>
+        <p>Commits, branches, pull requests avec leurs approbations et déploiements arrivent dans le panneau Développement natif de Jira : tableaux, JQL et Automation marchent comme avec l’intégration d’Atlassian. Un déploiement est relié à chaque commit qu’il livre, pas seulement au dernier.</p>
       </div>
       <figure>
         <a class="shot-link" href="/assets/shot-panel.png"><img src="/assets/shot-panel.png" alt="Un ticket Jira dont le panneau Développement est rempli par Linkwright : branches, commits, pull requests et un déploiement en production." loading="lazy" width="1840" height="900"></a>
@@ -279,8 +279,8 @@
 
     <div class="feature">
       <div class="feature-text">
-        <h3>Personne ne voit un dépôt qu’il ne devrait pas voir</h3>
-        <p>Un dépôt ne se relie qu’aux tickets des projets Jira auxquels il est rattaché. Associer une organisation GitHub demande l’un de ses propriétaires : personne ne peut exposer dans Jira des dépôts privés qu’il ne voit pas lui-même sur GitHub.</p>
+        <h3>Les dépôts restent dans les projets que vous choisissez</h3>
+        <p>Un dépôt ne se relie qu’aux tickets des projets Jira auxquels il est rattaché. Associer une organisation GitHub demande l’un de ses propriétaires. Ensuite, c’est Jira qui décide : un administrateur de projet peut rattacher tout dépôt de cette organisation, et qui voit les tickets du projet voit son activité.</p>
       </div>
       <figure>
         <a class="shot-link" href="/assets/shot-connect.png"><img src="/assets/shot-connect.png" alt="Association d’une organisation GitHub depuis l’administration de Jira ; seul un propriétaire de l’organisation peut l’associer." loading="lazy" width="1840" height="900"></a>
@@ -297,7 +297,7 @@
       <li><h3>GitHub envoie l’événement</h3><p>Il arrive sur votre site Jira au moment où il se produit, par un webhook signé. Les webhooks ne consomment aucun quota d’API GitHub.</p></li>
       <li><h3>Les clés de tickets sont repérées</h3><p>Dans les noms de branches, les messages de commit et les titres de pull requests, uniquement pour les projets auxquels ce dépôt est rattaché.</p></li>
       <li><h3>Jira est mis à jour</h3><p>Directement dans le panneau Développement natif : tout ce que vous avez déjà construit dessus continue de marcher.</p></li>
-      <li><h3>Une relecture périodique rattrape le reste</h3><p>Revérifier des données inchangées ne coûte rien. Ce qu’un webhook a manqué est rattrapé en 35 minutes environ.</p></li>
+      <li><h3>Une relecture périodique rattrape presque tout le reste</h3><p>Revérifier des données inchangées coûte peu. Ce qu’un webhook a manqué sur la branche par défaut, dans les pull requests ou dans les noms de branches est rattrapé en 35 minutes environ.</p></li>
     </ol>
     <p class="forge">Linkwright tourne <strong>entièrement sur Atlassian Forge</strong>. Vos données restent dans le stockage de votre propre site Jira, je n’ai aucun serveur nulle part, et aucune donnée Jira n’est jamais envoyée à GitHub. <a href="/security.html">Lire la politique de sécurité (en anglais)</a></p>
   </div>
@@ -333,7 +333,7 @@
         <dt>Rattrapage borné de l’activité ancienne</dt>
         <dd>Au rattachement d’un dépôt, les commits récents de la branche principale, les pull requests et les branches récentes sont reliés, ainsi que les commits de 20 branches encore jamais vues. Chaque <em>Rafraîchir</em> en rattrape 20 de plus.</dd>
         <dt>Relectures et déploiements arrivent seulement par webhook</dt>
-        <dd>La relecture périodique ne les rattrape pas.</dd>
+        <dd>La relecture périodique ne les rattrape pas, ni les commits des branches autres que la branche par défaut : Rafraîchir rattrape ceux-là.</dd>
         <dt>Pas de certification</dt>
         <dd>Ni SOC&nbsp;2, ni ISO&nbsp;27001. L’outil est fait pour des équipes de 20 à 200 personnes en libre-service, pas pour les procédures d’achat des grands comptes.</dd>
       </dl>
@@ -355,9 +355,9 @@
         <dt>Les Smart Commits, le JQL et Automation marchent-ils toujours ?</dt>
         <dd>Le JQL et Automation, oui : Linkwright remplit le panneau Développement de Jira lui-même, donc <code>development[commits]</code> en JQL, les badges des tableaux et les transitions automatiques se comportent comme avec l’intégration d’Atlassian. Les Smart Commits (<code>#comment</code>, <code>#time</code>, <code>#transition</code> dans un message de commit), oui depuis le 2 novembre 2026, pour les commits que vous écrivez et poussez vous-même, sur les tickets des projets auxquels le dépôt est rattaché : voir le <a href="/jira-smart-commits-github.html">guide des Smart Commits</a> (en anglais).</dd>
         <dt>Qu’est-ce qui sort de notre site Jira ?</dt>
-        <dd>Rien n’est envoyé à GitHub. Linkwright lit GitHub et écrit dans votre site Jira, et tourne entièrement sur Atlassian Forge : aucun serveur à moi entre les deux. Détails dans la <a href="/security.html">politique de sécurité</a>.</dd>
+        <dd>Aucune donnée Jira n’est envoyée à GitHub, seulement ce qu’il faut pour lire vos dépôts et, pour chaque webhook, l’adresse et le secret de votre site. Linkwright lit GitHub et écrit dans votre site Jira, et tourne entièrement sur Atlassian Forge : aucun serveur à moi entre les deux. Détails dans la <a href="/security.html">politique de sécurité</a>.</dd>
         <dt>Qui voit quels dépôts ?</dt>
-        <dd>Un dépôt n’alimente que les projets Jira auxquels il est rattaché, et seul un propriétaire de l’organisation GitHub peut l’associer à votre site. Personne ne voit dans Jira un dépôt privé qu’il ne pourrait pas voir sur GitHub. <a href="/permissions-and-sync-status.html">Chaque permission de la GitHub App, et pourquoi</a> (en anglais).</dd>
+        <dd>Un dépôt n’alimente que les projets Jira auxquels il est rattaché, et seul un propriétaire de l’organisation GitHub peut l’associer à votre site. Une fois l’organisation associée, l’accès suit Jira, pas GitHub : qui voit un ticket voit l’activité qui lui est liée, même celle d’un dépôt privé qu’il ne peut pas ouvrir sur GitHub. <a href="/permissions-and-sync-status.html">Chaque permission de la GitHub App, et pourquoi</a> (en anglais).</dd>
         <dt>Que se passe-t-il quand un lien casse ?</dt>
         <dd>L’état du dépôt passe à <em>Webhook en panne</em>, <em>Quota épuisé</em>, <em>En échec</em> ou <em>Non autorisé</em>, avec la raison et l’heure du dernier succès. <em>Rafraîchir</em> le relit depuis GitHub. <a href="/permissions-and-sync-status.html">Ce que veut dire chaque état</a> (en anglais).</dd>
         <dt>Qui est derrière, et en combien de temps le support répond-il ?</dt>
