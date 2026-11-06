@@ -40,6 +40,13 @@
   <div class="narrow">
     <h1>Changelog</h1>
 <p>What changes for people using Linkwright for Jira, newest first.</p>
+<h2 id="6-november-2026-version-227">6 November 2026 — version 2.27</h2>
+<ul>
+<li><strong>Pushes beyond 10,000 commits.</strong> GitHub stops comparing at 10,000 commits without an error. A new branch of
+10,500 commits was read up to that limit and reported as a success, leaving 500 commits unlinked with no warning.
+We found this on our own test site, the same day as 2.26. Those commits still aren’t linked, but the repository
+now shows “Commits unread”.</li>
+</ul>
 <h2 id="6-november-2026-version-226">6 November 2026 — version 2.26</h2>
 <ul>
 <li><strong>Commits that could be missed.</strong> We measured two cases where commits were not linked, with no warning:
