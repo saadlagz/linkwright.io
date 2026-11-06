@@ -40,6 +40,14 @@
   <div class="narrow">
     <h1>Changelog</h1>
 <p>What changes for people using Linkwright for Jira, newest first.</p>
+<h2 id="6-november-2026-version-226">6 November 2026 — version 2.26</h2>
+<ul>
+<li><strong>Commits that could be missed.</strong> We measured two cases where commits were not linked, with no warning:
+a first push to an empty connected repository (900 of 1,000 commits missed) and a new branch of 4,000
+commits (none linked). Both are now read in full, as is a new branch with no common ancestor.</li>
+<li><strong>Unread commits.</strong> If a push cannot be read to the end, the repository no longer shows as up to date:
+a status says so until that push has been read in full.</li>
+</ul>
 <h2 id="6-november-2026-version-225">6 November 2026 — version 2.25</h2>
 <ul>
 <li><strong>GitHub authorization.</strong> When GitHub no longer accepts your authorization, because it was revoked or
