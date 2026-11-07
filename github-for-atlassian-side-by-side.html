@@ -38,7 +38,7 @@
 <main class="doc">
   <div class="narrow">
     <h1>I ran my GitHub–Jira connector next to GitHub for Atlassian for 24 hours. Here is what each one did.</h1>
-<p><em>Published 10 October 2026. Measurements of 1–2 October 2026.</em></p>
+<p><em>Published 10 October 2026. Measurements of 1–2 October 2026, re-checked on the official app on 5 and 7 November 2026.</em></p>
 <p>I build Linkwright, a GitHub-to-Jira connector on Forge, so read this as a vendor’s test of its own
 product. I have tried to make it checkable: same scenarios, pushed within half a second of each other,
 measured from Jira’s own development data (<code>dev-status</code>), and every number is below, including the
@@ -87,20 +87,27 @@ Readings at about 2 minutes, then 1 hour, 6 hours and 24 hours. 1–2 October 20
 </tr>
 </tbody>
 </table>
-<p><strong>Update, 5 November 2026.</strong> GitHub for Atlassian is now version 4.2.0, and I re-ran two scenarios on it alone,
-on the same site and repository. One commit was linked within 18 s. A push of 500 commits showed <strong>10 commits and
-1 branch</strong> on the issue after 15 minutes, where it showed 0 in October. I did not re-run Linkwright that day or repeat the
-other scenarios, so the rest of this page still describes October.</p>
+<p><strong>Re-check, 5 and 7 November 2026.</strong> I re-ran three scenarios on GitHub for Atlassian alone, on the same site and
+repository. On 5 November (version 4.2.0, released that morning), one commit was linked within 18 s, and a push of 500
+commits showed <strong>10 commits and 1 branch</strong> on the issue after 15 minutes, where it showed 0 in October; I don’t know why.
+Removing access gave the same result as in October (below). On 7 November I repeated the 500-commit push on version 4.3.0:
+again <strong>10 commits and 1 branch</strong> after 16 minutes, and the 10 were the first 10 of the push. I have not re-run Linkwright
+since October, nor the other scenarios, so the table above still describes October.</p>
 <p><strong>The scenario that matters most to me: access removed.</strong> I removed each repository from its GitHub
 App, then pushed a commit naming SBS-6.</p>
 <ul>
-<li>GitHub for Atlassian: the commit was not received, and <strong>the commits already on SBS-6 disappeared
+<li>GitHub for Atlassian: the commit was not received, and <strong>the one commit already on SBS-6 disappeared
 from the issue</strong> (1 → 0), with nothing on the issue or the configuration page saying why. When
-access came back, everything returned on its own.</li>
+access came back, everything returned on its own, so this is a removal for as long as access is
+off, not a permanent loss. On 5 November, version 4.2.0 did the same on three issues (1, 10 and 1
+commits, all to 0), and again everything came back with access.</li>
 <li>Linkwright: the existing links stayed, the new commit was linked (the repository webhook survives
 the access change), and the repository showed <strong>“Not authorized”</strong> with the cause and what to do.
 Our first version only said so at the next re-read and gave the wrong cause; both fixed the same day.</li>
 </ul>
+<p>The flip side of ours: because the repository webhook survives, Linkwright keeps linking new commits from
+a repository you removed from its GitHub App, until you detach it in Linkwright. If you think removing
+access should make the data go, the official behaviour is the one you want. That’s a fair position.</p>
 <p><strong>What I learned that is useful whichever connector you run:</strong></p>
 <ol>
 <li><strong>Two connectors on the same repository get in each other’s way.</strong> On a shared repository in a first
@@ -113,7 +120,9 @@ history, check an issue touched by a big push with JQL <code>development[commits
 <li><strong>“Connected” is not “up to date”.</strong> Ask your connector when it last heard from each repository.</li>
 </ol>
 <p><strong>Limits of this test.</strong> One site, small repositories, one day, run by the vendor of one of the two
-apps. It predates Atlassian’s move of its app to Forge (from October 2026), so these results may no longer hold. The detailed protocol and raw readings are available on request, and I would like nothing more
+apps. Access removal was tested on one issue in October and three in November, never on a large history.
+<code>dev-status</code> is an internal Jira API. Linkwright has not been re-run since October. On my site, the official app
+still shows as a Connect (“Legacy”) app at version 4.3.0, so a later Forge version may behave differently. The detailed protocol and raw readings are available on request, and I would like nothing more
 than someone re-running it.</p>
 <p>Linkwright is on the <a href="https://marketplace.atlassian.com/apps/1218910089">Atlassian Marketplace</a>, free for up to 10 users. Questions and corrections are welcome at
 <a href="mailto:support@linkwright.io">support@linkwright.io</a>.</p>
