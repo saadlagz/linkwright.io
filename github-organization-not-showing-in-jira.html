@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>GitHub organization not showing in Jira: why, and how to connect it — Linkwright</title>
+<meta name="description" content="Your GitHub organization is installed but not listed in Jira: who can click Connect, the link for a non-owner admin, IP allow lists, and what to check, from Atlassian's documentation.">
+<link rel="canonical" href="https://linkwright.io/github-organization-not-showing-in-jira.html">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://linkwright.io/github-organization-not-showing-in-jira.html">
+<meta property="og:site_name" content="Linkwright">
+<meta property="og:title" content="GitHub organization not showing in Jira: why, and how to connect it — Linkwright">
+<meta property="og:description" content="Your GitHub organization is installed but not listed in Jira: who can click Connect, the link for a non-owner admin, IP allow lists, and what to check, from Atlassian's documentation.">
+<meta property="og:image" content="https://linkwright.io/assets/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="icon" href="/assets/favicon-96.png" type="image/png" sizes="96x96">
+<link rel="icon" href="/assets/logo.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+<meta name="theme-color" content="#14302a">
+<link rel="stylesheet" href="/style.css?v=54ef87ef0d">
+<script data-goatcounter="https://saadlagz.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+</head>
+<body>
+
+<header class="site">
+  <div class="wrap">
+    <a class="brand" href="/"><img src="/assets/logo.svg" alt="" width="28" height="28">Linkwright</a>
+    <nav>
+      <a href="/guides.html">Guides</a>
+      <a href="/docs.html">Documentation</a>
+      <a href="/security.html">Security</a>
+      <a class="nav-cta" href="/#early-access">Book a demo</a>
+    </nav>
+  </div>
+</header>
+
+<main class="doc">
+  <div class="narrow">
+    <h1>GitHub organization not showing in Jira: why, and how to connect it</h1>
+    <div class="toc"><p>On this page</p><ul><li><a href="#installed-on-github-is-not-connected-to-jira">Installed on GitHub is not connected to Jira</a></li><li><a href="#1-check-who-is-clicking-connect">1. Check who is clicking Connect</a></li><li><a href="#2-if-the-jira-admin-isnt-the-github-owner-send-a-link">2. If the Jira admin isn’t the GitHub owner, send a link</a></li><li><a href="#3-check-the-organizations-ip-allow-list">3. Check the organization’s IP allow list</a></li><li><a href="#4-try-a-clean-sign-in">4. Try a clean sign-in</a></li><li><a href="#5-check-which-github-you-are-on">5. Check which GitHub you are on</a></li><li><a href="#after-the-organization-is-connected">After the organization is connected</a></li><li><a href="#the-same-rule-in-linkwright">The same rule in Linkwright</a></li></ul></div>
+<p>You installed <em>GitHub for Atlassian</em>, your GitHub admin says access is granted, and GitHub even shows “Atlassian is
+installed” on the organization. Yet the app’s configuration page in Jira doesn’t list that organization, and its
+developers’ commits don’t appear on Jira issues.</p>
+<p>“Installed” and “connected” are two different states. This page sums up what Atlassian documents about the second one,
+read on <strong>9 November 2026</strong>, and what to check in order.</p>
+<h2 id="installed-on-github-is-not-connected-to-jira">Installed on GitHub is not connected to Jira</h2>
+<p>The GitHub App can be installed on an organization without that organization being connected to your Jira site. The
+Jira configuration page lists connections, so reinstalling the app does not create the missing one. It does restart your
+history from the default six months: see <a href="github-for-jira-backfill.html">how the backfill works</a>.</p>
+<h2 id="1-check-who-is-clicking-connect">1. Check who is clicking Connect</h2>
+<p>Atlassian’s rule: “You’ll have the Connect button only if you’re the owner of the GitHub organization.” Being a Jira site
+administrator isn’t enough, and neither is a lesser role on GitHub.</p>
+<p>Atlassian expects this to be two people in some teams: a Jira site admin installs the app, and a GitHub organization owner
+connects the organization.</p>
+<h2 id="2-if-the-jira-admin-isnt-the-github-owner-send-a-link">2. If the Jira admin isn’t the GitHub owner, send a link</h2>
+<p>The documented route:</p>
+<ol>
+<li>The Jira admin starts connecting an organization and chooses <strong>Send them a link and ask them to connect</strong>.</li>
+<li>They copy the message and URL from the <strong>Send a link to an organization owner</strong> dialog and send them to the owner.</li>
+<li>The owner uses the link to sign in and connect the organization to Jira.</li>
+</ol>
+<p>Atlassian’s support article for this case describes an owner who has no access to Jira. It also has the owner go to
+<strong>Settings &gt; Third-party Access &gt; OAuth application policy</strong> on GitHub, grant Atlassian Cloud access, and install the
+pending Jira app.</p>
+<p>The pages don’t say whether the owner needs an Atlassian account to follow the link. If the owner is blocked at that
+step, note the exact message they see: it is what support will ask for.</p>
+<h2 id="3-check-the-organizations-ip-allow-list">3. Check the organization’s IP allow list</h2>
+<p>Atlassian warns that an IP allow list can cause problems with the app, and that “GitHub blocks some requests to the API
+even if the correct IP addresses are listed in the allow list”. An organization admin can check it on GitHub:</p>
+<ol>
+<li>Open the organization’s <strong>Settings</strong> tab, then <strong>Organization security</strong> in the sidebar.</li>
+<li>Scroll to the <strong>IP allow list</strong> section.</li>
+<li>Select <strong>Enable IP allow list configuration for installed GitHub apps</strong>, then <strong>Save</strong>.</li>
+</ol>
+<p>If requests are still blocked, Atlassian’s fallback is to add the addresses by hand with <strong>+Add</strong>.</p>
+<p>In a public report from 2022 (issue 1288 of the app’s repository), the logs showed the app could not determine the
+user’s admin status in the missing organization, with GitHub answering 403.</p>
+<h2 id="4-try-a-clean-sign-in">4. Try a clean sign-in</h2>
+<p>In that same 2022 report, IP allow listing was off. The organization appeared after the reporter cleared their cookies
+for <code>github.atlassian.com</code> and signed in again. It is one report and an old one, but it takes a minute to try.</p>
+<h2 id="5-check-which-github-you-are-on">5. Check which GitHub you are on</h2>
+<p>These steps cover GitHub Cloud and GitHub Enterprise Cloud. GitHub Enterprise Server has
+<a href="https://support.atlassian.com/jira-cloud-administration/docs/connect-a-github-enterprise-server-account-to-jira-software/">its own setup page</a>,
+which asks for your server’s URL.</p>
+<h2 id="after-the-organization-is-connected">After the organization is connected</h2>
+<p>Connecting it gives you links from then on, plus an initial import of history. To confirm it worked, pick an issue
+whose key appears in a recent commit of that organization and open its Development panel. If it stays empty, see
+<a href="github-commits-not-showing-in-jira.html">GitHub commits not showing in Jira</a>.</p>
+<h2 id="the-same-rule-in-linkwright">The same rule in Linkwright</h2>
+<p>We build <a href="/">Linkwright</a>, another GitHub integration for Jira, so here is how it compares on this one point: it
+has the same owner rule, for the same reason (a Jira admin who isn’t an owner shouldn’t be able to show an organization’s
+private repositories in Jira). If the Jira admin isn’t an owner, they can send one a single-use invitation link. One
+difference from Atlassian’s documented case: the owner needs access to Jira on your site, because the link opens a page
+inside Jira. When someone can’t connect an organization, the screen says why instead of leaving it out of a list.</p>
+
+    <h2 id="more-guides">More guides</h2>
+    <ul><li><a href="connect-github-to-jira-cloud.html">How to connect GitHub to Jira Cloud</a></li><li><a href="github-issues-vs-jira.html">GitHub Issues vs Jira</a></li><li><a href="github-commits-not-showing-in-jira.html">GitHub commits not showing in Jira</a></li><li><a href="github-for-jira-backfill.html">GitHub for Jira backfill: restart it and check it</a></li><li><a href="jira-smart-commits-github.html">Jira Smart Commits with GitHub: syntax and checks</a></li><li><a href="github-for-atlassian-forge-migration.html">GitHub for Atlassian is moving to Forge: what to check</a></li><li><a href="restrict-github-repositories-per-jira-project.html">Limit which GitHub repositories each Jira project can link</a></li><li><a href="jira-jql-development-github.html">JQL for GitHub data in Jira</a></li><li><a href="permissions-and-sync-status.html">Linkwright permissions and sync statuses, explained</a></li><li><a href="github-for-jira-alternatives.html">GitHub for Jira alternatives</a></li><li><a href="github-for-atlassian-side-by-side.html">24 hours side by side with GitHub for Atlassian</a></li></ul>
+
+  </div>
+</main>
+
+<footer class="site">
+  <div class="wrap">
+    <span>&copy; 2026 Linkwright. Built in France by an independent developer.</span>
+    <nav>
+      <a href="/">Home</a>
+      <a href="/guides.html">Guides</a>
+      <a href="/docs.html">Documentation</a>
+      <a href="/security.html">Security</a>
+      <a href="/about.html">About</a>
+      <a href="/changelog.html">Changelog</a>
+      <a href="/support.html">Support</a>
+      <a href="mailto:support@linkwright.io">Contact</a>
+      <a href="/privacy.html">Privacy</a>
+      <a href="/terms.html">Terms</a>
+      <a href="/legal.html">Legal notice</a>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>
