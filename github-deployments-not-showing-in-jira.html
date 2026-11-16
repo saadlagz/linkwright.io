@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>GitHub deployments not showing in Jira: what to check, in order — Linkwright</title>
+<meta name="description" content="GitHub deployments missing from Jira or shown as undefined: pending permissions, no deployment_status, no issue key, environment mapping with .jira/config.yml, and Jira settings, from Atlassian's documentation.">
+<link rel="canonical" href="https://linkwright.io/github-deployments-not-showing-in-jira.html">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://linkwright.io/github-deployments-not-showing-in-jira.html">
+<meta property="og:site_name" content="Linkwright">
+<meta property="og:title" content="GitHub deployments not showing in Jira: what to check, in order — Linkwright">
+<meta property="og:description" content="GitHub deployments missing from Jira or shown as undefined: pending permissions, no deployment_status, no issue key, environment mapping with .jira/config.yml, and Jira settings, from Atlassian's documentation.">
+<meta property="og:image" content="https://linkwright.io/assets/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="icon" href="/assets/favicon-96.png" type="image/png" sizes="96x96">
+<link rel="icon" href="/assets/logo.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+<meta name="theme-color" content="#14302a">
+<link rel="stylesheet" href="/style.css?v=54ef87ef0d">
+<script data-goatcounter="https://saadlagz.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+</head>
+<body>
+
+<header class="site">
+  <div class="wrap">
+    <a class="brand" href="/"><img src="/assets/logo.svg" alt="" width="28" height="28">Linkwright</a>
+    <nav>
+      <a href="/guides.html">Guides</a>
+      <a href="/docs.html">Documentation</a>
+      <a href="/security.html">Security</a>
+      <a class="nav-cta" href="/#early-access">Book a demo</a>
+    </nav>
+  </div>
+</header>
+
+<main class="doc">
+  <div class="narrow">
+    <h1>GitHub deployments not showing in Jira: what to check, in order</h1>
+    <div class="toc"><p>On this page</p><ul><li><a href="#1-pending-permissions-on-an-older-installation">1. Pending permissions on an older installation</a></li><li><a href="#2-github-never-created-a-deployment">2. GitHub never created a deployment</a></li><li><a href="#3-no-issue-key-in-what-was-deployed">3. No issue key in what was deployed</a></li><li><a href="#4-undefined-or-unmapped-environment">4. “undefined” or “Unmapped” environment</a></li><li><a href="#5-jira-hides-it-from-you">5. Jira hides it from you</a></li><li><a href="#how-to-check-the-result">How to check the result</a></li><li><a href="#questions-that-come-up-after-that">Questions that come up after that</a></li><li><a href="#how-linkwright-handles-deployments">How Linkwright handles deployments</a></li></ul></div>
+<p>Your commits, branches and pull requests appear on Jira issues, but the <strong>Deployments</strong> tab is empty, or a deployment lands
+on an environment called “undefined” or “Unmapped”. The connection works, so this is rarely a connection problem. It comes
+from how deployment data reaches Jira. This page sums up what Atlassian documents for <em>GitHub for Atlassian</em>, read on
+<strong>16 November 2026</strong>, in the order that rules out the most causes first.</p>
+<h2 id="1-pending-permissions-on-an-older-installation">1. Pending permissions on an older installation</h2>
+<p>This is the cause with the shortest fix. In a <a href="https://community.atlassian.com/forums/discussion/3247889/github-deployments-do-not-appear-in-jira-cloud-prs-and-commits-do">June 2026 community thread</a>,
+everything was linked except deployments. The author’s conclusion: the app “was installed so long ago that it was missing
+permissions. After granting them the Deployments tab began showing data.”</p>
+<p>Ask a GitHub organization owner to open the list of GitHub Apps installed on the organization, in its settings, and see
+whether the Atlassian app is waiting for new permissions to be accepted. We found no page that shows this from the Jira side.</p>
+<h2 id="2-github-never-created-a-deployment">2. GitHub never created a deployment</h2>
+<p>Atlassian’s page is precise: “The GitHub for Atlassian Marketplace app only listens to <code>deployment_status</code> events.” A workflow
+that builds and ships your code does not create one by itself. There are two ways to get one:</p>
+<ul>
+<li>
+<p><strong>Use a GitHub environment in the job.</strong> GitHub’s documentation says “By default, when a workflow job references an
+environment, GitHub creates a deployment object to track the deployment.” Check that the job’s <code>environment:</code> block does not set
+<code>deployment: false</code>, which opts out.</p>
+<pre><code class="language-yaml">jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment: production
+    steps:
+      - run: ./deploy.sh
+</code></pre>
+</li>
+<li>
+<p><strong>Call the API yourself</strong>, from a script or another CI tool: create a deployment, then, in Atlassian’s words, “call the
+create deployment status API […] at least once to update the status of the deployment”. GitHub accepts the states
+<code>error</code>, <code>failure</code>, <code>inactive</code>, <code>in_progress</code>, <code>queued</code>, <code>pending</code> and <code>success</code>.</p>
+</li>
+</ul>
+<p>To check, open your repository on GitHub and look at the <strong>Deployments</strong> page. If it is empty or has no recent entry, Jira has
+nothing to show and the fix is on the GitHub side.</p>
+<h2 id="3-no-issue-key-in-what-was-deployed">3. No issue key in what was deployed</h2>
+<p>A deployment does not name an issue. Jira finds issues by “scanning deployed branches for new commit messages that contain
+Jira work item keys”, and Atlassian says you “must include Jira work item keys in commit messages, branch names, and pull
+requests.”</p>
+<p>Three cases catch people out:</p>
+<ul>
+<li><strong>A separate deployment branch.</strong> A <a href="https://community.atlassian.com/forums/discussion/3152022/how-to-link-jira-deployments-when-github-actions-run-on-a-separate-branch-like-dev-prod">November 2025 thread</a>
+describes CI running on separate dev and production branches. Check that the commits on the deployed branch still carry the
+key, especially if you squash or use release commits.</li>
+<li><strong>Which commits count.</strong> Atlassian’s page walks through an example: a failed deployment still appears on the issues whose
+commits it carried, and the next deployment is linked to every commit that has not yet been deployed successfully.</li>
+<li><strong>Large gaps.</strong> JRACLOUD-99064 (created 3 August 2026, Gathering Interest, 9 votes on 16 November 2026) reports that only the
+first 100 commits between two deployments are processed: “any commits beyond position 100 are silently dropped and never
+processed”. If only some issues from a big release are missing, count the commits between the two deployments. The
+workaround the ticket gives: “Deploy more frequently to keep the number of commits between any two deployments below 100”.</li>
+</ul>
+<h2 id="4-undefined-or-unmapped-environment">4. “undefined” or “Unmapped” environment</h2>
+<p>If deployments arrive under the wrong environment or none, it’s the name. “Jira tries to guess which environment to map your
+deployment event to based on the environment name”, and otherwise “Jira will show these as undefined environments.”</p>
+<p>The text matches, as listed on JRACLOUD-89992 (64 votes):</p>
+<table>
+<thead>
+<tr>
+<th>Jira environment</th>
+<th>Names that match</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Development</td>
+<td>development, dev, trunk</td>
+</tr>
+<tr>
+<td>Testing</td>
+<td>testing, test, tests, tst, integration, integ, intg, int, acceptance, accept, acpt, qa, qc, control, quality</td>
+</tr>
+<tr>
+<td>Staging</td>
+<td>staging, stage, stg, preprod, model, internal</td>
+</tr>
+<tr>
+<td>Production</td>
+<td>production, prod, prd, live</td>
+</tr>
+<tr>
+<td>Unmapped</td>
+<td>no match</td>
+</tr>
+</tbody>
+</table>
+<p>Names of your own, like <code>eu-west</code> or <code>customer-a</code>, need a mapping. Add a file called <code>.jira/config.yml</code> to the <strong>main branch</strong>
+of the repository:</p>
+<pre><code class="language-yaml">deployments:
+  environmentMapping:
+    development:
+      - &quot;dev*&quot;
+    testing:
+      - &quot;qa-*&quot;
+    staging:
+      - &quot;stage-*&quot;
+    production:
+      - &quot;eu-west&quot;
+      - &quot;customer-*&quot;
+</code></pre>
+<p>Two rules from Atlassian’s page: “Once you add this configuration file, Jira will not be able to automatically detect
+environment names”, so list every environment. And “You can specify up to 10 glob patterns for each of the four valid
+environments in Jira.” The structure above follows the example on
+<a href="https://support.atlassian.com/jira-cloud-administration/docs/link-github-workflows-and-deployments-to-jira-issues/">Atlassian’s page</a>;
+the names are examples of ours.</p>
+<h2 id="5-jira-hides-it-from-you">5. Jira hides it from you</h2>
+<p>If deployments exist but some people don’t see them:</p>
+<ul>
+<li>Atlassian: “You must have the space permission “View Development Tools” to see the Development panel in Jira work
+items.” Check that it is granted to those users.</li>
+<li>The space-wide list of deployments lives on the space’s <strong>Development</strong> page, under <strong>Deployments</strong>. That page follows the
+<strong>Development</strong> feature in <strong>Space settings &gt; Features</strong>. Atlassian notes that turning the feature off doesn’t remove
+the Development panel on work items, so this explains a missing page, not a missing panel.</li>
+</ul>
+<h2 id="how-to-check-the-result">How to check the result</h2>
+<ol>
+<li>
+<p>On GitHub, open <strong>Deployments</strong> and note the latest deployment and its state.</p>
+</li>
+<li>
+<p>On Jira, open one issue whose key is in a commit of that deployment, then look for it in its Development panel.</p>
+</li>
+<li>
+<p>Across a project, run JQL. <code>development[deployments].all</code> is refused by Jira Cloud, but this one works (checked on our
+test site, 16 November 2026; more in <a href="jira-jql-development-github.html">JQL for GitHub data in Jira</a>):</p>
+<pre><code>project = ABC AND deploymentEnvironmentType is not EMPTY
+</code></pre>
+</li>
+</ol>
+<p>Run the query before and after a deployment you know touched a given issue.</p>
+<h2 id="questions-that-come-up-after-that">Questions that come up after that</h2>
+<p><strong>Why does a rolled-back release still look deployed?</strong> Redeploying an older commit usually adds no new commits to scan, so the
+issues keep their status. GitHub’s deployment states include no “rolled back” value.</p>
+<p><strong>Why does a feature-branch deployment re-link old issues?</strong> A <a href="https://community.atlassian.com/forums/discussion/3225089/usage-of-jira-deployments-with-staging-environment">thread with over 3,200 views</a>
+reports deployments from feature branches re-associating work. Deciding which branches deploy to which environment in your
+workflow, for example with <code>deployment: ${{ github.ref_name == 'main' }}</code>, limits what Jira receives.</p>
+<p><strong>Is only the tagged commit marked as deployed?</strong> In the Atlassian-documented behaviour above, no: every new commit with a key
+counts. A report of the contrary is worth comparing against section 3.</p>
+<h2 id="how-linkwright-handles-deployments">How Linkwright handles deployments</h2>
+<p><a href="/">Linkwright</a> is a paid Forge app for <a href="https://GitHub.com">GitHub.com</a> and Jira Cloud, made by the author of this page, so read this
+section with that in mind. It listens to the same <code>deployment_status</code> event, so sections 2, 3 and 5 apply to it as well.</p>
+<ul>
+<li>A successful deployment is linked to every commit since the previous successful deployment of the same environment. It reads
+the range through GitHub’s API, page by page. We have tested this on a small test repository (14 September 2026), not beyond
+100 commits between two deployments, so we don’t claim that it solves JRACLOUD-99064.</li>
+<li>Only <code>success</code> triggers that reading. A first deployment is linked to the 100 most recent commits of the deployed version.</li>
+<li>A deployment that a newer one replaced still shows as deployed.</li>
+<li>Environment names are matched by fixed rules: names containing <code>stag</code>, <code>preprod</code>, <code>pre-prod</code> or <code>uat</code> are Staging, then
+<code>prod</code> is Production, <code>test</code> or <code>qa</code> Testing, <code>dev</code>, <code>preview</code> or <code>review</code> Development. There is no <code>.jira/config.yml</code>
+support: other names show as Unmapped. Atlassian’s app is more flexible on this point. (Until version 2.28.0, released
+16 November 2026, <code>preprod</code> was wrongly sent as Production.)</li>
+<li>Deployments arrive by webhook only. One missed while a webhook was down is not caught up later.</li>
+</ul>
+<p>What it adds is the status of each repository (Up to date, Webhook down, Not authorized and so on), so you can tell whether the
+data stopped arriving or never existed.</p>
+
+    <h2 id="more-guides">More guides</h2>
+    <ul><li><a href="connect-github-to-jira-cloud.html">How to connect GitHub to Jira Cloud</a></li><li><a href="github-issues-vs-jira.html">GitHub Issues vs Jira</a></li><li><a href="github-commits-not-showing-in-jira.html">GitHub commits not showing in Jira</a></li><li><a href="github-for-jira-backfill.html">GitHub for Jira backfill: restart it and check it</a></li><li><a href="jira-smart-commits-github.html">Jira Smart Commits with GitHub: syntax and checks</a></li><li><a href="github-for-atlassian-forge-migration.html">GitHub for Atlassian is moving to Forge: what to check</a></li><li><a href="restrict-github-repositories-per-jira-project.html">Limit which GitHub repositories each Jira project can link</a></li><li><a href="jira-jql-development-github.html">JQL for GitHub data in Jira</a></li><li><a href="permissions-and-sync-status.html">Linkwright permissions and sync statuses, explained</a></li><li><a href="github-for-jira-alternatives.html">GitHub for Jira alternatives</a></li><li><a href="github-for-atlassian-side-by-side.html">24 hours side by side with GitHub for Atlassian</a></li><li><a href="github-organization-not-showing-in-jira.html">GitHub organization not showing in Jira</a></li></ul>
+
+  </div>
+</main>
+
+<footer class="site">
+  <div class="wrap">
+    <span>&copy; 2026 Linkwright. Built in France by an independent developer.</span>
+    <nav>
+      <a href="/">Home</a>
+      <a href="/guides.html">Guides</a>
+      <a href="/docs.html">Documentation</a>
+      <a href="/security.html">Security</a>
+      <a href="/about.html">About</a>
+      <a href="/changelog.html">Changelog</a>
+      <a href="/support.html">Support</a>
+      <a href="mailto:support@linkwright.io">Contact</a>
+      <a href="/privacy.html">Privacy</a>
+      <a href="/terms.html">Terms</a>
+      <a href="/legal.html">Legal notice</a>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>

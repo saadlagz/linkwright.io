@@ -20,6 +20,7 @@ Key facts:
 - [Documentation](https://linkwright.io/docs.html): installation, linking rules, sync states, troubleshooting
 - [GitHub commits not showing in Jira](https://linkwright.io/github-commits-not-showing-in-jira.html): a troubleshooting checklist that applies to any connector
 - [GitHub organization not showing in Jira](https://linkwright.io/github-organization-not-showing-in-jira.html): why an installed organization is missing from GitHub for Atlassian's list (owner rule, link for a non-owner admin, IP allow list), from Atlassian's documentation (November 2026)
+- [GitHub deployments not showing in Jira](https://linkwright.io/github-deployments-not-showing-in-jira.html): why the Deployments tab is empty or shows "undefined" with GitHub for Atlassian (permissions, deployment_status, issue keys, .jira/config.yml environment mapping), from Atlassian's and GitHub's documentation (November 2026)
 - [GitHub for Jira alternatives](https://linkwright.io/github-for-jira-alternatives.html): the Marketplace options with public installs, ratings and prices
 - [24 hours side by side with GitHub for Atlassian](https://linkwright.io/github-for-atlassian-side-by-side.html): the same pushes measured on both connectors (1–2 October 2026), including where the official app does better
 - [Connect GitHub to Jira Cloud](https://linkwright.io/connect-github-to-jira-cloud.html): the setup steps

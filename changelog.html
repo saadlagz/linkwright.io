@@ -39,6 +39,12 @@
   <div class="narrow">
     <h1>Changelog</h1>
 <p>What changes for people using Linkwright for Jira, newest first.</p>
+<h2 id="16-november-2026-version-228">16 November 2026 — version 2.28</h2>
+<ul>
+<li><strong>Pre-production environments.</strong> A GitHub environment named <code>preprod</code> or <code>pre-prod</code> was sent to Jira as Production,
+because its name contains “prod”. It is now sent as Staging, as intended (checked on our test site with a real deployment).
+Deployments already sent are not sent again.</li>
+</ul>
 <h2 id="6-november-2026-version-227">6 November 2026 — version 2.27</h2>
 <ul>
 <li><strong>Pushes beyond 10,000 commits.</strong> GitHub stops comparing at 10,000 commits without an error. A new branch of
