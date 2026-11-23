@@ -29,7 +29,7 @@ Key facts:
 - [GitHub Issues vs Jira](https://linkwright.io/github-issues-vs-jira.html): both compared on vendor documentation (October 2026), when teams use both, and connecting them
 - [GitHub for Jira backfill](https://linkwright.io/github-for-jira-backfill.html): what GitHub for Atlassian's backfill imports (Atlassian documentation, November 2026), how to continue or restart it, and a five-minute check
 - [Jira Smart Commits with GitHub](https://linkwright.io/jira-smart-commits-github.html): syntax of #comment, #time and transitions (Atlassian documentation, November 2026), why a Smart Commit does not run (the commit email must match exactly one Jira user), a checklist, and how Linkwright limits who can run them
-- [GitHub for Atlassian is moving to Forge](https://linkwright.io/github-for-atlassian-forge-migration.html): Atlassian's October 2026 rollout, and a before/after check of your development data
+- [GitHub for Atlassian moved to Forge](https://linkwright.io/github-for-atlassian-forge-migration.html): migration announced complete on 21 November 2026, and a check of your development data
 - [Permissions and sync statuses](https://linkwright.io/permissions-and-sync-status.html): each GitHub App permission and why (read-only on code; write only on its own webhooks), and what each sync status means, with its threshold
 - [Atlassian Marketplace listing](https://marketplace.atlassian.com/apps/1218910089): install, pricing, reviews
 - [Security](https://linkwright.io/security.html): data handled, architecture, vulnerability reporting
