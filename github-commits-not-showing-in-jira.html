@@ -18,7 +18,7 @@
 <link rel="icon" href="/assets/logo.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
 <meta name="theme-color" content="#14302a">
-<link rel="stylesheet" href="/style.css?v=54ef87ef0d">
+<link rel="stylesheet" href="/style.css?v=6e21160c9b">
 <script data-goatcounter="https://saadlagz.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
 </head>
 <body>
@@ -30,7 +30,7 @@
       <a href="/guides.html">Guides</a>
       <a href="/docs.html">Documentation</a>
       <a href="/security.html">Security</a>
-      <a class="nav-cta" href="https://marketplace.atlassian.com/apps/1218910089">Get it free</a>
+      <a class="nav-cta" href="https://marketplace.atlassian.com/apps/1218910089?utm_source=linkwright.io&amp;utm_medium=referral&amp;utm_campaign=site&amp;utm_content=github-commits-not-showing-in-jira" data-goatcounter-click="marketplace/github-commits-not-showing-in-jira">Get it free</a>
     </nav>
   </div>
 </header>
@@ -38,6 +38,9 @@
 <main class="doc">
   <div class="narrow">
     <h1>GitHub commits not showing in Jira: a checklist</h1>
+    <p class="lw-note">Written by the developer of <a href="/">Linkwright</a>, a GitHub connector for Jira Cloud that
+    shows, for every repository, whether its data is up to date and why it is not. Free for teams up to 10 users:
+    <a href="https://marketplace.atlassian.com/apps/1218910089?utm_source=linkwright.io&amp;utm_medium=referral&amp;utm_campaign=site&amp;utm_content=github-commits-not-showing-in-jira" data-goatcounter-click="marketplace/github-commits-not-showing-in-jira">get it on the Atlassian Marketplace</a>.</p>
     <div class="toc"><p>On this page</p><ul><li><a href="#1-is-the-issue-key-written-the-way-jira-expects">1. Is the issue key written the way Jira expects?</a></li><li><a href="#2-was-the-commit-pushed-before-the-repository-was-connected">2. Was the commit pushed before the repository was connected?</a></li><li><a href="#3-is-jira-simply-still-indexing">3. Is Jira simply still indexing?</a></li><li><a href="#4-are-you-reading-a-cached-count">4. Are you reading a cached count?</a></li><li><a href="#5-are-there-more-than-100-commits-on-the-issue">5. Are there more than 100 commits on the issue?</a></li><li><a href="#6-can-jira-see-it-at-all-ask-it-with-jql">6. Can Jira see it at all? Ask it with JQL</a></li><li><a href="#7-does-the-connection-say-it-is-healthy-and-is-it">7. Does the connection say it is healthy, and is it?</a></li><li><a href="#8-did-the-connector-itself-change">8. Did the connector itself change?</a></li><li><a href="#how-linkwright-handles-this">How Linkwright handles this</a></li></ul></div>
 <p>You pushed a commit that mentions an issue, and the issue’s Development panel stays empty. This
 page goes through the causes in the order worth checking them. Most of it applies whatever
@@ -110,7 +113,7 @@ shows the time of the last webhook, the time of the last successful full read, a
 sending that Jira really kept the links, and repairs the ones it dropped, up to twice, then says so on screen (above 400
 items in a repository, Jira only shows it a sample, so only that sample is checked). It feeds Jira’s native
 Development panel, so JQL and Automation work as usual.</p>
-<p>It is free for up to 10 users and installs from the <a href="https://marketplace.atlassian.com/apps/1218910089">Atlassian Marketplace</a>, in Jira’s Apps menu. See also the <a href="docs.html">documentation</a>.</p>
+<p>It is free for up to 10 users and installs from the <a href="https://marketplace.atlassian.com/apps/1218910089?utm_source=linkwright.io&amp;utm_medium=referral&amp;utm_campaign=site&amp;utm_content=github-commits-not-showing-in-jira" data-goatcounter-click="marketplace/github-commits-not-showing-in-jira">Atlassian Marketplace</a>, in Jira’s Apps menu. See also the <a href="docs.html">documentation</a>.</p>
 
     <h2 id="more-guides">More guides</h2>
     <ul><li><a href="connect-github-to-jira-cloud.html">How to connect GitHub to Jira Cloud</a></li><li><a href="github-issues-vs-jira.html">GitHub Issues vs Jira</a></li><li><a href="github-for-jira-backfill.html">GitHub for Jira backfill: restart it and check it</a></li><li><a href="jira-smart-commits-github.html">Jira Smart Commits with GitHub: syntax and checks</a></li><li><a href="github-for-atlassian-forge-migration.html">GitHub for Atlassian moved to Forge: what to check</a></li><li><a href="restrict-github-repositories-per-jira-project.html">Limit which GitHub repositories each Jira project can link</a></li><li><a href="jira-jql-development-github.html">JQL for GitHub data in Jira</a></li><li><a href="permissions-and-sync-status.html">Linkwright permissions and sync statuses, explained</a></li><li><a href="github-for-jira-alternatives.html">GitHub for Jira alternatives</a></li><li><a href="github-for-atlassian-side-by-side.html">24 hours side by side with GitHub for Atlassian</a></li><li><a href="github-organization-not-showing-in-jira.html">GitHub organization not showing in Jira</a></li><li><a href="github-deployments-not-showing-in-jira.html">GitHub deployments not showing in Jira</a></li></ul>
@@ -139,5 +142,9 @@ Development panel, so JQL and Automation work as usual.</p>
   </div>
 </footer>
 
+<script>(function(){var q=new URLSearchParams(location.search),k=['utm_source','utm_medium','utm_campaign','utm_term'],
+h=k.some(function(x){return q.get(x)});if(!h&&q.get('gclid')){q.set('utm_source','google');q.set('utm_medium','cpc');h=true}if(!h)return;
+document.querySelectorAll('a[href^="https://marketplace.atlassian.com/apps/1218910089"]').forEach(function(a){var u=new URL(a.href);
+k.forEach(function(x){var v=q.get(x);if(v)u.searchParams.set(x,v.slice(0,60))});a.href=u.toString()})})();</script>
 </body>
 </html>

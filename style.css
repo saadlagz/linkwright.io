@@ -269,6 +269,7 @@ footer.site a:hover { text-decoration: underline; }
 .doc h3 { margin-top: 2rem; }
 .doc blockquote { margin: 1.5rem 0; padding: 0.9rem 1.2rem; border-left: 3px solid var(--brass-deep); background: var(--paper-2); color: var(--muted); }
 .doc blockquote p { margin: 0.35rem 0; }
+.lw-note { margin: 0 0 1.5rem; padding: 0.8rem 1.1rem; border-left: 3px solid var(--brass); background: var(--paper-2); font-size: 0.95rem; }
 .doc table { width: 100%; border-collapse: collapse; margin: 1.5rem 0; font-size: 0.95rem; display: block; overflow-x: auto; }
 .doc th, .doc td { text-align: left; padding: 0.65rem 0.9rem 0.65rem 0; border-bottom: 1px solid var(--line); vertical-align: top; }
 .doc th { font-size: 0.9rem; font-weight: 600; color: var(--ink); border-bottom: 2px solid var(--ink); white-space: nowrap; }
